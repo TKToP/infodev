@@ -1,0 +1,563 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Segurança Cibernética - INFO.DeV</title>
+    
+    <!-- Fontes modernas -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Lora:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Ícones Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #3b82f6;
+            --secondary-color: #2563eb;
+            --accent-color: #60a5fa;
+            --text-color: #e5e7eb;
+            --light-text: #9ca3af;
+            --bg-color: #111827;
+            --card-bg: #1f2937;
+            --footer-bg: #030712;
+            --cyber-color: #10b981; /* Verde cibernético */
+            --section-border: #374151;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: var(--card-bg);
+            padding: 15px 0;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
+        }
+
+        .logo-text {
+            font-family: 'Lora', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--primary-color), var(--cyber-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .nav-links a, .nav-links button {
+            font-size: 0.95rem;
+            padding: 8px 16px;
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+            color: var(--primary-color);
+            transition: all 0.3s;
+            border-radius: 6px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .nav-links button:hover, .nav-links a:hover {
+            background-color: rgba(59, 130, 246, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Header */
+        .page-header {
+            text-align: center;
+            margin: 40px 0;
+            padding: 30px 0;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(16, 185, 129, 0.1));
+            border-radius: 12px;
+            border: 1px solid var(--section-border);
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            color: var(--cyber-color);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        /* Content */
+        .content-container {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+            border: 1px solid var(--section-border);
+        }
+
+        /* Cybersecurity Sections */
+        .cyber-section {
+            margin-bottom: 30px;
+            padding: 25px;
+            background-color: rgba(31, 41, 55, 0.7);
+            border-radius: 8px;
+            border-left: 4px solid var(--cyber-color);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .cyber-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .cyber-section:hover {
+            transform: translateY(-5px);
+            background-color: rgba(31, 41, 55, 0.9);
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.1);
+        }
+
+        .cyber-section h2 {
+            color: var(--cyber-color);
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--section-border);
+        }
+
+        .cyber-section h2 i {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+
+        .cyber-section:hover h2 i {
+            transform: scale(1.2);
+        }
+
+        .cyber-section p {
+            margin-bottom: 10px;
+            color: var(--light-text);
+        }
+
+        /* Enhanced Content */
+        .enhanced-content {
+            border-left: 3px solid var(--cyber-color);
+            padding: 15px;
+            margin: 20px 0;
+            background: rgba(16, 185, 129, 0.05);
+            border-radius: 5px;
+        }
+
+        .enhanced-content h3 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--cyber-color);
+            margin-bottom: 10px;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        .comparison-table th, .comparison-table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid var(--section-border);
+        }
+
+        .comparison-table th {
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+
+        /* Alert Boxes */
+        .alert-box {
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 6px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .alert-box i {
+            font-size: 1.2rem;
+            margin-top: 2px;
+        }
+
+        .technical-alert {
+            background-color: rgba(59, 130, 246, 0.1);
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .risk-alert {
+            background-color: rgba(239, 68, 68, 0.1);
+            border-left: 4px solid #ef4444;
+        }
+
+        code {
+            font-family: 'Courier New', monospace;
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-size: 0.9em;
+        }
+
+        pre {
+            background-color: #1e293b;
+            padding: 12px;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 10px 0;
+            line-height: 1.5;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--footer-bg);
+            color: #d1d5db;
+            padding: 30px 0;
+            margin-top: 60px;
+            border-top: 1px solid var(--section-border);
+        }
+
+        .footer-content {
+            text-align: center;
+        }
+
+        .footer-bottom {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--section-border);
+            font-size: 0.9rem;
+            color: var(--light-text);
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .navbar .container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .cyber-section h2 {
+                font-size: 1.3rem;
+            }
+            
+            .comparison-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar">
+            <div class="container">
+                <a href="PAGPRI.html" class="logo">
+                    <!-- Logo SVG inline para INFO.DeV -->
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="40" height="40" rx="8" fill="url(#paint0_linear)"/>
+                        <path d="M12 12H16V28H12V12Z" fill="white"/>
+                        <path d="M18 12H22V28H18V12Z" fill="white"/>
+                        <path d="M24 12H28V28H24V12Z" fill="white"/>
+                        <path d="M12 12H28V16H12V12Z" fill="white"/>
+                        <path d="M12 24H28V28H12V24Z" fill="white"/>
+                        <defs>
+                            <linearGradient id="paint0_linear" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#2563EB"/>
+                                <stop offset="1" stop-color="#00B3A6"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <span class="logo-text">INFO.DeV</span>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="PAGPRI.html"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="Materiais.html"><i class="fas fa-book"></i> Materiais</a></li>
+                    <li><a href="PagFAQ.html"><i class="fas fa-question-circle"></i> FAQ</a></li>
+                    <li><a href="quiz/quiz.html"><i class="fas fa-question"></i> QUIZ</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <header class="page-header">
+            <h1><i class="fas fa-shield-virus"></i> Segurança Cibernética</h1>
+        </header>
+
+        <main>
+            <div class="content-container">
+                <!-- Seção 1 - Defesa Contra Ataques -->
+                <div class="cyber-section">
+                    <h2><i class="fas fa-user-shield"></i> Defesa Contra Ataques</h2>
+                    <p>Proteção contra ameaças como DDoS, phishing, ransomware e malwares com estratégias baseadas no MITRE ATT&CK.</p>
+                    
+                    <div class="enhanced-content">
+                        <h3><i class="fas fa-chart-bar"></i> Estatísticas Globais (2024)</h3>
+                        <table class="comparison-table">
+                            <tr>
+                                <th>Ataque</th>
+                                <th>Frequência</th>
+                                <th>Prejuízo Médio</th>
+                            </tr>
+                            <tr>
+                                <td>Ransomware</td>
+                                <td>1 ataque/11s</td>
+                                <td>US$ 1,85M</td>
+                            </tr>
+                            <tr>
+                                <td>Phishing</td>
+                                <td>+65% vs 2023</td>
+                                <td>US$ 4,76M</td>
+                            </tr>
+                            <tr>
+                                <td>DDoS</td>
+                                <td>13,1M ataques</td>
+                                <td>US$ 6k/hora</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="alert-box technical-alert">
+                        <i class="fas fa-tools"></i>
+                        <div>
+                            <strong>Ferramentas Essenciais:</strong>
+                            <ul style="margin-top: 8px; margin-left: 20px;">
+                                <li><strong>CrowdStrike:</strong> EDR para ransomware</li>
+                                <li><strong>Proofpoint:</strong> Proteção anti-phishing</li>
+                                <li><strong>Cloudflare:</strong> Mitigação DDoS</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seção 2 - Firewalls e IPS -->
+                <div class="cyber-section">
+                    <h2><i class="fas fa-firewall"></i> Firewalls e IPS</h2>
+                    <p>Implementação de sistemas de proteção perimetral baseados no modelo Zero Trust.</p>
+                    
+                    <div class="enhanced-content">
+                        <h3><i class="fas fa-network-wired"></i> Arquitetura Recomendada (NIST SP 800-41)</h3>
+                        <ol>
+                            <li>Firewall de próxima geração (NGFW)</li>
+                            <li>IPS com assinaturas atualizadas</li>
+                            <li>Segmentação de rede (VLANs)</li>
+                            <li>Inspeção SSL/TLS</li>
+                        </ol>
+                        
+                        <h3 style="margin-top:15px;"><i class="fas fa-code"></i> Exemplo: Regra pfSense</h3>
+                        <pre>
+# Bloqueia varredura de portas
+block in quick proto tcp from any to any flags S/SA \
+  keep state (max-src-conn 100, max-src-conn-rate 15/5, \
+  overload &lt;bruteforce&gt; flush global)</pre>
+                    </div>
+
+                    <div class="alert-box risk-alert">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <div>
+                            <strong>Alerta CVE-2024-2156:</strong> Vulnerabilidade crítica em firewalls Palo Alto (CVE-2024-2156) permite execução remota de código. Atualize para PAN-OS 11.1.2+.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seção 3 - Resposta a Incidentes -->
+                <div class="cyber-section">
+                    <h2><i class="fas fa-triangle-exclamation"></i> Resposta a Incidentes</h2>
+                    <p>Plano de ação baseado no framework NIST SP 800-61 para contenção, erradicação e recuperação.</p>
+                    
+                    <div class="enhanced-content">
+                        <h3><i class="fas fa-list-check"></i> Fluxo de Resposta (SANS)</h3>
+                        <table class="comparison-table">
+                            <tr>
+                                <th>Fase</th>
+                                <th>Ações</th>
+                                <th>Timing</th>
+                            </tr>
+                            <tr>
+                                <td>Preparação</td>
+                                <td>Playbooks, treinamento</td>
+                                <td>Contínuo</td>
+                            </tr>
+                            <tr>
+                                <td>Identificação</td>
+                                <td>SIEM, EDR</td>
+                                <td>&lt; 1h</td>
+                            </tr>
+                            <tr>
+                                <td>Contenção</td>
+                                <td>Isolamento, backups</td>
+                                <td>&lt; 4h</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="alert-box technical-alert">
+                        <i class="fas fa-file-alt"></i>
+                        <div>
+                            <strong>Documentação Obrigatória:</strong>
+                            <ol style="margin-top: 8px; margin-left: 20px;">
+                                <li>Formulário de registro de incidentes</li>
+                                <li>Logs de atividades suspeitas</li>
+                                <li>Relatório pós-incidente (72h)</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seção 4 - Monitoramento -->
+                <div class="cyber-section">
+                    <h2><i class="fas fa-eye"></i> Monitoramento Contínuo</h2>
+                    <p>Implementação de SOC (Security Operations Center) com ferramentas de detecção proativa.</p>
+                    
+                    <div class="enhanced-content">
+                        <h3><i class="fas fa-desktop"></i> Stack Tecnológica</h3>
+                        <table class="comparison-table">
+                            <tr>
+                                <th>Função</th>
+                                <th>Ferramenta</th>
+                                <th>Custo</th>
+                            </tr>
+                            <tr>
+                                <td>SIEM</td>
+                                <td>Splunk, Wazuh</td>
+                                <td>$$-$$$</td>
+                            </tr>
+                            <tr>
+                                <td>EDR/XDR</td>
+                                <td>CrowdStrike, SentinelOne</td>
+                                <td>$$$</td>
+                            </tr>
+                            <tr>
+                                <td>SOAR</td>
+                                <td>TheHive, Cortex</td>
+                                <td>Open Source</td>
+                            </tr>
+                        </table>
+                        
+                        <h3 style="margin-top:15px;"><i class="fas fa-bell"></i> Indicadores de Comprometimento (IOCs)</h3>
+                        <div class="alert-box risk-alert">
+                            <i class="fas fa-search"></i>
+                            <div>
+                                <strong>Monitorar:</strong>
+                                <ul style="margin-top: 8px; margin-left: 20px;">
+                                    <li>Logins fora do horário</li>
+                                    <li>Tráfego para IPs suspeitos</li>
+                                    <li>Alterações não autorizadas</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <div class="footer-content">
+                <p>© 2025 INFO.DeV | Todos os direitos reservados.</p>
+                <div class="footer-bottom">
+                    <p>Desenvolvido com <i class="fas fa-heart" style="color: #ef4444;"></i> pela equipe INFO.DeV</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Efeito suave de rolagem para os links internos
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Animação de aparecimento das seções
+        const cyberSections = document.querySelectorAll('.cyber-section');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        cyberSections.forEach(section => observer.observe(section));
+    </script>
+</body>
+</html>

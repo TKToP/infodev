@@ -1,0 +1,699 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exemplos de E-Business - INFO.DeV</title>
+    
+    <!-- Fontes modernas -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Lora:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Ícones Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #3b82f6;
+            --secondary-color: #1e40af;
+            --accent-color: #60a5fa;
+            --text-color: #f3f4f6;
+            --light-text: #9ca3af;
+            --bg-color: #111827;
+            --card-bg: #1f2937;
+            --footer-bg: #0f172a;
+            --ebusiness-color: #9333ea;
+            --danger-color: #ef4444;
+            --warning-color: #f59e0b;
+            --success-color: #10b981;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: var(--card-bg);
+            padding: 15px 0;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.5);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
+        }
+
+        .logo-text {
+            font-family: 'Lora', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--primary-color), #00b3a6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .nav-links a, .nav-links button {
+            font-size: 0.95rem;
+            padding: 8px 16px;
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+            color: var(--primary-color);
+            transition: all 0.3s;
+            border-radius: 6px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .nav-links button:hover, .nav-links a:hover {
+            background-color: var(--primary-color);
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        /* Header */
+        .page-header {
+            text-align: center;
+            margin: 40px 0;
+            padding: 30px 0;
+            background: linear-gradient(135deg, rgba(147, 51, 234, 0.2), rgba(168, 85, 247, 0.1));
+            border-radius: 12px;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            color: var(--ebusiness-color);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            color: var(--light-text);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Content */
+        .content-container {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            margin-bottom: 40px;
+        }
+
+        /* Example Cards */
+        .example-card {
+            background-color: var(--bg-color);
+            padding: 25px;
+            border-radius: 8px;
+            border-left: 4px solid var(--ebusiness-color);
+            margin-bottom: 25px;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .example-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .example-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .example-card h3 {
+            color: var(--ebusiness-color);
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .example-card h3 i {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .example-card:hover h3 i {
+            transform: scale(1.2);
+        }
+
+        .example-card p {
+            margin-bottom: 10px;
+            line-height: 1.7;
+            color: var(--text-color);
+        }
+
+        .example-card strong {
+            color: var(--ebusiness-color);
+            font-weight: 600;
+        }
+
+        /* Alert Boxes */
+        .alert-box {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            border-left: 4px solid;
+        }
+
+        .alert-danger {
+            background-color: rgba(239, 68, 68, 0.1);
+            border-left-color: var(--danger-color);
+        }
+
+        .alert-warning {
+            background-color: rgba(245, 158, 11, 0.1);
+            border-left-color: var(--warning-color);
+        }
+
+        .alert-success {
+            background-color: rgba(16, 185, 129, 0.1);
+            border-left-color: var(--success-color);
+        }
+
+        .alert-icon {
+            font-size: 1.5rem;
+            margin-top: 2px;
+        }
+
+        .alert-danger .alert-icon {
+            color: var(--danger-color);
+        }
+
+        .alert-warning .alert-icon {
+            color: var(--warning-color);
+        }
+
+        .alert-success .alert-icon {
+            color: var(--success-color);
+        }
+
+        /* Business Tags */
+        .business-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 15px 0;
+        }
+
+        .business-tag {
+            background-color: rgba(147, 51, 234, 0.2);
+            color: var(--ebusiness-color);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s;
+        }
+
+        .business-tag:hover {
+            background-color: rgba(147, 51, 234, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .comparison-table th, .comparison-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #374151;
+        }
+
+        .comparison-table th {
+            background-color: rgba(147, 51, 234, 0.1);
+            color: var(--ebusiness-color);
+            font-weight: 600;
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comparison-table tr:hover {
+            background-color: rgba(147, 51, 234, 0.05);
+        }
+
+        /* Code Examples */
+        .code-container {
+            background-color: #0f172a;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            overflow-x: auto;
+            border: 1px solid #374151;
+        }
+
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            color: var(--light-text);
+            font-size: 0.9rem;
+        }
+
+        .copy-btn {
+            background-color: var(--card-bg);
+            border: none;
+            color: var(--text-color);
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .copy-btn:hover {
+            background-color: var(--ebusiness-color);
+        }
+
+        pre {
+            margin: 0;
+            font-family: 'Courier New', Courier, monospace;
+            line-height: 1.5;
+        }
+
+        /* Tooltip */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            border-bottom: 1px dotted var(--light-text);
+            cursor: help;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            text-align: center;
+            border-radius: 6px;
+            padding: 10px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -100px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            border: 1px solid #374151;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--footer-bg);
+            color: #d1d5db;
+            padding: 30px 0;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            text-align: center;
+        }
+
+        .footer-bottom {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #374151;
+            font-size: 0.9rem;
+            color: #9ca3af;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .navbar .container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .example-card h3 {
+                font-size: 1.2rem;
+            }
+            
+            .comparison-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar">
+            <div class="container">
+                <a href="PAGPRI.html" class="logo">
+                    <!-- Logo SVG inline para INFO.DeV -->
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="40" height="40" rx="8" fill="url(#paint0_linear)"/>
+                        <path d="M12 12H16V28H12V12Z" fill="white"/>
+                        <path d="M18 12H22V28H18V12Z" fill="white"/>
+                        <path d="M24 12H28V28H24V12Z" fill="white"/>
+                        <path d="M12 12H28V16H12V12Z" fill="white"/>
+                        <path d="M12 24H28V28H12V24Z" fill="white"/>
+                        <defs>
+                            <linearGradient id="paint0_linear" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#2563EB"/>
+                                <stop offset="1" stop-color="#00B3A6"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <span class="logo-text">INFO.DeV</span>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="PAGPRI.html"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="Materiais.html"><i class="fas fa-book"></i> Materiais</a></li>
+                    <li><a href="PagFAQ.html"><i class="fas fa-question-circle"></i> FAQ</a></li>
+                    <li><a href="quiz/quiz.html"><i class="fas fa-question"></i> QUIZ</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <header class="page-header">
+            <h1><i class="fas fa-network-wired"></i> Exemplos de Aplicação de E-Business</h1>
+            <p>Casos reais de como a transformação digital está sendo implementada nas empresas</p>
+        </header>
+
+        <main>
+            <div class="content-container">
+                <!-- Alertas OWASP -->
+                <div class="alert-box alert-warning">
+                    <i class="fas fa-exclamation-triangle alert-icon"></i>
+                    <div>
+                        <h3>Segurança em Soluções de E-Business</h3>
+                        <p>Segundo o OWASP Top 10 2024, sistemas de e-business estão entre os principais alvos de ataques cibernéticos. Implemente sempre <strong>autenticação forte</strong> e <strong>proteção de dados</strong>.</p>
+                    </div>
+                </div>
+
+                <!-- Cards de exemplos -->
+                <div class="example-card">
+                    <h3><i class="fas fa-store"></i> 1. Plataformas de E-commerce</h3>
+                    <p>Ferramentas completas que permitem a criação e gestão de lojas virtuais com vitrine, carrinho, pagamentos e integração logística.</p>
+                    <p><strong>Exemplos práticos:</strong> Shopify, WooCommerce, Magento, Loja Integrada, Nuvemshop.</p>
+                    
+                    <div class="business-tags">
+                        <span class="business-tag"><i class="fab fa-shopify"></i> Shopify</span>
+                        <span class="business-tag"><i class="fab fa-wordpress"></i> WooCommerce</span>
+                        <span class="business-tag"><i class="fas fa-lock"></i> PCI DSS</span>
+                    </div>
+                    
+                    <div class="alert-box alert-danger">
+                        <i class="fas fa-exclamation-circle alert-icon"></i>
+                        <div>
+                            <h3>Risco de Fraude</h3>
+                            <p>Plataformas de e-commerce devem implementar <span class="tooltip">3D Secure<span class="tooltiptext">Protocolo de autenticação para pagamentos online</span></span> e sistemas antifraude para proteger transações.</p>
+                        </div>
+                    </div>
+                    
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Plataforma</th>
+                                <th>Segurança</th>
+                                <th>Custo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Shopify</td>
+                                <td>Alta (PCI DSS Level 1)</td>
+                                <td>$$$</td>
+                            </tr>
+                            <tr>
+                                <td>WooCommerce</td>
+                                <td>Média (depende da hospedagem)</td>
+                                <td>$</td>
+                            </tr>
+                            <tr>
+                                <td>Magento</td>
+                                <td>Alta (para versão Enterprise)</td>
+                                <td>$$$$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="example-card">
+                    <h3><i class="fas fa-robot"></i> 2. Atendimento ao Cliente via Chatbots</h3>
+                    <p>Programas que simulam conversas humanas, oferecendo suporte automático e reduzindo a carga dos atendentes.</p>
+                    <p><strong>Exemplos práticos:</strong> Chatbot no WhatsApp tirando dúvidas sobre entregas ou ajudando em devoluções.</p>
+                    
+                    <div class="code-container">
+                        <div class="code-header">
+                            <span>Exemplo: Configuração Básica de Chatbot</span>
+                            <button class="copy-btn" onclick="copyCode(this)"><i class="far fa-copy"></i> Copiar</button>
+                        </div>
+                        <pre><code>// Configuração básica de fluxo de chatbot
+const chatbotFlow = {
+  welcomeMessage: "Olá! Como posso ajudar?",
+  options: [
+    { keyword: "entrega", response: "Nossas entregas levam até 5 dias úteis." },
+    { keyword: "devolução", response: "Acesse 'Minha Conta' para iniciar uma devolução." },
+    { keyword: "pagamento", response: "Aceitamos Pix, cartão e boleto." }
+  ],
+  fallbackResponse: "Desculpe, não entendi. Digite AJUDA para opções."
+};</code></pre>
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <h3><i class="fas fa-chart-line"></i> 3. Sistemas de Gestão Empresarial (ERP)</h3>
+                    <p>Integram todas as áreas da empresa para melhorar o controle e a tomada de decisões.</p>
+                    <p><strong>Exemplos práticos:</strong> Totvs, Bling, Omie, SAP, Conta Azul.</p>
+                    
+                    <div class="business-tags">
+                        <span class="business-tag"><i class="fas fa-database"></i> ERP</span>
+                        <span class="business-tag"><i class="fas fa-shield-alt"></i> Segurança</span>
+                        <span class="business-tag"><i class="fas fa-sync-alt"></i> Integração</span>
+                    </div>
+                    
+                    <div class="alert-box alert-success">
+                        <i class="fas fa-check-circle alert-icon"></i>
+                        <div>
+                            <h3>Melhor Prática</h3>
+                            <p>Para ERPs, implemente <strong>controle de acesso por função (RBAC)</strong> e <strong>backup automatizado</strong> dos dados.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <h3><i class="fas fa-brain"></i> 4. Marketing Digital com Dados e IA</h3>
+                    <p>Uso de inteligência artificial e dados para criar campanhas mais eficazes e personalizadas.</p>
+                    <p><strong>Exemplos práticos:</strong> Recomendação de produtos, anúncios segmentados, remarketing com Google e Meta Ads.</p>
+                    
+                    <div class="business-tags">
+                        <span class="business-tag"><i class="fas fa-robot"></i> IA</span>
+                        <span class="business-tag"><i class="fas fa-chart-bar"></i> Analytics</span>
+                        <span class="business-tag"><i class="fas fa-user-shield"></i> LGPD</span>
+                    </div>
+                    
+                    <div class="alert-box alert-warning">
+                        <i class="fas fa-exclamation-triangle alert-icon"></i>
+                        <div>
+                            <h3>Privacidade de Dados</h3>
+                            <p>Campanhas de marketing devem estar em conformidade com a <span class="tooltip">LGPD<span class="tooltiptext">Lei Geral de Proteção de Dados</span></span> e ter consentimento explícito para uso de dados pessoais.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <h3><i class="fas fa-gear"></i> 5. Automatização de Processos com RPA</h3>
+                    <p>Robôs de software que executam tarefas repetitivas, liberando tempo humano para atividades mais estratégicas.</p>
+                    <p><strong>Exemplos práticos:</strong> Robôs que geram relatórios, copiam dados entre sistemas ou fazem conciliações bancárias.</p>
+                    
+                    <div class="business-tags">
+                        <span class="business-tag"><i class="fas fa-robot"></i> RPA</span>
+                        <span class="business-tag"><i class="fas fa-code"></i> Python</span>
+                        <span class="business-tag"><i class="fas fa-shield-alt"></i> Segurança</span>
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <h3><i class="fas fa-user-check"></i> 6. Relacionamento com Clientes via CRM</h3>
+                    <p>Ferramentas para acompanhar clientes, personalizar interações e aumentar a fidelização.</p>
+                    <p><strong>Exemplos práticos:</strong> Salesforce, RD Station, Pipedrive. Envio de e-mails segmentados e acompanhamento de vendas.</p>
+                    
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>CRM</th>
+                                <th>Segmento</th>
+                                <th>Segurança</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Salesforce</td>
+                                <td>Grandes empresas</td>
+                                <td>Alta</td>
+                            </tr>
+                            <tr>
+                                <td>RD Station</td>
+                                <td>Pequenas/Médias</td>
+                                <td>Média-Alta</td>
+                            </tr>
+                            <tr>
+                                <td>Pipedrive</td>
+                                <td>Vendas</td>
+                                <td>Média</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <div class="footer-content">
+                <p>© 2025 INFO.DeV | Todos os direitos reservados.</p>
+                <div class="footer-bottom">
+                    <p>Desenvolvido com <i class="fas fa-heart" style="color: #e74c3c;"></i> pela equipe INFO.DeV</p>
+                    <p>OWASP Top 10 2024 | Segurança em E-Business</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Animação de scroll para os cards
+        const exampleCards = document.querySelectorAll('.example-card');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        exampleCards.forEach(card => observer.observe(card));
+
+        // Função para copiar código
+        function copyCode(button) {
+            const codeContainer = button.closest('.code-container');
+            const code = codeContainer.querySelector('code').textContent;
+
+            navigator.clipboard.writeText(code).then(() => {
+                button.innerHTML = '<i class="fas fa-check"></i> Copiado!';
+                setTimeout(() => {
+                    button.innerHTML = '<i class="far fa-copy"></i> Copiar';
+                }, 2000);
+            });
+        }
+
+        // Tooltips dinâmicos
+        document.querySelectorAll('.tooltip').forEach(tooltip => {
+            tooltip.addEventListener('mouseenter', function () {
+                const tooltipText = this.querySelector('.tooltiptext');
+                tooltipText.style.visibility = 'visible';
+                tooltipText.style.opacity = '1';
+            });
+
+            tooltip.addEventListener('mouseleave', function () {
+                const tooltipText = this.querySelector('.tooltiptext');
+                tooltipText.style.visibility = 'hidden';
+                tooltipText.style.opacity = '0';
+            });
+        });
+
+        // Efeito suave de rolagem para os links internos
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

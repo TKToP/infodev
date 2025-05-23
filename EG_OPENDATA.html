@@ -1,0 +1,879 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dados Abertos (Open Data) - INFO.DeV</title>
+    
+    <!-- Fontes modernas -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Lora:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Ícones Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #3b82f6;
+            --secondary-color: #2563eb;
+            --accent-color: #60a5fa;
+            --text-color: #e5e7eb;
+            --light-text: #9ca3af;
+            --bg-color: #111827;
+            --card-bg: #1f2937;
+            --footer-bg: #030712;
+            --government-color: #6366f1;
+            --data-color: #3b82f6; /* Azul para dados abertos */
+            --innovation-color: #8b5cf6; /* Roxo para inovação */
+            --section-border: #374151;
+            --owasp-red: #d73a49;
+            --security-green: #28a745;
+            --code-bg: #1e1e1e;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: var(--card-bg);
+            padding: 15px 0;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo-text {
+            font-family: 'Lora', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--primary-color), var(--government-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .nav-links a, .nav-links button {
+            font-size: 0.95rem;
+            padding: 8px 16px;
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+            color: var(--primary-color);
+            transition: all 0.3s;
+            border-radius: 6px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .nav-links button:hover, .nav-links a:hover {
+            background-color: rgba(59, 130, 246, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Header */
+        .page-header {
+            text-align: center;
+            margin: 40px 0;
+            padding: 30px 0;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(99, 102, 241, 0.1));
+            border-radius: 12px;
+            border: 1px solid var(--section-border);
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            color: var(--data-color);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            color: var(--light-text);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Content */
+        .content-container {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+            border: 1px solid var(--section-border);
+        }
+
+        /* Seções Temáticas */
+        .content-section {
+            margin-bottom: 30px;
+            padding: 25px;
+            background-color: rgba(31, 41, 55, 0.7);
+            border-radius: 8px;
+            border-left: 4px solid var(--data-color);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .content-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .content-section:hover {
+            transform: translateY(-5px);
+            background-color: rgba(31, 41, 55, 0.9);
+            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.1);
+        }
+
+        .content-section h2 {
+            color: var(--data-color);
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--section-border);
+        }
+
+        .content-section h2 i {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+
+        .content-section:hover h2 i {
+            transform: scale(1.2);
+        }
+
+        .content-section p {
+            margin-bottom: 10px;
+            color: var(--light-text);
+        }
+
+        /* Enhanced Content */
+        .enhanced-content {
+            border-left: 3px solid var(--data-color);
+            padding: 15px;
+            margin: 20px 0;
+            background: rgba(59, 130, 246, 0.05);
+            border-radius: 5px;
+        }
+
+        .enhanced-content h3 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--data-color);
+            margin-bottom: 10px;
+        }
+
+        /* Listas */
+        .feature-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .feature-list li {
+            margin-bottom: 12px;
+            padding-left: 30px;
+            position: relative;
+            line-height: 1.6;
+        }
+
+        .feature-list li::before {
+            content: "→";
+            color: var(--data-color);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        /* Government Cards */
+        .gov-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .gov-card {
+            background: rgba(59, 130, 246, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+            border: 1px solid var(--section-border);
+            transition: all 0.3s;
+        }
+
+        .gov-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.2);
+        }
+
+        .gov-card h4 {
+            color: var(--data-color);
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Stats */
+        .stat-badge {
+            display: inline-block;
+            background-color: rgba(59, 130, 246, 0.2);
+            color: var(--data-color);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin: 5px 0;
+            font-weight: 600;
+        }
+
+        /* Alert Boxes */
+        .alert-box {
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 6px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .alert-box i {
+            font-size: 1.2rem;
+            margin-top: 2px;
+        }
+
+        .data-alert {
+            background-color: rgba(59, 130, 246, 0.1);
+            border-left: 4px solid var(--data-color);
+        }
+
+        .innovation-alert {
+            background-color: rgba(139, 92, 246, 0.1);
+            border-left: 4px solid var(--innovation-color);
+        }
+
+        .owasp-alert {
+            background-color: rgba(215, 58, 73, 0.1);
+            border-left: 4px solid var(--owasp-red);
+        }
+
+        .security-alert {
+            background-color: rgba(40, 167, 69, 0.1);
+            border-left: 4px solid var(--security-green);
+        }
+
+        /* Tabelas Comparativas */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .comparison-table th, .comparison-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--section-border);
+        }
+
+        .comparison-table th {
+            background-color: rgba(59, 130, 246, 0.2);
+            color: var(--data-color);
+            font-weight: 600;
+        }
+
+        .comparison-table tr:hover {
+            background-color: rgba(59, 130, 246, 0.05);
+        }
+
+        /* Blocos de Código */
+        .code-block {
+            background-color: var(--code-bg);
+            border-radius: 6px;
+            padding: 15px;
+            margin: 15px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9rem;
+            border-left: 4px solid var(--data-color);
+        }
+
+        .code-block pre {
+            margin: 0;
+        }
+
+        .code-block .comment {
+            color: #6A9955;
+        }
+
+        .code-block .keyword {
+            color: #569CD6;
+        }
+
+        .code-block .string {
+            color: #CE9178;
+        }
+
+        .code-block .function {
+            color: #DCDCAA;
+        }
+
+        /* Tooltips */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            border-bottom: 1px dotted var(--light-text);
+            cursor: help;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            text-align: center;
+            border-radius: 6px;
+            padding: 10px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -100px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            border: 1px solid var(--section-border);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--footer-bg);
+            color: #d1d5db;
+            padding: 30px 0;
+            margin-top: 60px;
+            border-top: 1px solid var(--section-border);
+        }
+
+        .footer-content {
+            text-align: center;
+        }
+
+        .footer-bottom {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--section-border);
+            font-size: 0.9rem;
+            color: var(--light-text);
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .navbar .container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .content-section h2 {
+                font-size: 1.3rem;
+            }
+            
+            .gov-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .comparison-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar">
+            <div class="container">
+                <a href="PAGPRI.html" class="logo">
+                    <!-- Logo SVG inline para INFO.DeV -->
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="40" height="40" rx="8" fill="url(#paint0_linear)"/>
+                        <path d="M12 12H16V28H12V12Z" fill="white"/>
+                        <path d="M18 12H22V28H18V12Z" fill="white"/>
+                        <path d="M24 12H28V28H24V12Z" fill="white"/>
+                        <path d="M12 12H28V16H12V12Z" fill="white"/>
+                        <path d="M12 24H28V28H12V24Z" fill="white"/>
+                        <defs>
+                            <linearGradient id="paint0_linear" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#2563EB"/>
+                                <stop offset="1" stop-color="#00B3A6"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <span class="logo-text">INFO.DeV</span>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="PAGPRI.html"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="Materiais.html"><i class="fas fa-book"></i> Materiais</a></li>
+                    <li><a href="PagFAQ.html"><i class="fas fa-question-circle"></i> FAQ</a></li>
+                    <li><a href="quiz/quiz.html"><i class="fas fa-question"></i> QUIZ</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <header class="page-header">
+            <h1><i class="fas fa-database"></i> Dados Abertos (Open Data)</h1>
+            <p>A abertura de dados públicos fortalece a transparência, promove o controle social e estimula inovações baseadas em evidências.</p>
+        </header>
+
+        <main>
+            <div class="content-container">
+                <!-- Seção 1 - Publicação de Dados -->
+                <div class="content-section">
+                    <h2><i class="fas fa-file-alt"></i> Publicação de bases de dados</h2>
+                    
+                    <p>Órgãos públicos disponibilizam <strong>informações em formatos abertos e acessíveis</strong> (CSV, JSON, XML) para qualquer cidadão usar, seguindo os princípios FAIR (Findable, Accessible, Interoperable, Reusable).</p>
+                    
+                    <div class="gov-cards">
+                        <div class="gov-card">
+                            <h4><i class="fas fa-table"></i> Formatos Recomendados</h4>
+                            <ul class="feature-list">
+                                <li>CSV (dados tabulares)</li>
+                                <li>JSON (dados estruturados)</li>
+                                <li>XML (documentos estruturados)</li>
+                                <li>GeoJSON (dados espaciais)</li>
+                                <li>RDF (dados semânticos)</li>
+                            </ul>
+                        </div>
+                        <div class="gov-card">
+                            <h4><i class="fas fa-server"></i> Portais Principais</h4>
+                            <ul class="feature-list">
+                                <li>Dados.gov.br</li>
+                                <li>Portal da Transparência</li>
+                                <li>IBGE - APIs</li>
+                                <li>APIs do Governo Federal</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="alert-box data-alert">
+                        <i class="fas fa-info-circle"></i>
+                        <div>
+                            <strong>Lei de Acesso à Informação:</strong> A LAI (Lei 12.527/2011) estabelece a obrigatoriedade de disponibilização de dados públicos em formatos abertos e máquina-processáveis.
+                        </div>
+                    </div>
+
+                    <!-- Novo conteúdo técnico -->
+                    <div class="enhanced-content">
+                        <h3><i class="fas fa-code"></i> Consumindo APIs de Dados Abertos</h3>
+                        <p>Exemplo de consumo da API de dados do IBGE:</p>
+                        
+                        <div class="code-block">
+                            <pre><span class="keyword">const</span> axios = require(<span class="string">'axios'</span>);
+
+<span class="comment">// Buscar dados de municípios por UF</span>
+<span class="keyword">async</span> <span class="keyword">function</span> <span class="function">getMunicipios</span>(uf) {
+    <span class="keyword">try</span> {
+        <span class="keyword">const</span> response = await axios.get(
+            <span class="string">`https://servicodados.ibge.gov.br/api/v1/localidades/estados/</span>${uf}<span class="string">/municipios`</span>
+        );
+        
+        <span class="keyword">return</span> response.data.map(mun => ({
+            id: mun.id,
+            nome: mun.nome,
+            microrregiao: mun.microrregiao.nome
+        }));
+    } <span class="keyword">catch</span> (error) {
+        console.error(<span class="string">'Erro ao buscar municípios:'</span>, error.message);
+        <span class="keyword">throw</span> error;
+    }
+}
+
+<span class="comment">// Exemplo de uso</span>
+<span class="function">getMunicipios</span>(<span class="string">'SP'</span>)
+    .then(municipios => console.log(<span class="string">'Municípios de SP:'</span>, municipios))
+    .catch(err => console.error(err));</pre>
+                        </div>
+
+                        <div class="alert-box security-alert">
+                            <i class="fas fa-shield-alt"></i>
+                            <div>
+                                <strong>Boas Práticas:</strong> Ao consumir APIs públicas, implemente <span class="tooltip">cache<span class="tooltiptext">Armazenamento temporário de dados para reduzir chamadas repetidas</span></span> para evitar sobrecarregar os servidores e sempre trate erros adequadamente.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seção 2 - Uso de Dados -->
+                <div class="content-section">
+                    <h2><i class="fas fa-users"></i> Uso por diferentes setores</h2>
+                    
+                    <p><strong>Desenvolvedores, jornalistas, ONGs e pesquisadores</strong> utilizam esses dados para criar visualizações, aplicativos e estudos que beneficiam toda a sociedade.</p>
+                    
+                    <div class="enhanced-content">
+                        <h3><i class="fas fa-chart-bar"></i> Casos de Uso Reais</h3>
+                        <ul class="feature-list">
+                            <li><strong>Jornalismo de dados:</strong> Reportagens investigativas baseadas em dados</li>
+                            <li><strong>Startups:</strong> Soluções inovadoras para problemas urbanos</li>
+                            <li><strong>Academia:</strong> Pesquisas científicas com dados reais</li>
+                            <li><strong>Controle social:</strong> Monitoramento de políticas públicas</li>
+                        </ul>
+                    </div>
+
+                    <div class="gov-cards">
+                        <div class="gov-card">
+                            <h4><i class="fas fa-laptop-code"></i> Ferramentas Populares</h4>
+                            <ul class="feature-list">
+                                <li>Python (Pandas, Matplotlib)</li>
+                                <li>R (ggplot2, Shiny)</li>
+                                <li>Tableau/Power BI</li>
+                                <li>D3.js (visualizações web)</li>
+                            </ul>
+                        </div>
+                        <div class="gov-card">
+                            <h4><i class="fas fa-award"></i> Exemplos de Sucesso</h4>
+                            <ul class="feature-list">
+                                <li>Operação Serenata de Amor</li>
+                                <li>APIs do Banco Central</li>
+                                <li>Portal da Transparência</li>
+                                <li>Dados Abertos do SUS</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Nova tabela comparativa -->
+                    <h3 style="margin-top: 25px;"><i class="fas fa-table"></i> Tipos de Dados Mais Demandados</h3>
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Tipo de Dado</th>
+                                <th>Órgão Responsável</th>
+                                <th>Exemplo de Uso</th>
+                                <th>Disponibilidade</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Orçamentário</td>
+                                <td>Ministério da Economia</td>
+                                <td>Fiscalização de gastos</td>
+                                <td>Alta</td>
+                            </tr>
+                            <tr>
+                                <td>Educação</td>
+                                <td>INEP/MEC</td>
+                                <td>Análise de desempenho</td>
+                                <td>Média</td>
+                            </tr>
+                            <tr>
+                                <td>Saúde</td>
+                                <td>Ministério da Saúde</td>
+                                <td>Monitoramento de epidemias</td>
+                                <td>Alta</td>
+                            </tr>
+                            <tr>
+                                <td>Transporte</td>
+                                <td>Ministério da Infraestrutura</td>
+                                <td>Otimização de rotas</td>
+                                <td>Baixa</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="alert-box innovation-alert">
+                        <i class="fas fa-lightbulb"></i>
+                        <div>
+                            <strong>Hackathons:</strong> Eventos como o Hackathon da CGU estimulam o uso criativo de dados abertos, gerando soluções inovadoras para desafios públicos.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seção 3 - Inovação -->
+                <div class="content-section">
+                    <h2><i class="fas fa-lightbulb"></i> Estímulo à inovação</h2>
+                    
+                    <p>Iniciativas baseadas em dados abertos <strong>solucionam problemas sociais, otimizam políticas públicas e geram novas oportunidades de negócio</strong>, movimentando a economia digital.</p>
+                    
+                    <div class="gov-cards">
+                        <div class="gov-card">
+                            <h4><i class="fas fa-rocket"></i> Impacto Econômico</h4>
+                            <ul class="feature-list">
+                                <li><span class="stat-badge">+R$2 bi</span> em negócios</li>
+                                <li>Novos modelos de negócio</li>
+                                <li>Eficiência no setor público</li>
+                                <li>Empregos em tecnologia</li>
+                            </ul>
+                        </div>
+                        <div class="gov-card">
+                            <h4><i class="fas fa-project-diagram"></i> Ecossistema</h4>
+                            <ul class="feature-list">
+                                <li>Incubadoras de startups</li>
+                                <li>Programas de aceleração</li>
+                                <li>Parcerias público-privadas</li>
+                                <li>Comunidades de desenvolvedores</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="alert-box data-alert">
+                        <i class="fas fa-chart-line"></i>
+                        <div>
+                            <strong>Dados 2024:</strong> O Brasil ocupa a 8ª posição no Índice Global de Dados Abertos, com mais de 5.000 conjuntos de dados disponíveis no portal dados.gov.br.
+                        </div>
+                    </div>
+
+                    <!-- Novo conteúdo técnico -->
+                    <div class="enhanced-content">
+                        <h3><i class="fas fa-code"></i> Criando Visualizações com D3.js</h3>
+                        <p>Exemplo básico de visualização de dados abertos:</p>
+                        
+                        <div class="code-block">
+                            <pre><span class="comment">// Exemplo de gráfico com dados do IBGE</span>
+<span class="keyword">async</span> <span class="keyword">function</span> <span class="function">renderChart</span>() {
+    <span class="comment">// Buscar dados da API</span>
+    <span class="keyword">const</span> response = await fetch(<span class="string">'https://servicodados.ibge.gov.br/api/v1/paises/BR/indicadores/77840'</span>);
+    <span class="keyword">const</span> data = await response.json();
+    
+    <span class="comment">// Processar dados</span>
+    <span class="keyword">const</span> dataset = data[0].series[0].serie.map(item => ({
+        ano: item.key,
+        valor: parseFloat(item.value)
+    }));
+    
+    <span class="comment">// Configurar dimensões</span>
+    <span class="keyword">const</span> margin = {top: 20, right: 30, bottom: 40, left: 50};
+    <span class="keyword">const</span> width = 600 - margin.left - margin.right;
+    <span class="keyword">const</span> height = 400 - margin.top - margin.bottom;
+    
+    <span class="comment">// Criar SVG</span>
+    <span class="keyword">const</span> svg = d3.select(<span class="string">"#chart"</span>)
+        .append(<span class="string">"svg"</span>)
+        .attr(<span class="string">"width"</span>, width + margin.left + margin.right)
+        .attr(<span class="string">"height"</span>, height + margin.top + margin.bottom)
+        .append(<span class="string">"g"</span>)
+        .attr(<span class="string">"transform"</span>, <span class="string">`translate(</span>${margin.left}<span class="string">,</span>${margin.top}<span class="string">)`</span>);
+    
+    <span class="comment">// Criar escalas e eixos (código continua...)</span>
+}</pre>
+                        </div>
+
+                        <div class="alert-box security-alert">
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <strong>Dica:</strong> Para começar com visualização de dados, explore bibliotecas como <span class="tooltip">Chart.js<span class="tooltiptext">Biblioteca JavaScript simples para criar gráficos responsivos</span></span> (mais simples) ou D3.js (mais poderosa) dependendo da complexidade do seu projeto.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seção 4 - Transparência -->
+                <div class="content-section">
+                    <h2><i class="fas fa-globe"></i> Transparência e cidadania</h2>
+                    
+                    <p><strong>Facilita o controle social</strong>, permitindo que qualquer pessoa fiscalize gastos, indicadores e desempenho do governo, fortalecendo a democracia e a boa governança.</p>
+                    
+                    <div class="enhanced-content">
+                        <h3><i class="fas fa-search-dollar"></i> Ferramentas de Fiscalização</h3>
+                        <ul class="feature-list">
+                            <li>Portal da Transparência</li>
+                            <li>Sistemas de informações orçamentárias</li>
+                            <li>APIs de licitações e contratos</li>
+                            <li>Dados de servidores públicos</li>
+                            <li>Painéis de monitoramento</li>
+                        </ul>
+                    </div>
+
+                    <div class="gov-cards">
+                        <div class="gov-card">
+                            <h4><i class="fas fa-balance-scale"></i> Impacto Democrático</h4>
+                            <ul class="feature-list">
+                                <li><span class="stat-badge">+30%</span> transparência</li>
+                                <li>Redução de corrupção</li>
+                                <li>Participação cidadã</li>
+                                <li>Accountability</li>
+                            </ul>
+                        </div>
+                        <div class="gov-card">
+                            <h4><i class="fas fa-tools"></i> Recursos para Cidadãos</h4>
+                            <ul class="feature-list">
+                                <li>Tutoriais de uso</li>
+                                <li>Formulários de solicitação</li>
+                                <li>Denúncias online</li>
+                                <li>Relatórios personalizados</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Nova tabela comparativa -->
+                    <h3 style="margin-top: 25px;"><i class="fas fa-table"></i> Indicadores de Transparência</h3>
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Indicador</th>
+                                <th>2015</th>
+                                <th>2020</th>
+                                <th>2024</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Municípios com portal</td>
+                                <td>42%</td>
+                                <td>78%</td>
+                                <td>92%</td>
+                            </tr>
+                            <tr>
+                                <td>Dados em formato aberto</td>
+                                <td>15%</td>
+                                <td>65%</td>
+                                <td>88%</td>
+                            </tr>
+                            <tr>
+                                <td>APIs disponíveis</td>
+                                <td>5</td>
+                                <td>127</td>
+                                <td>432</td>
+                            </tr>
+                            <tr>
+                                <td>Posição no ranking global</td>
+                                <td>56º</td>
+                                <td>22º</td>
+                                <td>8º</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="alert-box owasp-alert">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <div>
+                            <strong>Segurança:</strong> Ao trabalhar com dados sensíveis, mesmo que públicos, proteja a privacidade dos indivíduos seguindo as diretrizes da <span class="tooltip">LGPD<span class="tooltiptext">Lei Geral de Proteção de Dados (Lei 13.709/2018)</span></span> e técnicas de anonimização.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <div class="footer-content">
+                <p>© 2025 INFO.DeV | Todos os direitos reservados.</p>
+                <div class="footer-bottom">
+                    <p>Desenvolvido com <i class="fas fa-heart" style="color: #ef4444;"></i> pela equipe INFO.DeV</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Efeito suave de rolagem para os links internos
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Animação de aparecimento das seções
+        const contentSections = document.querySelectorAll('.content-section');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        contentSections.forEach(section => observer.observe(section));
+
+        // Simulador de carregamento de dados
+        document.addEventListener('DOMContentLoaded', () => {
+            const loadingElements = document.querySelectorAll('[data-loading]');
+            loadingElements.forEach(el => {
+                el.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Carregando dados...';
+                setTimeout(() => {
+                    el.innerHTML = '<i class="fas fa-check-circle"></i> Dados carregados com sucesso!';
+                }, 1500);
+            });
+        });
+    </script>
+</body>
+</html>

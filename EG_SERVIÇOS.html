@@ -1,0 +1,646 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serviços Públicos Online (G2C) - INFO.DeV</title>
+    
+    <!-- Fontes modernas -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Lora:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Ícones Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #3b82f6;
+            --secondary-color: #2563eb;
+            --accent-color: #60a5fa;
+            --text-color: #e5e7eb;
+            --light-text: #9ca3af;
+            --bg-color: #111827;
+            --card-bg: #1f2937;
+            --footer-bg: #030712;
+            --government-color: #6366f1; /* Índigo para governo */
+            --service-color: #8b5cf6; /* Roxo para serviços */
+            --section-border: #374151;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: var(--card-bg);
+            padding: 15px 0;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo-text {
+            font-family: 'Lora', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--primary-color), var(--service-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .nav-links a, .nav-links button {
+            font-size: 0.95rem;
+            padding: 8px 16px;
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+            color: var(--primary-color);
+            transition: all 0.3s;
+            border-radius: 6px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .nav-links button:hover, .nav-links a:hover {
+            background-color: rgba(59, 130, 246, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Header */
+        .page-header {
+            text-align: center;
+            margin: 40px 0;
+            padding: 30px 0;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
+            border-radius: 12px;
+            border: 1px solid var(--section-border);
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            color: var(--service-color);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            color: var(--light-text);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Content */
+        .content-container {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+            border: 1px solid var(--section-border);
+        }
+
+        /* Seções Temáticas */
+        .content-section {
+            margin-bottom: 30px;
+            padding: 25px;
+            background-color: rgba(31, 41, 55, 0.7);
+            border-radius: 8px;
+            border-left: 4px solid var(--service-color);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .content-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .content-section:hover {
+            transform: translateY(-5px);
+            background-color: rgba(31, 41, 55, 0.9);
+            box-shadow: 0 8px 20px rgba(139, 92, 246, 0.1);
+        }
+
+        .content-section h2 {
+            color: var(--service-color);
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--section-border);
+        }
+
+        .content-section h2 i {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+
+        .content-section:hover h2 i {
+            transform: scale(1.2);
+        }
+
+        .content-section p {
+            margin-bottom: 10px;
+            color: var(--light-text);
+        }
+
+        /* Enhanced Content */
+        .enhanced-content {
+            border-left: 3px solid var(--service-color);
+            padding: 15px;
+            margin: 20px 0;
+            background: rgba(139, 92, 246, 0.05);
+            border-radius: 5px;
+        }
+
+        .enhanced-content h3 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--service-color);
+            margin-bottom: 10px;
+        }
+
+        /* Listas */
+        .feature-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .feature-list li {
+            margin-bottom: 12px;
+            padding-left: 30px;
+            position: relative;
+            line-height: 1.6;
+        }
+
+        .feature-list li::before {
+            content: "→";
+            color: var(--service-color);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        /* Service Cards */
+        .service-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .service-card {
+            background: rgba(139, 92, 246, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+            border: 1px solid var(--section-border);
+            transition: all 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(139, 92, 246, 0.2);
+        }
+
+        .service-card h4 {
+            color: var(--service-color);
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Stats */
+        .stat-badge {
+            display: inline-block;
+            background-color: rgba(139, 92, 246, 0.2);
+            color: var(--service-color);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin: 5px 0;
+            font-weight: 600;
+        }
+
+        /* Alert Boxes */
+        .alert-box {
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 6px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .alert-box i {
+            font-size: 1.2rem;
+            margin-top: 2px;
+        }
+
+        .service-alert {
+            background-color: rgba(139, 92, 246, 0.1);
+            border-left: 4px solid var(--service-color);
+        }
+
+        /* Platform Showcase */
+        .platform-showcase {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .platform-item {
+            flex: 1;
+            min-width: 200px;
+            background: rgba(139, 92, 246, 0.05);
+            border: 1px solid var(--section-border);
+            border-radius: 8px;
+            padding: 15px;
+            transition: all 0.3s;
+        }
+
+        .platform-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(139, 92, 246, 0.1);
+        }
+
+        .platform-item h5 {
+            color: var(--service-color);
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--footer-bg);
+            color: #d1d5db;
+            padding: 30px 0;
+            margin-top: 60px;
+            border-top: 1px solid var(--section-border);
+        }
+
+        .footer-content {
+            text-align: center;
+        }
+
+        .footer-bottom {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--section-border);
+            font-size: 0.9rem;
+            color: var(--light-text);
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .navbar .container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .content-section h2 {
+                font-size: 1.3rem;
+            }
+            
+            .service-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .platform-showcase {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar">
+            <div class="container">
+                <a href="PAGPRI.html" class="logo">
+                    <!-- Logo SVG inline para INFO.DeV -->
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="40" height="40" rx="8" fill="url(#paint0_linear)"/>
+                        <path d="M12 12H16V28H12V12Z" fill="white"/>
+                        <path d="M18 12H22V28H18V12Z" fill="white"/>
+                        <path d="M24 12H28V28H24V12Z" fill="white"/>
+                        <path d="M12 12H28V16H12V12Z" fill="white"/>
+                        <path d="M12 24H28V28H12V24Z" fill="white"/>
+                        <defs>
+                            <linearGradient id="paint0_linear" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#2563EB"/>
+                                <stop offset="1" stop-color="#00B3A6"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <span class="logo-text">INFO.DeV</span>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="PAGPRI.html"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="Materiais.html"><i class="fas fa-book"></i> Materiais</a></li>
+                    <li><a href="PagFAQ.html"><i class="fas fa-question-circle"></i> FAQ</a></li>
+                    <li><a href="quiz/quiz.html"><i class="fas fa-question"></i> QUIZ</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <header class="page-header">
+            <h1><i class="fas fa-laptop-code"></i> Serviços Públicos Online (G2C)</h1>
+            <p>O modelo G2C (Governo para Cidadão) visa facilitar o acesso da população a diversos serviços públicos por meio de plataformas digitais.</p>
+        </header>
+
+        <main>
+            <div class="content-container">
+                <!-- Seção 1 - Emissão de Documentos -->
+                <div class="content-section">
+                    <h2><i class="fas fa-id-card"></i> Emissão de Documentos</h2>
+                    
+                    <p>Serviços como emissão ou atualização de CPF, RG e CNH podem ser iniciados online, reduzindo filas e burocracia.</p>
+                    
+                    <div class="service-cards">
+                        <div class="service-card">
+                            <h4><i class="fas fa-fingerprint"></i> Documentos Principais</h4>
+                            <ul class="feature-list">
+                                <li><span class="stat-badge">100% digital</span> CPF</li>
+                                <li>RG Digital em 15 estados</li>
+                                <li>CNH Eletrônica</li>
+                                <li>Título de Eleitor</li>
+                                <li>Carteira de Trabalho Digital</li>
+                            </ul>
+                        </div>
+                        <div class="service-card">
+                            <h4><i class="fas fa-clock"></i> Economia de Tempo</h4>
+                            <ul class="feature-list">
+                                <li><span class="stat-badge">-80%</span> tempo de espera</li>
+                                <li>Processos 24/7</li>
+                                <li>Atualização sem sair de casa</li>
+                                <li>Notificações por e-mail/SMS</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="alert-box service-alert">
+                        <i class="fas fa-lightbulb"></i>
+                        <div>
+                            <strong>Novidade:</strong> A CNH Digital agora tem validade jurídica em todo território nacional, dispensando a versão física na maioria dos casos.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seção 2 - Agendamento de Atendimentos -->
+                <div class="content-section">
+                    <h2><i class="fas fa-calendar-check"></i> Agendamento de Atendimentos</h2>
+                    
+                    <p>Plataformas digitais permitem agendar atendimentos em órgãos públicos, como Detran, Receita Federal e INSS.</p>
+                    
+                    <div class="enhanced-content">
+                        <h3><i class="fas fa-chart-line"></i> Benefícios</h3>
+                        <ul class="feature-list">
+                            <li>Redução de filas e aglomerações</li>
+                            <li>Escolha de data e horário conveniente</li>
+                            <li>Lista de documentos necessários</li>
+                            <li>Confirmação e lembretes automáticos</li>
+                        </ul>
+                    </div>
+
+                    <div class="platform-showcase">
+                        <div class="platform-item">
+                            <h5><i class="fas fa-car"></i> Detran Digital</h5>
+                            <p>Agendamento para licenciamento, renovação de CNH e outros serviços de trânsito.</p>
+                        </div>
+                        <div class="platform-item">
+                            <h5><i class="fas fa-file-invoice-dollar"></i> Receita Federal</h5>
+                            <p>Atendimento presencial agendado para questões fiscais e tributárias.</p>
+                        </div>
+                        <div class="platform-item">
+                            <h5><i class="fas fa-retirement"></i> Meu INSS</h5>
+                            <p>Agendamento para perícias, benefícios e outros serviços previdenciários.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seção 3 - Consultas e Benefícios Sociais -->
+                <div class="content-section">
+                    <h2><i class="fas fa-university"></i> Consultas e Benefícios Sociais</h2>
+                    
+                    <p>É possível consultar benefícios como <strong>INSS</strong>, <strong>FGTS</strong>, e realizar atualizações no <strong>CadÚnico</strong> de forma online.</p>
+                    
+                    <div class="service-cards">
+                        <div class="service-card">
+                            <h4><i class="fas fa-hand-holding-usd"></i> Benefícios</h4>
+                            <ul class="feature-list">
+                                <li>Consulta de saldo e extrato</li>
+                                <li>Solicitação de benefícios</li>
+                                <li>Agendamento de perícias</li>
+                                <li>Atualização cadastral</li>
+                                <li>Simulações</li>
+                            </ul>
+                        </div>
+                        <div class="service-card">
+                            <h4><i class="fas fa-mobile-alt"></i> Acesso</h4>
+                            <ul class="feature-list">
+                                <li>Aplicativo Meu INSS</li>
+                                <li>Portal do FGTS</li>
+                                <li>App Caixa Tem</li>
+                                <li>Gov.br</li>
+                                <li>Atendimento por chatbot</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="alert-box service-alert">
+                        <i class="fas fa-chart-pie"></i>
+                        <div>
+                            <strong>Dados 2024:</strong> 85% das consultas ao INSS já são realizadas digitalmente, reduzindo em 60% o tempo médio de espera.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seção 4 - Matrículas e Serviços Educacionais -->
+                <div class="content-section">
+                    <h2><i class="fas fa-school"></i> Matrículas e Serviços Educacionais</h2>
+                    
+                    <p>Matrículas escolares, emissão de boletins e acesso a conteúdos educacionais também podem ser realizados pela internet.</p>
+                    
+                    <div class="enhanced-content">
+                        <h3><i class="fas fa-graduation-cap"></i> Serviços Disponíveis</h3>
+                        <ul class="feature-list">
+                            <li>Matrícula Online em escolas públicas</li>
+                            <li>Consulta de vagas e lotação</li>
+                            <li>Acesso a boletins e histórico</li>
+                            <li>Material didático digital</li>
+                            <li>Bibliotecas virtuais</li>
+                        </ul>
+                    </div>
+
+                    <div class="platform-showcase">
+                        <div class="platform-item">
+                            <h5><i class="fas fa-book-open"></i> MEC Digital</h5>
+                            <p>Plataforma do Ministério da Educação com serviços unificados.</p>
+                        </div>
+                        <div class="platform-item">
+                            <h5><i class="fas fa-laptop-house"></i> Aula em Casa</h5>
+                            <p>Conteúdos educacionais para estudantes de todo país.</p>
+                        </div>
+                        <div class="platform-item">
+                            <h5><i class="fas fa-user-graduate"></i> SISU/Prouni</h5>
+                            <p>Inscrição e acompanhamento de programas de acesso ao ensino superior.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seção 5 - Exemplo: GOV.BR -->
+                <div class="content-section">
+                    <h2><i class="fas fa-globe"></i> Portal GOV.BR</h2>
+                    
+                    <p>O portal <strong>GOV.BR</strong> centraliza centenas de serviços públicos digitais, oferecendo um único login para acesso a diferentes órgãos e funcionalidades.</p>
+                    
+                    <div class="service-cards">
+                        <div class="service-card">
+                            <h4><i class="fas fa-star"></i> Vantagens</h4>
+                            <ul class="feature-list">
+                                <li><span class="stat-badge">1.200+</span> serviços integrados</li>
+                                <li>Conta única para todos os órgãos</li>
+                                <li>Níveis de segurança ajustáveis</li>
+                                <li>Centralização de documentos</li>
+                                <li>Notificações personalizadas</li>
+                            </ul>
+                        </div>
+                        <div class="service-card">
+                            <h4><i class="fas fa-mobile-alt"></i> Recursos</h4>
+                            <ul class="feature-list">
+                                <li>Aplicativo oficial</li>
+                                <li>Assinatura digital</li>
+                                <li>Carteira de vacinação</li>
+                                <li>Histórico escolar</li>
+                                <li>Certidões online</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="alert-box service-alert">
+                        <i class="fas fa-award"></i>
+                        <div>
+                            <strong>Reconhecimento:</strong> O GOV.BR foi eleito o melhor portal de serviços públicos do mundo pelo ONU em 2023.
+                        </div>
+                    </div>
+
+                    <div class="enhanced-content">
+                        <h3><i class="fas fa-lock"></i> Níveis de Segurança</h3>
+                        <ol class="feature-list">
+                            <li><strong>Prata:</strong> Dados básicos + foto selfie</li>
+                            <li><strong>Ouro:</strong> Validação por documento oficial</li>
+                            <li><strong>Ouro+:</strong> Certificado digital ou biometria</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <div class="footer-content">
+                <p>© 2025 INFO.DeV | Todos os direitos reservados.</p>
+                <div class="footer-bottom">
+                    <p>Desenvolvido com <i class="fas fa-heart" style="color: #ef4444;"></i> pela equipe INFO.DeV</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Efeito suave de rolagem para os links internos
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Animação de aparecimento das seções
+        const contentSections = document.querySelectorAll('.content-section');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        contentSections.forEach(section => observer.observe(section));
+    </script>
+</body>
+</html>

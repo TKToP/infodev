@@ -1,0 +1,540 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logística e Entrega no E-Commerce - INFO.DeV</title>
+    
+    <!-- Fontes modernas -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Lora:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Ícones Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #3b82f6;
+            --secondary-color: #2563eb;
+            --accent-color: #60a5fa;
+            --text-color: #e5e7eb;
+            --light-text: #9ca3af;
+            --bg-color: #111827;
+            --card-bg: #1f2937;
+            --footer-bg: #030712;
+            --logistics-color: #f59e0b; /* Amarelo para logística */
+            --section-border: #374151;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: var(--card-bg);
+            padding: 15px 0;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
+        }
+
+        .logo-text {
+            font-family: 'Lora', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--primary-color), var(--logistics-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .nav-links a, .nav-links button {
+            font-size: 0.95rem;
+            padding: 8px 16px;
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+            color: var(--primary-color);
+            transition: all 0.3s;
+            border-radius: 6px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .nav-links button:hover, .nav-links a:hover {
+            background-color: rgba(59, 130, 246, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Header */
+        .page-header {
+            text-align: center;
+            margin: 40px 0;
+            padding: 30px 0;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(245, 158, 11, 0.1));
+            border-radius: 12px;
+            border: 1px solid var(--section-border);
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            color: var(--logistics-color);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            color: var(--light-text);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Content */
+        .content-container {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+            border: 1px solid var(--section-border);
+        }
+
+        /* Logistics Sections */
+        .logistics-section {
+            margin-bottom: 30px;
+            padding: 25px;
+            background-color: rgba(31, 41, 55, 0.7);
+            border-radius: 8px;
+            border-left: 4px solid var(--logistics-color);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .logistics-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .logistics-section:hover {
+            transform: translateY(-5px);
+            background-color: rgba(31, 41, 55, 0.9);
+            box-shadow: 0 8px 20px rgba(245, 158, 11, 0.1);
+        }
+
+        .logistics-section h2 {
+            color: var(--logistics-color);
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--section-border);
+        }
+
+        .logistics-section h2 i {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+
+        .logistics-section:hover h2 i {
+            transform: scale(1.2);
+        }
+
+        .logistics-section p {
+            margin-bottom: 10px;
+            color: var(--light-text);
+        }
+
+        /* Enhanced Content */
+        .enhanced-content {
+            border-left: 3px solid var(--logistics-color);
+            padding: 15px;
+            margin: 20px 0;
+            background: rgba(245, 158, 11, 0.05);
+            border-radius: 5px;
+        }
+
+        .enhanced-content h3 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--logistics-color);
+            margin-bottom: 10px;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        .comparison-table th, .comparison-table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid var(--section-border);
+        }
+
+        .comparison-table th {
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+
+        /* Alert Boxes */
+        .alert-box {
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 6px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .alert-box i {
+            font-size: 1.2rem;
+            margin-top: 2px;
+        }
+
+        .technical-alert {
+            background-color: rgba(59, 130, 246, 0.1);
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .cost-alert {
+            background-color: rgba(22, 163, 74, 0.1);
+            border-left: 4px solid #16a34a;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--footer-bg);
+            color: #d1d5db;
+            padding: 30px 0;
+            margin-top: 60px;
+            border-top: 1px solid var(--section-border);
+        }
+
+        .footer-content {
+            text-align: center;
+        }
+
+        .footer-bottom {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--section-border);
+            font-size: 0.9rem;
+            color: var(--light-text);
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .navbar .container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .logistics-section h2 {
+                font-size: 1.3rem;
+            }
+            
+            .comparison-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar">
+            <div class="container">
+                <a href="PAGPRI.html" class="logo">
+                    <!-- Logo SVG inline para INFO.DeV -->
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="40" height="40" rx="8" fill="url(#paint0_linear)"/>
+                        <path d="M12 12H16V28H12V12Z" fill="white"/>
+                        <path d="M18 12H22V28H18V12Z" fill="white"/>
+                        <path d="M24 12H28V28H24V12Z" fill="white"/>
+                        <path d="M12 12H28V16H12V12Z" fill="white"/>
+                        <path d="M12 24H28V28H12V24Z" fill="white"/>
+                        <defs>
+                            <linearGradient id="paint0_linear" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#2563EB"/>
+                                <stop offset="1" stop-color="#00B3A6"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <span class="logo-text">INFO.DeV</span>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="PAGPRI.html"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="Materiais.html"><i class="fas fa-book"></i> Materiais</a></li>
+                    <li><a href="PagFAQ.html"><i class="fas fa-question-circle"></i> FAQ</a></li>
+                    <li><a href="quiz/quiz.html"><i class="fas fa-question"></i> QUIZ</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <header class="page-header">
+            <h1><i class="fas fa-truck"></i> Logística e Entrega no E-Commerce</h1>
+            <p>A logística de entrega é fundamental para o sucesso de um e-commerce. Ela envolve desde o armazenamento até o envio do produto ao cliente final.</p>
+        </header>
+
+        <main>
+            <div class="content-container">
+                <!-- Seção 1 - Dropshipping -->
+                <div class="logistics-section">
+                    <h2><i class="fas fa-box-open"></i> Dropshipping</h2>
+                    <p>Modelo onde a loja não mantém o estoque dos produtos, mas sim o fornecedor que realiza o envio diretamente para o cliente.</p>
+                    
+                    <div class="enhanced-content">
+                        <h3><i class="fas fa-chart-line"></i> Vantagens e Desvantagens</h3>
+                        <table class="comparison-table">
+                            <tr>
+                                <th>Aspecto</th>
+                                <th>Vantagem</th>
+                                <th>Desvantagem</th>
+                            </tr>
+                            <tr>
+                                <td>Investimento</td>
+                                <td>Baixo custo inicial</td>
+                                <td>Margens menores</td>
+                            </tr>
+                            <tr>
+                                <td>Controle</td>
+                                <td>Sem gestão de estoque</td>
+                                <td>Dependência do fornecedor</td>
+                            </tr>
+                            <tr>
+                                <td>Escalabilidade</td>
+                                <td>Crescimento rápido</td>
+                                <td>Qualidade variável</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="alert-box technical-alert">
+                        <i class="fas fa-lightbulb"></i>
+                        <div>
+                            <strong>Plataformas Recomendadas:</strong> Oberlo, Spocket, Modal Rápido (Brasil)
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seção 2 - Fulfillment -->
+                <div class="logistics-section">
+                    <h2><i class="fas fa-truck-loading"></i> Fulfillment</h2>
+                    <p>Processo no qual a empresa terceiriza toda a gestão de armazenagem, separação, embalagem e envio de produtos.</p>
+                    
+                    <div class="enhanced-content">
+                        <h3><i class="fas fa-calculator"></i> Cálculo de Custos</h3>
+                        <pre>
+Custo Total = Armazenagem + Pick/Pack + Envio + Taxas Adicionais
+Exemplo Amazon FBA:
+- Armazenagem: R$ 0,50/item/mês
+- Pick/Pack: R$ 2,50 por pedido
+- Envio: Variável por peso/dimensão</pre>
+                    </div>
+
+                    <div class="alert-box cost-alert">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <div>
+                            <strong>Economia:</strong> Redução de 30-50% nos custos logísticos comparado a operação própria
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seção 3 - Frete -->
+                <div class="logistics-section">
+                    <h2><i class="fas fa-shipping-fast"></i> Frete Personalizável e Rastreamento</h2>
+                    <p>Oferece opções de frete que atendem as preferências dos consumidores, incluindo o rastreamento do pedido em tempo real.</p>
+                    
+                    <div class="enhanced-content">
+                        <h3><i class="fas fa-tachometer-alt"></i> Métricas de Performance</h3>
+                        <table class="comparison-table">
+                            <tr>
+                                <th>Métrica</th>
+                                <th>Bom</th>
+                                <th>Ótimo</th>
+                            </tr>
+                            <tr>
+                                <td>Tempo de Entrega</td>
+                                <td>5-7 dias</td>
+                                <td>2-3 dias</td>
+                            </tr>
+                            <tr>
+                                <td>Taxa de Abandono</td>
+                                <td>&lt; 15%</td>
+                                <td>&lt; 8%</td>
+                            </tr>
+                            <tr>
+                                <td>Satisfação</td>
+                                <td>4 estrelas</td>
+                                <td>4.5+ estrelas</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Seção 4 - Logística Reversa -->
+                <div class="logistics-section">
+                    <h2><i class="fas fa-undo"></i> Logística Reversa</h2>
+                    <p>Processo de devolução de mercadorias, importante para o e-commerce quando o cliente precisa trocar ou devolver um produto.</p>
+                    
+                    <div class="enhanced-content">
+                        <h3><i class="fas fa-file-alt"></i> Requisitos Legais (Brasil)</h3>
+                        <ul style="margin-left: 20px;">
+                            <li>Direito de arrependimento em 7 dias (CDC Art. 49)</li>
+                            <li>Prazos máximos para reembolso (30 dias)</li>
+                            <li>Isenção de custos para produtos defeituosos</li>
+                        </ul>
+                        
+                        <h3 style="margin-top:15px;"><i class="fas fa-chart-pie"></i> Impacto nos Negócios</h3>
+                        <div class="alert-box technical-alert">
+                            <i class="fas fa-percentage"></i>
+                            <div>
+                                <strong>Dados 2024:</strong> Lojas com política clara de devolução têm 23% mais conversões
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seção 5 - Tendências -->
+                <div class="logistics-section">
+                    <h2><i class="fas fa-rocket"></i> Tendências em Logística</h2>
+                    <p>Inovações que estão transformando a cadeia de suprimentos do e-commerce.</p>
+                    
+                    <div class="enhanced-content">
+                        <h3><i class="fas fa-bolt"></i> Tecnologias Emergentes</h3>
+                        <table class="comparison-table">
+                            <tr>
+                                <th>Tecnologia</th>
+                                <th>Aplicação</th>
+                                <th>Impacto</th>
+                            </tr>
+                            <tr>
+                                <td>IA na Roteirização</td>
+                                <td>Otimização de entregas</td>
+                                <td>-15% custos</td>
+                            </tr>
+                            <tr>
+                                <td>Drones</td>
+                                <td>Entregas rápidas</td>
+                                <td>30min-2h</td>
+                            </tr>
+                            <tr>
+                                <td>Blockchain</td>
+                                <td>Rastreabilidade</td>
+                                <td>+Transparência</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <div class="footer-content">
+                <p>© 2025 INFO.DeV | Todos os direitos reservados.</p>
+                <div class="footer-bottom">
+                    <p>Desenvolvido com <i class="fas fa-heart" style="color: #ef4444;"></i> pela equipe INFO.DeV</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Efeito suave de rolagem para os links internos
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Animação de aparecimento das seções
+        const logisticsSections = document.querySelectorAll('.logistics-section');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        logisticsSections.forEach(section => observer.observe(section));
+    </script>
+</body>
+</html>

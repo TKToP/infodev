@@ -1,0 +1,555 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Segurança de Aplicações Web - INFO.DeV</title>
+    
+    <!-- Fontes modernas -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Lora:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Ícones Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #3b82f6;
+            --secondary-color: #2563eb;
+            --accent-color: #60a5fa;
+            --text-color: #e5e7eb;
+            --light-text: #9ca3af;
+            --bg-color: #111827;
+            --card-bg: #1f2937;
+            --footer-bg: #030712;
+            --security-color: #f59e0b; /* Amarelo-ouro para segurança web */
+            --section-border: #374151;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: var(--card-bg);
+            padding: 15px 0;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
+        }
+
+        .logo-text {
+            font-family: 'Lora', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--primary-color), var(--security-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .nav-links a, .nav-links button {
+            font-size: 0.95rem;
+            padding: 8px 16px;
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+            color: var(--primary-color);
+            transition: all 0.3s;
+            border-radius: 6px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .nav-links button:hover, .nav-links a:hover {
+            background-color: rgba(59, 130, 246, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Header */
+        .page-header {
+            text-align: center;
+            margin: 40px 0;
+            padding: 30px 0;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(245, 158, 11, 0.1));
+            border-radius: 12px;
+            border: 1px solid var(--section-border);
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            color: var(--security-color);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        /* Content */
+        .content-container {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+            border: 1px solid var(--section-border);
+        }
+
+        /* Security Sections */
+        .security-section {
+            margin-bottom: 30px;
+            padding: 25px;
+            background-color: rgba(31, 41, 55, 0.7);
+            border-radius: 8px;
+            border-left: 4px solid var(--security-color);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .security-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .security-section:hover {
+            transform: translateY(-5px);
+            background-color: rgba(31, 41, 55, 0.9);
+            box-shadow: 0 8px 20px rgba(245, 158, 11, 0.1);
+        }
+
+        .security-section h2 {
+            color: var(--security-color);
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--section-border);
+        }
+
+        .security-section h2 i {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+
+        .security-section:hover h2 i {
+            transform: scale(1.2);
+        }
+
+        .security-section p {
+            margin-bottom: 10px;
+            color: var(--light-text);
+        }
+
+        /* Enhanced Content */
+        .enhanced-content {
+            border-left: 3px solid var(--security-color);
+            padding: 15px;
+            margin: 20px 0;
+            background: rgba(245, 158, 11, 0.05);
+            border-radius: 5px;
+        }
+
+        .enhanced-content h3 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--security-color);
+            margin-bottom: 10px;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        .comparison-table th, .comparison-table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid var(--section-border);
+        }
+
+        .comparison-table th {
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+
+        /* Alert Boxes */
+        .alert-box {
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 6px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .alert-box i {
+            font-size: 1.2rem;
+            margin-top: 2px;
+        }
+
+        .technical-alert {
+            background-color: rgba(59, 130, 246, 0.1);
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .risk-alert {
+            background-color: rgba(239, 68, 68, 0.1);
+            border-left: 4px solid #ef4444;
+        }
+
+        code {
+            font-family: 'Courier New', monospace;
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-size: 0.9em;
+        }
+
+        pre {
+            background-color: #1e293b;
+            padding: 12px;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 10px 0;
+            line-height: 1.5;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--footer-bg);
+            color: #d1d5db;
+            padding: 30px 0;
+            margin-top: 60px;
+            border-top: 1px solid var(--section-border);
+        }
+
+        .footer-content {
+            text-align: center;
+        }
+
+        .footer-bottom {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--section-border);
+            font-size: 0.9rem;
+            color: var(--light-text);
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .navbar .container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .security-section h2 {
+                font-size: 1.3rem;
+            }
+            
+            .comparison-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar">
+            <div class="container">
+                <a href="PAGPRI.html" class="logo">
+                    <!-- Logo SVG inline para INFO.DeV -->
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="40" height="40" rx="8" fill="url(#paint0_linear)"/>
+                        <path d="M12 12H16V28H12V12Z" fill="white"/>
+                        <path d="M18 12H22V28H18V12Z" fill="white"/>
+                        <path d="M24 12H28V28H24V12Z" fill="white"/>
+                        <path d="M12 12H28V16H12V12Z" fill="white"/>
+                        <path d="M12 24H28V28H12V24Z" fill="white"/>
+                        <defs>
+                            <linearGradient id="paint0_linear" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#2563EB"/>
+                                <stop offset="1" stop-color="#00B3A6"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <span class="logo-text">INFO.DeV</span>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="PAGPRI.html"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="Materiais.html"><i class="fas fa-book"></i> Materiais</a></li>
+                    <li><a href="PagFAQ.html"><i class="fas fa-question-circle"></i> FAQ</a></li>
+                    <li><a href="quiz/quiz.html"><i class="fas fa-question"></i> QUIZ</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <header class="page-header">
+            <h1><i class="fas fa-code-shield"></i> Segurança de Aplicações Web</h1>
+        </header>
+
+        <main>
+            <div class="content-container">
+                <!-- Seção 1 - Ataques Comuns -->
+                <div class="security-section">
+                    <h2><i class="fas fa-bug-slash"></i> Prevenção de Ataques Comuns</h2>
+                    <p>Defesas contra SQL Injection, Cross-Site Scripting (XSS), CSRF e outras ameaças OWASP Top 10.</p>
+                    
+                    <div class="enhanced-content">
+                        <h3><i class="fas fa-shield-virus"></i> Técnicas de Mitigação</h3>
+                        <table class="comparison-table">
+                            <tr>
+                                <th>Ataque</th>
+                                <th>Prevenção</th>
+                                <th>Ferramentas</th>
+                            </tr>
+                            <tr>
+                                <td>SQL Injection</td>
+                                <td>Prepared Statements, ORMs</td>
+                                <td>SQLMap (teste)</td>
+                            </tr>
+                            <tr>
+                                <td>XSS</td>
+                                <td>Sanitização, CSP Headers</td>
+                                <td>XSStrike, DOMPurify</td>
+                            </tr>
+                            <tr>
+                                <td>CSRF</td>
+                                <td>Tokens anti-CSRF</td>
+                                <td>CSRFToken (Django)</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="alert-box technical-alert">
+                        <i class="fas fa-code"></i>
+                        <div>
+                            <strong>Exemplo Prático (Node.js):</strong> Implementação de sanitização contra XSS:
+                            <pre style="margin-top: 8px;">
+const sanitizeHtml = require('sanitize-html');
+
+const userInput = '&lt;script&gt;malicious()&lt;/script&gt;';
+const clean = sanitizeHtml(userInput, {
+  allowedTags: ['b', 'i', 'em', 'strong'],
+  allowedAttributes: {}
+});
+
+console.log(clean); // Saída segura: "malicious()"</pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seção 2 - DevSecOps -->
+                <div class="security-section">
+                    <h2><i class="fas fa-shield-halved"></i> DevSecOps</h2>
+                    <p>Integração contínua de segurança no ciclo de desenvolvimento (Shift-Left Security).</p>
+                    
+                    <div class="enhanced-content">
+                        <h3><i class="fas fa-cogs"></i> Pipeline Seguro</h3>
+                        <ol>
+                            <li><strong>Pré-commit:</strong> Hooks Git com Husky + Semgrep</li>
+                            <li><strong>CI/CD:</strong> SAST (SonarQube), SCA (Dependabot)</li>
+                            <li><strong>Deploy:</strong> WAF (ModSecurity), DAST (OWASP ZAP)</li>
+                        </ol>
+                        
+                        <h3 style="margin-top:15px;"><i class="fas fa-chart-line"></i> Métricas Chave (2024)</h3>
+                        <div class="alert-box technical-alert">
+                            <i class="fas fa-ruler"></i>
+                            <div>
+                                <strong>Time-to-Fix:</strong> Redução de 65% com DevSecOps<br>
+                                <strong>Custo:</strong> 100x mais barato corrigir na fase de design<br>
+                                <strong>Eficácia:</strong> 80% menos vulnerabilidades em produção
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seção 3 - Testes -->
+                <div class="security-section">
+                    <h2><i class="fas fa-vial-virus"></i> Testes de Segurança</h2>
+                    <p>Identificação proativa de vulnerabilidades com abordagens automatizadas e manuais.</p>
+                    
+                    <div class="enhanced-content">
+                        <h3><i class="fas fa-toolbox"></i> Ferramentas Recomendadas</h3>
+                        <table class="comparison-table">
+                            <tr>
+                                <th>Tipo</th>
+                                <th>Ferramenta</th>
+                                <th>Uso</th>
+                            </tr>
+                            <tr>
+                                <td>SAST</td>
+                                <td>Semgrep, Checkmarx</td>
+                                <td>Análise estática</td>
+                            </tr>
+                            <tr>
+                                <td>DAST</td>
+                                <td>OWASP ZAP, Burp Suite</td>
+                                <td>Teste dinâmico</td>
+                            </tr>
+                            <tr>
+                                <td>SCA</td>
+                                <td>Dependabot, Snyk</td>
+                                <td>Dependências</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="alert-box risk-alert">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <div>
+                            <strong>Alerta OWASP 2024:</strong> Ataques de <em>Supply Chain</em> aumentaram 300%. Priorize:
+                            <ul style="margin-top: 8px; margin-left: 20px;">
+                                <li>Verificação de assinatura de pacotes</li>
+                                <li>Lockfile de dependências (npm, pip)</li>
+                                <li>Scanners como <code>npm audit</code></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seção 4 - Mobile -->
+                <div class="security-section">
+                    <h2><i class="fas fa-mobile-screen-button"></i> Segurança em Aplicativos Móveis</h2>
+                    <p>Proteção contra engenharia reversa, vazamento de dados e hardening de apps.</p>
+                    
+                    <div class="enhanced-content">
+                        <h3><i class="fas fa-lock"></i> Hardening Essentials</h3>
+                        <table class="comparison-table">
+                            <tr>
+                                <th>Plataforma</th>
+                                <th>Técnica</th>
+                                <th>Ferramenta</th>
+                            </tr>
+                            <tr>
+                                <td>Android</td>
+                                <td>ProGuard, Cert Pinning</td>
+                                <td>Jadx, Frida</td>
+                            </tr>
+                            <tr>
+                                <td>iOS</td>
+                                <td>Code Obfuscation</td>
+                                <td>iMAS, Objection</td>
+                            </tr>
+                        </table>
+                        
+                        <h3 style="margin-top:15px;"><i class="fas fa-shield-alt"></i> Padrões Obrigatórios</h3>
+                        <div class="alert-box technical-alert">
+                            <i class="fas fa-file-alt"></i>
+                            <div>
+                                <strong>OWASP MASVS:</strong> Nível L2 para apps financeiros<br>
+                                <strong>PCI DSS:</strong> Requisito 6.5 para pagamentos<br>
+                                <strong>GDPR:</strong> Artigo 32 para proteção de dados
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <div class="footer-content">
+                <p>© 2025 INFO.DeV | Todos os direitos reservados.</p>
+                <div class="footer-bottom">
+                    <p>Desenvolvido com <i class="fas fa-heart" style="color: #ef4444;"></i> pela equipe INFO.DeV</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Efeito suave de rolagem para os links internos
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Animação de aparecimento das seções
+        const securitySections = document.querySelectorAll('.security-section');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        securitySections.forEach(section => observer.observe(section));
+    </script>
+</body>
+</html>

@@ -1,0 +1,500 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prevenção contra Fraudes no E-Business - INFO.DeV</title>
+    
+    <!-- Fontes modernas -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Lora:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Ícones Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #3b82f6;
+            --secondary-color: #2563eb;
+            --accent-color: #60a5fa;
+            --text-color: #e5e7eb;
+            --light-text: #9ca3af;
+            --bg-color: #111827;
+            --card-bg: #1f2937;
+            --footer-bg: #030712;
+            --fraud-color: #ef4444; /* Vermelho para prevenção a fraudes */
+            --section-border: #374151;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: var(--card-bg);
+            padding: 15px 0;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
+        }
+
+        .logo-text {
+            font-family: 'Lora', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--primary-color), var(--fraud-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .nav-links a, .nav-links button {
+            font-size: 0.95rem;
+            padding: 8px 16px;
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+            color: var(--primary-color);
+            transition: all 0.3s;
+            border-radius: 6px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .nav-links button:hover, .nav-links a:hover {
+            background-color: rgba(59, 130, 246, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Header */
+        .page-header {
+            text-align: center;
+            margin: 40px 0;
+            padding: 30px 0;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(239, 68, 68, 0.1));
+            border-radius: 12px;
+            border: 1px solid var(--section-border);
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            color: var(--fraud-color);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        /* Content */
+        .content-container {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+            border: 1px solid var(--section-border);
+        }
+
+        /* Fraud Sections */
+        .fraud-section {
+            margin-bottom: 30px;
+            padding: 25px;
+            background-color: rgba(31, 41, 55, 0.7);
+            border-radius: 8px;
+            border-left: 4px solid var(--fraud-color);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .fraud-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .fraud-section:hover {
+            transform: translateY(-5px);
+            background-color: rgba(31, 41, 55, 0.9);
+            box-shadow: 0 8px 20px rgba(239, 68, 68, 0.1);
+        }
+
+        .fraud-section h2 {
+            color: var(--fraud-color);
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--section-border);
+        }
+
+        .fraud-section h2 i {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+
+        .fraud-section:hover h2 i {
+            transform: scale(1.2);
+        }
+
+        .fraud-section p {
+            margin-bottom: 10px;
+            color: var(--light-text);
+        }
+
+        /* Enhanced Content */
+        .enhanced-content {
+            border-left: 3px solid var(--fraud-color);
+            padding: 15px;
+            margin: 20px 0;
+            background: rgba(239, 68, 68, 0.05);
+            border-radius: 5px;
+        }
+
+        .enhanced-content h3 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--fraud-color);
+            margin-bottom: 10px;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        .comparison-table th, .comparison-table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid var(--section-border);
+        }
+
+        .comparison-table th {
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--footer-bg);
+            color: #d1d5db;
+            padding: 30px 0;
+            margin-top: 60px;
+            border-top: 1px solid var(--section-border);
+        }
+
+        .footer-content {
+            text-align: center;
+        }
+
+        .footer-bottom {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--section-border);
+            font-size: 0.9rem;
+            color: var(--light-text);
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .navbar .container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .fraud-section h2 {
+                font-size: 1.3rem;
+            }
+            
+            .comparison-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar">
+            <div class="container">
+               <a href="PAGPRI.html" class="logo">
+                    <!-- Logo SVG inline para INFO.DeV -->
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="40" height="40" rx="8" fill="url(#paint0_linear)"/>
+                        <path d="M12 12H16V28H12V12Z" fill="white"/>
+                        <path d="M18 12H22V28H18V12Z" fill="white"/>
+                        <path d="M24 12H28V28H24V12Z" fill="white"/>
+                        <path d="M12 12H28V16H12V12Z" fill="white"/>
+                        <path d="M12 24H28V28H12V24Z" fill="white"/>
+                        <defs>
+                            <linearGradient id="paint0_linear" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#2563EB"/>
+                                <stop offset="1" stop-color="#00B3A6"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <span class="logo-text">INFO.DeV</span>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="PAGPRI.html"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="Materiais.html"><i class="fas fa-book"></i> Materiais</a></li>
+                    <li><a href="PagFAQ.html"><i class="fas fa-question-circle"></i> FAQ</a></li>
+                    <li><a href="quiz/quiz.html"><i class="fas fa-question"></i> QUIZ</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <header class="page-header">
+            <h1><i class="fas fa-shield-alt"></i> Prevenção contra Fraudes no E-Business</h1>
+        </header>
+
+        <main>
+            <div class="content-container">
+                <!-- Seção 1 - Métodos Antifraude -->
+                <div class="fraud-section">
+                    <h2><i class="fas fa-ban"></i> Métodos para Evitar Fraudes Online</h2>
+                    <p>Uso de autenticação em dois fatores, verificação de identidade e conexões seguras para proteger transações e dados sensíveis.</p>
+                    
+                    <div class="enhanced-content">
+                        <h3><i class="fas fa-chart-pie"></i> Estatísticas de Fraude (2024)</h3>
+                        <ul>
+                            <li>Prejuízos globais devem chegar a $48 bilhões em fraudes online</li>
+                            <li>62% das fraudes ocorrem em dispositivos móveis</li>
+                            <li>Métodos antifraude reduzem perdas em até 78%</li>
+                        </ul>
+                        
+                        <h3 style="margin-top:15px;"><i class="fas fa-tools"></i> Ferramentas Essenciais</h3>
+                        <table class="comparison-table">
+                            <tr>
+                                <th>Tecnologia</th>
+                                <th>Eficácia</th>
+                                <th>Custo</th>
+                            </tr>
+                            <tr>
+                                <td>Autenticação Multifator</td>
+                                <td>Alta (94%)</td>
+                                <td>Baixo-Médio</td>
+                            </tr>
+                            <tr>
+                                <td>Biometria Comportamental</td>
+                                <td>Muito Alta (98%)</td>
+                                <td>Alto</td>
+                            </tr>
+                            <tr>
+                                <td>Verificação de Documentos</td>
+                                <td>Média (82%)</td>
+                                <td>Médio</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Seção 2 - Monitoramento -->
+                <div class="fraud-section">
+                    <h2><i class="fas fa-chart-line"></i> Monitoramento de Padrões de Compra</h2>
+                    <p>Análise de comportamento do consumidor para identificar desvios incomuns que possam indicar fraude.</p>
+                    
+                    <div class="enhanced-content">
+                        <h3><i class="fas fa-lightbulb"></i> Sinais de Alerta</h3>
+                        <ul>
+                            <li>Compras grandes fora do padrão do cliente</li>
+                            <li>Múltiplas tentativas com cartões diferentes</li>
+                            <li>Endereços de entrega incomuns</li>
+                            <li>Dispositivos desconhecidos ou proxies</li>
+                        </ul>
+                        
+                        <h3 style="margin-top:15px;"><i class="fas fa-project-diagram"></i> Fluxo de Detecção</h3>
+                        <ol>
+                            <li>Coleta de dados comportamentais</li>
+                            <li>Análise em tempo real por algoritmos</li>
+                            <li>Pontuação de risco para cada transação</li>
+                            <li>Ação automatizada conforme política</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <!-- Seção 3 - Resposta a Fraudes -->
+                <div class="fraud-section">
+                    <h2><i class="fas fa-exclamation-triangle"></i> Estratégias de Resposta a Transações Suspeitas</h2>
+                    <p>Bloqueio automático de transações suspeitas, alertas imediatos e investigação interna para mitigar danos rapidamente.</p>
+                    
+                    <div class="enhanced-content">
+                        <h3><i class="fas fa-list-check"></i> Plano de Ação</h3>
+                        <table class="comparison-table">
+                            <tr>
+                                <th>Nível de Risco</th>
+                                <th>Ação Recomendada</th>
+                                <th>Tempo de Resposta</th>
+                            </tr>
+                            <tr>
+                                <td>Baixo</td>
+                                <td>Verificação adicional</td>
+                                <td>24 horas</td>
+                            </tr>
+                            <tr>
+                                <td>Médio</td>
+                                <td>Bloqueio temporário</td>
+                                <td>1 hora</td>
+                            </tr>
+                            <tr>
+                                <td>Alto</td>
+                                <td>Bloqueio imediato + notificação</td>
+                                <td>Imediato</td>
+                            </tr>
+                        </table>
+                        
+                        <h3 style="margin-top:15px;"><i class="fas fa-phone-volume"></i> Protocolo de Comunicação</h3>
+                        <ul>
+                            <li>Notificar equipe de segurança em até 15 minutos</li>
+                            <li>Comunicar cliente em caso de falso positivo</li>
+                            <li>Relatar às autoridades se confirmada fraude</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Seção 4 - Machine Learning -->
+                <div class="fraud-section">
+                    <h2><i class="fas fa-robot"></i> Uso de Machine Learning para Sistemas Antifraude</h2>
+                    <p>Modelos de IA que aprendem com os dados e ajudam a detectar fraudes com maior precisão e em tempo real.</p>
+                    
+                    <div class="enhanced-content">
+                        <h3><i class="fas fa-brain"></i> Técnicas Avançadas</h3>
+                        <table class="comparison-table">
+                            <tr>
+                                <th>Técnica</th>
+                                <th>Aplicação</th>
+                                <th>Precisão</th>
+                            </tr>
+                            <tr>
+                                <td>Redes Neurais</td>
+                                <td>Padrões complexos</td>
+                                <td>92-96%</td>
+                            </tr>
+                            <tr>
+                                <td>Análise de Grafos</td>
+                                <td>Rede de conexões</td>
+                                <td>88-94%</td>
+                            </tr>
+                            <tr>
+                                <td>Processamento de Linguagem</td>
+                                <td>Fraude em chatbots</td>
+                                <td>85-90%</td>
+                            </tr>
+                        </table>
+                        
+                        <h3 style="margin-top:15px;"><i class="fas fa-database"></i> Dados para Treinamento</h3>
+                        <ul>
+                            <li>Histórico de transações fraudulentas</li>
+                            <li>Padrões de navegação suspeitos</li>
+                            <li>Dados de geolocalização e dispositivos</li>
+                            <li>Comportamento típico por segmento</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <div class="footer-content">
+                <p>© 2025 INFO.DeV | Todos os direitos reservados.</p>
+                <div class="footer-bottom">
+                    <p>Desenvolvido com <i class="fas fa-heart" style="color: #ef4444;"></i> pela equipe INFO.DeV</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Efeito suave de rolagem para os links internos
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Animação de aparecimento das seções
+        const fraudSections = document.querySelectorAll('.fraud-section');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        fraudSections.forEach(section => observer.observe(section));
+    </script>
+</body>
+</html>

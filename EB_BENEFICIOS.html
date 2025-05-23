@@ -1,0 +1,413 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benefícios do E-Business - INFO.DeV</title>
+    
+    <!-- Fontes modernas -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Lora:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Ícones Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+     <style>
+        :root {
+            --primary-color: #60a5fa;
+            --secondary-color: #1e3a8a;
+            --accent-color: #3b82f6;
+            --text-color: #f3f4f6;
+            --light-text: #9ca3af;
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --footer-bg: #020617;
+            --ebusiness-color: #c084fc;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .navbar {
+            background-color: var(--card-bg);
+            padding: 15px 0;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.5);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
+        }
+
+        .logo-text {
+            font-family: 'Lora', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--primary-color), #00b3a6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .nav-links a, .nav-links button {
+            font-size: 0.95rem;
+            padding: 8px 16px;
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+            color: var(--primary-color);
+            transition: all 0.3s;
+            border-radius: 6px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .nav-links button:hover, .nav-links a:hover {
+            background-color: var(--primary-color);
+            color: #0f172a;
+            transform: translateY(-2px);
+        }
+
+        .page-header {
+            text-align: center;
+            margin: 40px 0;
+            padding: 30px 0;
+            background: linear-gradient(135deg, rgba(147, 51, 234, 0.1), rgba(168, 85, 247, 0.1));
+            border-radius: 12px;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            color: var(--ebusiness-color);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            color: var(--light-text);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .content-container,
+        .form-container {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            margin-bottom: 40px;
+        }
+
+        .benefit-section {
+            margin-bottom: 30px;
+            padding: 25px;
+            background-color: #1f2937;
+            border-radius: 8px;
+            border-left: 4px solid var(--ebusiness-color);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .benefit-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .benefit-section h2,
+        .form-container h2 {
+            color: var(--ebusiness-color);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .benefit-section i,
+        .form-container h2 i {
+            font-size: 1.5rem;
+            color: var(--ebusiness-color);
+        }
+
+        .benefit-section ul {
+            padding-left: 20px;
+            list-style-type: none;
+        }
+
+        .benefit-section li {
+            margin-bottom: 10px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .benefit-section li::before {
+            content: "\2192";
+            position: absolute;
+            left: 0;
+            color: var(--ebusiness-color);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            background-color: #0f172a;
+            color: var(--text-color);
+            border: 1px solid #334155;
+            border-radius: 6px;
+            font-family: 'Inter', sans-serif;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--ebusiness-color);
+            outline: none;
+        }
+
+        .submit-btn {
+            background-color: var(--ebusiness-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background-color: #a855f7;
+            transform: translateY(-2px);
+        }
+
+        footer {
+            background-color: var(--footer-bg);
+            color: #9ca3af;
+            padding: 30px 0;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            text-align: center;
+        }
+
+        .footer-bottom {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #374151;
+            font-size: 0.9rem;
+            color: #6b7280;
+        }
+
+        @media (max-width: 768px) {
+            .navbar .container {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar">
+            <div class="container">
+               <a href="PAGPRI.html" class="logo">
+                    <!-- Logo SVG inline para INFO.DeV -->
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="40" height="40" rx="8" fill="url(#paint0_linear)"/>
+                        <path d="M12 12H16V28H12V12Z" fill="white"/>
+                        <path d="M18 12H22V28H18V12Z" fill="white"/>
+                        <path d="M24 12H28V28H24V12Z" fill="white"/>
+                        <path d="M12 12H28V16H12V12Z" fill="white"/>
+                        <path d="M12 24H28V28H12V24Z" fill="white"/>
+                        <defs>
+                            <linearGradient id="paint0_linear" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#2563EB"/>
+                                <stop offset="1" stop-color="#00B3A6"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <span class="logo-text">INFO.DeV</span>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="PAGPRI.html"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="Materiais.html"><i class="fas fa-book"></i> Materiais</a></li>
+                    <li><a href="PagFAQ.html"><i class="fas fa-question-circle"></i> FAQ</a></li>
+                    <li><a href="quiz/quiz.html"><i class="fas fa-question"></i> QUIZ</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <header class="page-header">
+            <h1><i class="fas fa-briefcase"></i> Benefícios do E-Business</h1>
+            <p>Como as tecnologias digitais estão transformando os modelos de negócios</p>
+        </header>
+
+        <main>
+            <div class="content-container">
+                <!-- Seções de benefícios -->
+                <div class="benefit-section">
+                    <h2><i class="fas fa-dollar-sign"></i> Redução de custos</h2>
+                    <p>O uso de tecnologias digitais permite cortar gastos com papel, deslocamentos, espaço físico e mão de obra para tarefas repetitivas.</p>
+                    <ul>
+                        <li>Automatização de processos rotineiros (como emissão de notas fiscais, controle de estoque, folha de pagamento).</li>
+                        <li>Redução de intermediários com plataformas diretas (marketplaces, e-commerces).</li>
+                        <li>Economia com marketing digital (redes sociais, anúncios pagos).</li>
+                    </ul>
+                </div>
+
+                <div class="benefit-section">
+                    <h2><i class="fas fa-network-wired"></i> Processos integrados</h2>
+                    <p>Sistemas como ERP e CRM conectam diferentes áreas da empresa para atuar de forma sincronizada.</p>
+                    <ul>
+                        <li>Dados de vendas atualizam automaticamente estoque e financeiro.</li>
+                        <li>Equipes compartilham informações em tempo real.</li>
+                        <li>Maior agilidade, rastreabilidade e segurança.</li>
+                    </ul>
+                </div>
+
+                <div class="benefit-section">
+                    <h2><i class="fas fa-chart-line"></i> Maior alcance de mercado</h2>
+                    <p>Com a internet, empresas podem vender 24h por dia para qualquer lugar do mundo.</p>
+                    <ul>
+                        <li>Uso de e-commerce, redes sociais, apps.</li>
+                        <li>Supera barreiras geográficas e horários.</li>
+                        <li>Engaja clientes que não iriam à loja física.</li>
+                    </ul>
+                </div>
+
+                <div class="benefit-section">
+                    <h2><i class="fas fa-database"></i> Tomada de decisão baseada em dados</h2>
+                    <p>Decisões mais inteligentes com análise de dados, KPIs e ferramentas de BI.</p>
+                    <ul>
+                        <li>Relatórios e dashboards em tempo real.</li>
+                        <li>Acompanhamento de indicadores de desempenho.</li>
+                        <li>Análises preditivas com IA.</li>
+                    </ul>
+                </div>
+
+                <div class="benefit-section">
+                    <h2><i class="fas fa-lightbulb"></i> Inovação e competitividade</h2>
+                    <p>O E-Business permite testar, inovar e adaptar produtos com agilidade.</p>
+                    <ul>
+                        <li>Uso de tecnologias como IA, blockchain e RA.</li>
+                        <li>Adaptação rápida às mudanças do mercado.</li>
+                        <li>Lançamento ágil de produtos e serviços.</li>
+                    </ul>
+                </div>
+
+              
+
+        <footer>
+            <div class="footer-content">
+                <p>© 2025 INFO.DeV | Todos os direitos reservados.</p>
+                <div class="footer-bottom">
+                    <p>Desenvolvido com <i class="fas fa-heart" style="color: #e74c3c;"></i> pela equipe INFO.DeV</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Animação de scroll para as seções
+        const sections = document.querySelectorAll('.benefit-section');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        sections.forEach(section => observer.observe(section));
+
+        // Efeito suave de rolagem para os links internos
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

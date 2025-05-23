@@ -1,0 +1,549 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meios de Pagamento no E-Commerce - INFO.DeV</title>
+    
+    <!-- Fontes modernas -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Lora:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Ícones Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #3b82f6;
+            --secondary-color: #2563eb;
+            --accent-color: #60a5fa;
+            --text-color: #e5e7eb;
+            --light-text: #9ca3af;
+            --bg-color: #111827;
+            --card-bg: #1f2937;
+            --footer-bg: #030712;
+            --payment-color: #10b981; /* Verde para pagamentos */
+            --section-border: #374151;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: var(--card-bg);
+            padding: 15px 0;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
+        }
+
+        .logo-text {
+            font-family: 'Lora', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--primary-color), var(--payment-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .nav-links a, .nav-links button {
+            font-size: 0.95rem;
+            padding: 8px 16px;
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+            color: var(--primary-color);
+            transition: all 0.3s;
+            border-radius: 6px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .nav-links button:hover, .nav-links a:hover {
+            background-color: rgba(59, 130, 246, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Header */
+        .page-header {
+            text-align: center;
+            margin: 40px 0;
+            padding: 30px 0;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(16, 185, 129, 0.1));
+            border-radius: 12px;
+            border: 1px solid var(--section-border);
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            color: var(--payment-color);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            color: var(--light-text);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Content */
+        .content-container {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+            border: 1px solid var(--section-border);
+        }
+
+        /* Payment Sections */
+        .payment-section {
+            margin-bottom: 30px;
+            padding: 25px;
+            background-color: rgba(31, 41, 55, 0.7);
+            border-radius: 8px;
+            border-left: 4px solid var(--payment-color);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .payment-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .payment-section:hover {
+            transform: translateY(-5px);
+            background-color: rgba(31, 41, 55, 0.9);
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.1);
+        }
+
+        .payment-section h2 {
+            color: var(--payment-color);
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--section-border);
+        }
+
+        .payment-section h2 i {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+
+        .payment-section:hover h2 i {
+            transform: scale(1.2);
+        }
+
+        .payment-section p {
+            margin-bottom: 10px;
+            color: var(--light-text);
+        }
+
+        /* Enhanced Content */
+        .enhanced-content {
+            border-left: 3px solid var(--payment-color);
+            padding: 15px;
+            margin: 20px 0;
+            background: rgba(16, 185, 129, 0.05);
+            border-radius: 5px;
+        }
+
+        .enhanced-content h3 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--payment-color);
+            margin-bottom: 10px;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        .comparison-table th, .comparison-table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid var(--section-border);
+        }
+
+        .comparison-table th {
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+
+        /* Alert Boxes */
+        .alert-box {
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 6px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .alert-box i {
+            font-size: 1.2rem;
+            margin-top: 2px;
+        }
+
+        .technical-alert {
+            background-color: rgba(59, 130, 246, 0.1);
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .security-alert {
+            background-color: rgba(22, 163, 74, 0.1);
+            border-left: 4px solid #16a34a;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--footer-bg);
+            color: #d1d5db;
+            padding: 30px 0;
+            margin-top: 60px;
+            border-top: 1px solid var(--section-border);
+        }
+
+        .footer-content {
+            text-align: center;
+        }
+
+        .footer-bottom {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--section-border);
+            font-size: 0.9rem;
+            color: var(--light-text);
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .navbar .container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .payment-section h2 {
+                font-size: 1.3rem;
+            }
+            
+            .comparison-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar">
+            <div class="container">
+               <a href="PAGPRI.html" class="logo">
+                    <!-- Logo SVG inline para INFO.DeV -->
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="40" height="40" rx="8" fill="url(#paint0_linear)"/>
+                        <path d="M12 12H16V28H12V12Z" fill="white"/>
+                        <path d="M18 12H22V28H18V12Z" fill="white"/>
+                        <path d="M24 12H28V28H24V12Z" fill="white"/>
+                        <path d="M12 12H28V16H12V12Z" fill="white"/>
+                        <path d="M12 24H28V28H12V24Z" fill="white"/>
+                        <defs>
+                            <linearGradient id="paint0_linear" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#2563EB"/>
+                                <stop offset="1" stop-color="#00B3A6"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <span class="logo-text">INFO.DeV</span>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="PAGPRI.html"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="Materiais.html"><i class="fas fa-book"></i> Materiais</a></li>
+                    <li><a href="PagFAQ.html"><i class="fas fa-question-circle"></i> FAQ</a></li>
+                    <li><a href="quiz/quiz.html"><i class="fas fa-question"></i> QUIZ</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <header class="page-header">
+            <h1><i class="fas fa-credit-card"></i> Meios de Pagamento no E-Commerce</h1>
+            <p>O pagamento no e-commerce é essencial para garantir uma experiência segura e eficiente para o consumidor. Conheça os principais métodos e suas características.</p>
+        </header>
+
+        <main>
+            <div class="content-container">
+                <!-- Seção 1 - Cartões -->
+                <div class="payment-section">
+                    <h2><i class="fas fa-credit-card"></i> Cartões de Crédito/Débito</h2>
+                    <p>Método mais utilizado no e-commerce, permitindo parcelamento e oferecendo proteção ao consumidor.</p>
+                    
+                    <div class="enhanced-content">
+                        <h3><i class="fas fa-percentage"></i> Taxas e Bandeiras (2024)</h3>
+                        <table class="comparison-table">
+                            <tr>
+                                <th>Bandeira</th>
+                                <th>Taxa Média</th>
+                                <th>Parcelamento</th>
+                            </tr>
+                            <tr>
+                                <td>Visa/Mastercard</td>
+                                <td>2.39% + R$0,40</td>
+                                <td>Até 12x</td>
+                            </tr>
+                            <tr>
+                                <td>Elo</td>
+                                <td>2.59% + R$0,40</td>
+                                <td>Até 10x</td>
+                            </tr>
+                            <tr>
+                                <td>Amex</td>
+                                <td>3.49% + R$0,40</td>
+                                <td>Até 6x</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="alert-box security-alert">
+                        <i class="fas fa-shield-alt"></i>
+                        <div>
+                            <strong>PCI DSS:</strong> Certificação obrigatória para lojas que processam cartões. Exige:
+                            <ul style="margin-top: 8px; margin-left: 20px;">
+                                <li>Criptografia de dados</li>
+                                <li>Testes de segurança regulares</li>
+                                <li>Políticas de acesso restrito</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seção 2 - Boletos -->
+                <div class="payment-section">
+                    <h2><i class="fas fa-file-invoice-dollar"></i> Boletos Bancários</h2>
+                    <p>Método tradicional no Brasil, ideal para consumidores sem cartão ou que preferem pagar à vista.</p>
+                    
+                    <div class="enhanced-content">
+                        <h3><i class="fas fa-chart-bar"></i> Estatísticas de Uso</h3>
+                        <ul style="margin-left: 20px;">
+                            <li>15-20% dos pagamentos em e-commerce</li>
+                            <li>Taxa de conversão 30% menor que cartões</li>
+                            <li>Prazo de compensação: 1-3 dias úteis</li>
+                        </ul>
+                        
+                        <h3 style="margin-top:15px;"><i class="fas fa-lightbulb"></i> Boas Práticas</h3>
+                        <div class="alert-box technical-alert">
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                Oferecer desconto (2-5%) para pagamento via boleto pode aumentar conversões em 25%
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seção 3 - Carteiras Digitais -->
+                <div class="payment-section">
+                    <h2><i class="fas fa-wallet"></i> Carteiras Digitais</h2>
+                    <p>Soluções que armazenam informações de pagamento para transações rápidas e seguras.</p>
+                    
+                    <div class="enhanced-content">
+                        <h3><i class="fas fa-mobile-alt"></i> Principais Opções</h3>
+                        <table class="comparison-table">
+                            <tr>
+                                <th>Plataforma</th>
+                                <th>Taxa</th>
+                                <th>Tempo de Liquidação</th>
+                            </tr>
+                            <tr>
+                                <td>Mercado Pago</td>
+                                <td>1.99-4.99%</td>
+                                <td>1-2 dias</td>
+                            </tr>
+                            <tr>
+                                <td>PayPal</td>
+                                <td>3.49% + R$1,50</td>
+                                <td>3-5 dias</td>
+                            </tr>
+                            <tr>
+                                <td>PicPay</td>
+                                <td>2.39%</td>
+                                <td>1-3 dias</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Seção 4 - PIX -->
+                <div class="payment-section">
+                    <h2><i class="fas fa-exchange-alt"></i> PIX e Transferências</h2>
+                    <p>Sistema de pagamento instantâneo do Banco Central, com transações em segundos 24/7.</p>
+                    
+                    <div class="enhanced-content">
+                        <h3><i class="fas fa-bolt"></i> Vantagens do PIX</h3>
+                        <ul style="margin-left: 20px;">
+                            <li>Sem custo para pessoa física</li>
+                            <li>Liquidação imediata (até 10 segundos)</li>
+                            <li>Disponível 24 horas/dia, 7 dias/semana</li>
+                            <li>Redução de chargebacks</li>
+                        </ul>
+                        
+                        <h3 style="margin-top:15px;"><i class="fas fa-code"></i> Implementação</h3>
+                        <div class="alert-box technical-alert">
+                            <i class="fas fa-cog"></i>
+                            <div>
+                                <strong>API PIX:</strong> Integração via PSPs (Mercado Pago, PagSeguro) ou diretamente com bancos
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seção 5 - NFC/QR Code -->
+                <div class="payment-section">
+                    <h2><i class="fas fa-qrcode"></i> Pagamento por Aproximação e QR Code</h2>
+                    <p>Tecnologias de pagamento rápido via NFC (Near Field Communication) ou leitura de QR Codes.</p>
+                    
+                    <div class="enhanced-content">
+                        <h3><i class="fas fa-mobile"></i> Adoção no Brasil (2024)</h3>
+                        <table class="comparison-table">
+                            <tr>
+                                <th>Tecnologia</th>
+                                <th>Penetração</th>
+                                <th>Crescimento</th>
+                            </tr>
+                            <tr>
+                                <td>NFC (Apple/Google Pay)</td>
+                                <td>35% smartphones</td>
+                                <td>+120% a.a.</td>
+                            </tr>
+                            <tr>
+                                <td>QR Code Dinâmico</td>
+                                <td>60% varejistas</td>
+                                <td>+80% a.a.</td>
+                            </tr>
+                        </table>
+                        
+                        <h3 style="margin-top:15px;"><i class="fas fa-lock"></i> Segurança</h3>
+                        <div class="alert-box security-alert">
+                            <i class="fas fa-shield-alt"></i>
+                            <div>
+                                <strong>Tokenização:</strong> Dados do cartão são substituídos por tokens únicos, eliminando riscos de fraude
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <div class="footer-content">
+                <p>© 2025 INFO.DeV | Todos os direitos reservados.</p>
+                <div class="footer-bottom">
+                    <p>Desenvolvido com <i class="fas fa-heart" style="color: #ef4444;"></i> pela equipe INFO.DeV</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Efeito suave de rolagem para os links internos
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Animação de aparecimento das seções
+        const paymentSections = document.querySelectorAll('.payment-section');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        paymentSections.forEach(section => observer.observe(section));
+    </script>
+</body>
+</html>

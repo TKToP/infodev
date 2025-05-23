@@ -1,0 +1,796 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finanças e Crédito Rural (AgFintechs) - INFO.DeV</title>
+    
+    <!-- Fontes modernas -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Lora:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Ícones Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #3b82f6;
+            --secondary-color: #2563eb;
+            --accent-color: #60a5fa;
+            --text-color: #e5e7eb;
+            --light-text: #9ca3af;
+            --bg-color: #111827;
+            --card-bg: #1f2937;
+            --footer-bg: #030712;
+            --egov-color: #8b5cf6;
+            --agro-color: #10b981; /* Verde para AgFintech */
+            --finance-color: #f59e0b; /* Amarelo para finanças */
+            --section-border: #374151;
+            --danger-color: #ef4444;
+            --success-color: #10b981;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: var(--card-bg);
+            padding: 15px 0;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo-text {
+            font-family: 'Lora', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--primary-color), var(--egov-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .nav-links a, .nav-links button {
+            font-size: 0.95rem;
+            padding: 8px 16px;
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+            color: var(--primary-color);
+            transition: all 0.3s;
+            border-radius: 6px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .nav-links button:hover, .nav-links a:hover {
+            background-color: rgba(59, 130, 246, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Header */
+        .page-header {
+            text-align: center;
+            margin: 40px 0;
+            padding: 30px 0;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(245, 158, 11, 0.1));
+            border-radius: 12px;
+            border: 1px solid var(--section-border);
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            color: var(--agro-color);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            color: var(--light-text);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Content */
+        .content-container {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+            border: 1px solid var(--section-border);
+        }
+
+        /* Seções Temáticas */
+        .content-section {
+            margin-bottom: 30px;
+            padding: 25px;
+            background-color: rgba(31, 41, 55, 0.7);
+            border-radius: 8px;
+            border-left: 4px solid var(--agro-color);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .finance-section {
+            border-left-color: var(--finance-color);
+        }
+
+        .finance-section h2 {
+            color: var(--finance-color) !important;
+        }
+
+        .content-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .content-section:hover {
+            transform: translateY(-5px);
+            background-color: rgba(31, 41, 55, 0.9);
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.1);
+        }
+
+        .finance-section:hover {
+            box-shadow: 0 8px 20px rgba(245, 158, 11, 0.1);
+        }
+
+        .content-section h2 {
+            color: var(--agro-color);
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--section-border);
+        }
+
+        .content-section h2 i {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+
+        .content-section:hover h2 i {
+            transform: scale(1.2);
+        }
+
+        .content-section p {
+            margin-bottom: 10px;
+            color: var(--light-text);
+        }
+
+        /* Enhanced Content */
+        .enhanced-content {
+            border-left: 3px solid var(--agro-color);
+            padding: 15px;
+            margin: 20px 0;
+            background: rgba(16, 185, 129, 0.05);
+            border-radius: 5px;
+        }
+
+        .finance-enhanced {
+            border-left-color: var(--finance-color);
+            background: rgba(245, 158, 11, 0.05);
+        }
+
+        .enhanced-content h3 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--agro-color);
+            margin-bottom: 10px;
+        }
+
+        .finance-enhanced h3 {
+            color: var(--finance-color) !important;
+        }
+
+        /* Listas */
+        .feature-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .feature-list li {
+            margin-bottom: 12px;
+            padding-left: 30px;
+            position: relative;
+            line-height: 1.6;
+        }
+
+        .feature-list li::before {
+            content: "→";
+            color: var(--agro-color);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        .finance-list li::before {
+            color: var(--finance-color);
+        }
+
+        /* Benefit Cards */
+        .benefit-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .benefit-card {
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+            border: 1px solid var(--section-border);
+            transition: all 0.3s;
+        }
+
+        .finance-card {
+            background: rgba(245, 158, 11, 0.1);
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(16, 185, 129, 0.2);
+        }
+
+        .finance-card:hover {
+            box-shadow: 0 5px 15px rgba(245, 158, 11, 0.2);
+        }
+
+        .benefit-card h4 {
+            color: var(--agro-color);
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .finance-card h4 {
+            color: var(--finance-color);
+        }
+
+        /* Stats */
+        .stat-badge {
+            display: inline-block;
+            background-color: rgba(16, 185, 129, 0.2);
+            color: var(--agro-color);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin: 5px 0;
+            font-weight: 600;
+        }
+
+        .finance-badge {
+            background-color: rgba(245, 158, 11, 0.2);
+            color: var(--finance-color);
+        }
+
+        .danger-badge {
+            background-color: rgba(239, 68, 68, 0.2);
+            color: var(--danger-color);
+        }
+
+        .success-badge {
+            background-color: rgba(16, 185, 129, 0.2);
+            color: var(--success-color);
+        }
+
+        /* Alert Boxes */
+        .alert-box {
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 6px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .alert-box i {
+            font-size: 1.2rem;
+            margin-top: 2px;
+        }
+
+        .agro-alert {
+            background-color: rgba(16, 185, 129, 0.1);
+            border-left: 4px solid var(--agro-color);
+        }
+
+        .finance-alert {
+            background-color: rgba(245, 158, 11, 0.1);
+            border-left: 4px solid var(--finance-color);
+        }
+
+        .danger-alert {
+            background-color: rgba(239, 68, 68, 0.1);
+            border-left: 4px solid var(--danger-color);
+        }
+
+        .success-alert {
+            background-color: rgba(16, 185, 129, 0.1);
+            border-left: 4px solid var(--success-color);
+        }
+
+        /* Platform Showcase */
+        .platform-showcase {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .platform-item {
+            flex: 1;
+            min-width: 200px;
+            background: rgba(16, 185, 129, 0.05);
+            border: 1px solid var(--section-border);
+            border-radius: 8px;
+            padding: 15px;
+            transition: all 0.3s;
+        }
+
+        .finance-item {
+            background: rgba(245, 158, 11, 0.05);
+        }
+
+        .platform-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(16, 185, 129, 0.1);
+        }
+
+        .finance-item:hover {
+            box-shadow: 0 5px 15px rgba(245, 158, 11, 0.1);
+        }
+
+        .platform-item h5 {
+            color: var(--agro-color);
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .finance-item h5 {
+            color: var(--finance-color);
+        }
+
+        /* Comparison Tables */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .comparison-table th, .comparison-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border: 1px solid var(--section-border);
+        }
+
+        .comparison-table th {
+            background-color: rgba(16, 185, 129, 0.1);
+            color: var(--agro-color);
+            font-weight: 600;
+        }
+
+        .finance-table th {
+            background-color: rgba(245, 158, 11, 0.1);
+            color: var(--finance-color);
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background-color: rgba(31, 41, 55, 0.5);
+        }
+
+        .comparison-table tr:hover {
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--footer-bg);
+            color: #d1d5db;
+            padding: 30px 0;
+            margin-top: 60px;
+            border-top: 1px solid var(--section-border);
+        }
+
+        .footer-content {
+            text-align: center;
+        }
+
+        .footer-bottom {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--section-border);
+            font-size: 0.9rem;
+            color: var(--light-text);
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+
+        .shake {
+            animation: shake 0.5s;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .navbar .container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .content-section h2 {
+                font-size: 1.3rem;
+            }
+            
+            .benefit-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .platform-showcase {
+                flex-direction: column;
+            }
+            
+            .comparison-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar">
+            <div class="container">
+                <a href="PAGPRI.html" class="logo">
+                    <!-- Logo SVG inline para INFO.DeV -->
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="40" height="40" rx="8" fill="url(#paint0_linear)"/>
+                        <path d="M12 12H16V28H12V12Z" fill="white"/>
+                        <path d="M18 12H22V28H18V12Z" fill="white"/>
+                        <path d="M24 12H28V28H24V12Z" fill="white"/>
+                        <path d="M12 12H28V16H12V12Z" fill="white"/>
+                        <path d="M12 24H28V28H12V24Z" fill="white"/>
+                        <defs>
+                            <linearGradient id="paint0_linear" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#2563EB"/>
+                                <stop offset="1" stop-color="#00B3A6"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <span class="logo-text">INFO.DeV</span>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="PAGPRI.html"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="Materiais.html"><i class="fas fa-book"></i> Materiais</a></li>
+                    <li><a href="PagFAQ.html"><i class="fas fa-question-circle"></i> FAQ</a></li>
+                    <li><a href="quiz/quiz.html"><i class="fas fa-question"></i> QUIZ</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <header class="page-header">
+            <h1><i class="fas fa-tractor"></i> Finanças e Crédito Rural (AgFintechs)</h1>
+            <p>As AgFintechs estão revolucionando o financiamento agrícola com tecnologia, oferecendo soluções mais rápidas e acessíveis para produtores rurais.</p>
+        </header>
+
+        <main>
+            <div class="content-container">
+                <!-- Seção 1 - Crédito Personalizado -->
+                <div class="content-section">
+                    <h2><i class="fas fa-credit-card"></i> Crédito Personalizado para Produtores</h2>
+                    
+                    <p>Plataformas que oferecem <strong>crédito rural</strong> com base em dados específicos de cada produtor, como produtividade e clima.</p>
+                    
+                    <div class="benefit-cards">
+                        <div class="benefit-card">
+                            <h4><i class="fas fa-chart-pie"></i> Vantagens</h4>
+                            <ul class="feature-list">
+                                <li><span class="stat-badge">+40%</span> aprovação de crédito</li>
+                                <li>Taxas personalizadas por perfil</li>
+                                <li>Análise em tempo real</li>
+                                <li>Integração com dados de safra</li>
+                            </ul>
+                        </div>
+                        <div class="benefit-card">
+                            <h4><i class="fas fa-cogs"></i> Tecnologias Utilizadas</h4>
+                            <ul class="feature-list">
+                                <li>Machine Learning para análise de risco</li>
+                                <li>APIs de dados climáticos</li>
+                                <li>Blockchain para contratos</li>
+                                <li>Biometria para autenticação</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="alert-box agro-alert">
+                        <i class="fas fa-lightbulb"></i>
+                        <div>
+                            <strong>Exemplo Prático:</strong> Financiamento ajustado conforme o histórico de safra e o risco climático da região.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seção 2 - Seguros Agrícolas -->
+                <div class="content-section finance-section">
+                    <h2><i class="fas fa-shield-alt"></i> Seguros Agrícolas Inovadores</h2>
+                    
+                    <p>AgFintechs oferecem seguros agrícolas personalizados, que protegem os produtores contra eventos climáticos extremos e outros riscos.</p>
+                    
+                    <div class="enhanced-content finance-enhanced">
+                        <h3><i class="fas fa-satellite-dish"></i> Tecnologias Disruptivas</h3>
+                        <ul class="feature-list finance-list">
+                            <li>Monitoramento por satélite</li>
+                            <li>IoT em equipamentos agrícolas</li>
+                            <li>Parametrização automática de sinistros</li>
+                            <li>Pagamentos instantâneos via PIX</li>
+                        </ul>
+                    </div>
+
+                    <div class="platform-showcase">
+                        <div class="platform-item finance-item">
+                            <h5><i class="fas fa-cloud-sun-rain"></i> Seguro Paramétrico</h5>
+                            <p>Ativação automática quando parâmetros climáticos são atingidos.</p>
+                        </div>
+                        <div class="platform-item finance-item">
+                            <h5><i class="fas fa-seedling"></i> Cobertura por Safra</h5>
+                            <p>Proteção específica para cada tipo de cultura e região.</p>
+                        </div>
+                        <div class="platform-item finance-item">
+                            <h5><i class="fas fa-robot"></i> Automação de Sinistros</h5>
+                            <p>Processamento automático com imagens de satélite.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seção 3 - Avaliação de Risco -->
+                <div class="content-section">
+                    <h2><i class="fas fa-chart-line"></i> Avaliação de Risco Baseada em Dados</h2>
+                    
+                    <p>O uso de <strong>Big Data</strong> e análises preditivas para avaliar o risco de crédito e seguro, com base no comportamento da lavoura e previsões climáticas.</p>
+                    
+                    <div class="comparison-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Tecnologia</th>
+                                    <th>Aplicação</th>
+                                    <th>Impacto</th>
+                                    <th>Exemplo</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Satélites</td>
+                                    <td>Monitoramento de lavouras</td>
+                                    <td><span class="stat-badge">+30%</span> precisão</td>
+                                    <td>NDVI para saúde vegetal</td>
+                                </tr>
+                                <tr>
+                                    <td>IoT</td>
+                                    <td>Dados em tempo real</td>
+                                    <td><span class="stat-badge">-50%</span> atrasos</td>
+                                    <td>Sensores de umidade</td>
+                                </tr>
+                                <tr>
+                                    <td>Machine Learning</td>
+                                    <td>Previsão de safras</td>
+                                    <td><span class="stat-badge">85%</span> acurácia</td>
+                                    <td>Modelos preditivos</td>
+                                </tr>
+                                <tr>
+                                    <td>Blockchain</td>
+                                    <td>Contratos inteligentes</td>
+                                    <td><span class="stat-badge">-70%</span> fraudes</td>
+                                    <td>Histórico imutável</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="alert-box agro-alert">
+                        <i class="fas fa-database"></i>
+                        <div>
+                            <strong>Exemplo:</strong> Ferramentas que usam dados de produtividade, clima e solo para prever a rentabilidade das safras e o risco financeiro.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seção 4 - Automação Financeira -->
+                <div class="content-section finance-section">
+                    <h2><i class="fas fa-cogs"></i> Automação de Processos Financeiros</h2>
+                    
+                    <p>Automação de todo o processo de solicitação e aprovação de crédito e seguros, tornando o acesso mais rápido e eficiente.</p>
+                    
+                    <div class="benefit-cards">
+                        <div class="benefit-card finance-card">
+                            <h4><i class="fas fa-bolt"></i> Benefícios</h4>
+                            <ul class="feature-list finance-list">
+                                <li><span class="stat-badge finance-badge">-80%</span> tempo de aprovação</li>
+                                <li>Redução de burocracia</li>
+                                <li>Integração com bancos</li>
+                                <li>Documentação digital</li>
+                            </ul>
+                        </div>
+                        <div class="benefit-card finance-card">
+                            <h4><i class="fas fa-star"></i> Plataformas líderes</h4>
+                            <ul class="feature-list finance-list">
+                                <li><strong>Traive:</strong> Marketplace de crédito</li>
+                                <li><strong>TerraMagna:</strong> Garantias digitais</li>
+                                <li><strong>Agrolend:</strong> Crédito especializado</li>
+                                <li><strong>Agrotools:</strong> Análise de risco</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="alert-box finance-alert">
+                        <i class="fas fa-rocket"></i>
+                        <div>
+                            <strong>Dados 2024:</strong> Plataformas como Traive, TerraMagna e Agrolend já automatizaram mais de 90% do processo de análise e aprovação de crédito agrícola.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seção 5 - Tendências Futuras -->
+                <div class="content-section">
+                    <h2><i class="fas fa-globe"></i> Tendências e Futuro do AgFintech</h2>
+                    
+                    <p>As inovações que estão moldando o futuro das finanças agrícolas:</p>
+                    
+                    <div class="enhanced-content">
+                        <h3><i class="fas fa-brain"></i> Próximas Inovações</h3>
+                        <ul class="feature-list">
+                            <li><strong>Tokenização de ativos:</strong> Fractional ownership de terras</li>
+                            <li><strong>DeFi Agrícola:</strong> Empréstimos descentralizados</li>
+                            <li><strong>Agricultura 5.0:</strong> Integração total de dados</li>
+                            <li><strong>Carbon Credits:</strong> Financiamento sustentável</li>
+                            <li><strong>Marketplace Global:</strong> Conectando produtores e investidores</li>
+                        </ul>
+                    </div>
+
+                    <div class="platform-showcase">
+                        <div class="platform-item">
+                            <h5><i class="fas fa-coins"></i> Agro Tokens</h5>
+                            <p>Ativos digitais lastreados em produção agrícola.</p>
+                        </div>
+                        <div class="platform-item">
+                            <h5><i class="fas fa-leaf"></i> Crédito de Carbono</h5>
+                            <p>Financiamento baseado em práticas sustentáveis.</p>
+                        </div>
+                        <div class="platform-item">
+                            <h5><i class="fas fa-robot"></i> AI Total</h5>
+                            <p>Gestão financeira completamente automatizada.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <div class="footer-content">
+                <p>© 2025 INFO.DeV | Todos os direitos reservados.</p>
+                <div class="footer-bottom">
+                    <p>Desenvolvido com <i class="fas fa-heart" style="color: #ef4444;"></i> pela equipe INFO.DeV</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Efeito suave de rolagem para os links internos
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Animação de aparecimento das seções
+        const contentSections = document.querySelectorAll('.content-section');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        contentSections.forEach(section => observer.observe(section));
+
+        // Tooltips dinâmicos
+        document.querySelectorAll('.tooltip').forEach(element => {
+            element.addEventListener('mouseenter', function () {
+                const tooltip = this.querySelector('.tooltiptext');
+                tooltip.style.visibility = 'visible';
+                tooltip.style.opacity = '1';
+            });
+
+            element.addEventListener('mouseleave', function () {
+                const tooltip = this.querySelector('.tooltiptext');
+                tooltip.style.visibility = 'hidden';
+                tooltip.style.opacity = '0';
+            });
+        });
+    </script>
+</body>
+</html>

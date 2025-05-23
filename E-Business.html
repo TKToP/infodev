@@ -1,0 +1,498 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Business - INFO.DeV</title>
+    
+    <!-- Fontes modernas -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Lora:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Ícones Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+   <style>
+    :root {
+        --primary-color: #3b82f6;
+        --secondary-color: #0ea5e9;
+        --accent-color: #22d3ee;
+        --text-color: #e5e7eb;
+        --light-text: #9ca3af;
+        --bg-color: #0f172a;
+        --card-bg: #1e293b;
+        --footer-bg: #0f172a;
+        --border-color: #334155;
+        --hover-bg: #2563eb;
+        --highlight-color: #38bdf8;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Inter', sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        line-height: 1.6;
+    }
+
+    a {
+        text-decoration: none;
+        color: inherit;
+        transition: all 0.3s ease;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    /* Navbar */
+    .navbar {
+        background-color: var(--card-bg);
+        padding: 15px 0;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+    }
+
+    .navbar .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        transition: transform 0.3s ease;
+    }
+
+    .logo:hover {
+        transform: scale(1.05);
+    }
+
+    .logo-text {
+        font-family: 'Lora', serif;
+        font-size: 1.8rem;
+        font-weight: 700;
+        background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .nav-links {
+        list-style: none;
+        display: flex;
+        gap: 15px;
+        align-items: center;
+    }
+
+    .nav-links a, .nav-links button {
+        font-size: 0.95rem;
+        padding: 8px 16px;
+        border: none;
+        background-color: transparent;
+        cursor: pointer;
+        color: var(--highlight-color);
+        transition: all 0.3s;
+        border-radius: 6px;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .nav-links button:hover, .nav-links a:hover {
+        background-color: var(--hover-bg);
+        color: #fff;
+        transform: translateY(-2px);
+    }
+
+    /* Header */
+    .page-header {
+        text-align: center;
+        margin: 40px 0;
+        padding: 30px 0;
+        background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(14, 165, 233, 0.1));
+        border-radius: 12px;
+    }
+
+    .page-header h1 {
+        font-size: 2.5rem;
+        color: var(--primary-color);
+        margin-bottom: 15px;
+        font-weight: 700;
+    }
+
+    .page-header p {
+        font-size: 1.1rem;
+        color: var(--light-text);
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+    /* Content Container */
+    .content-container {
+        background-color: var(--card-bg);
+        border-radius: 12px;
+        padding: 30px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        margin-bottom: 40px;
+    }
+
+    /* What is Button */
+    .what-is-button {
+        background-color: var(--primary-color);
+        color: white;
+        padding: 15px 25px;
+        font-size: 1.1rem;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 0 auto 30px;
+        font-weight: 600;
+        width: 100%;
+        max-width: 400px;
+        justify-content: center;
+    }
+
+    .what-is-button:hover {
+        background-color: var(--secondary-color);
+        transform: translateY(-3px);
+    }
+
+    .what-is-content {
+        background-color: #1e293b;
+        padding: 25px;
+        border-radius: 8px;
+        margin-bottom: 30px;
+        border-left: 4px solid var(--primary-color);
+        transition: all 0.5s ease;
+    }
+
+    .what-is-content p, .what-is-content li {
+        color: var(--text-color);
+    }
+
+    .what-is-content.hidden {
+        display: none;
+    }
+
+    /* Tópicos */
+    .topics-menu h2 {
+        text-align: center;
+        color: var(--primary-color);
+        margin-bottom: 30px;
+        font-size: 1.8rem;
+        position: relative;
+        padding-bottom: 10px;
+    }
+
+    .topics-menu h2::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 3px;
+        background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+        border-radius: 3px;
+    }
+
+    .topics-list {
+        list-style: none;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+    }
+
+    .topics-list li a {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 20px;
+        background-color: var(--card-bg);
+        border-radius: 8px;
+        border: 1px solid var(--border-color);
+        color: var(--text-color);
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .topics-list li a:hover {
+        background-color: var(--primary-color);
+        color: white;
+        transform: translateY(-5px);
+    }
+
+    .topics-list li a i {
+        font-size: 1.5rem;
+        transition: transform 0.3s ease;
+    }
+
+    .topics-list li a:hover i {
+        transform: scale(1.2);
+    }
+
+    /* Referências */
+    .references {
+        margin-top: 50px;
+        padding: 30px;
+        background-color: var(--card-bg);
+        border-radius: 12px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .references h2 {
+        color: var(--primary-color);
+        margin-bottom: 20px;
+        text-align: center;
+        font-size: 1.8rem;
+    }
+
+    .reference-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+    }
+
+    .reference-card {
+        padding: 20px;
+        background-color: #1e293b;
+        border-radius: 8px;
+        border-left: 4px solid var(--primary-color);
+    }
+
+    .reference-card h3 {
+        color: var(--accent-color);
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .reference-card ul {
+        list-style: none;
+        padding-left: 0;
+    }
+
+    .reference-card li {
+        margin-bottom: 10px;
+        padding-left: 20px;
+        position: relative;
+        color: var(--light-text);
+    }
+
+    .reference-card li::before {
+        content: "→";
+        position: absolute;
+        left: 0;
+        color: var(--accent-color);
+    }
+
+    .reference-card a {
+        color: var(--highlight-color);
+        text-decoration: underline;
+    }
+
+    .reference-card a:hover {
+        color: var(--primary-color);
+    }
+
+    /* Footer */
+    footer {
+        background-color: var(--footer-bg);
+        color: #94a3b8;
+        padding: 30px 0;
+        margin-top: 60px;
+    }
+
+    .footer-content {
+        text-align: center;
+    }
+
+    .footer-bottom {
+        margin-top: 20px;
+        padding-top: 20px;
+        border-top: 1px solid #334155;
+        font-size: 0.9rem;
+        color: #64748b;
+    }
+
+    /* Responsivo */
+    @media (max-width: 768px) {
+        .topics-list {
+            grid-template-columns: 1fr;
+        }
+
+        .navbar .container {
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .nav-links {
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .page-header h1 {
+            font-size: 2rem;
+        }
+    }
+</style>
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar">
+            <div class="container">
+                <a href="PAGPRI.html" class="logo">
+                    <!-- Logo SVG inline para INFO.DeV -->
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="40" height="40" rx="8" fill="url(#paint0_linear)"/>
+                        <path d="M12 12H16V28H12V12Z" fill="white"/>
+                        <path d="M18 12H22V28H18V12Z" fill="white"/>
+                        <path d="M24 12H28V28H24V12Z" fill="white"/>
+                        <path d="M12 12H28V16H12V12Z" fill="white"/>
+                        <path d="M12 24H28V28H12V24Z" fill="white"/>
+                        <defs>
+                            <linearGradient id="paint0_linear" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#2563EB"/>
+                                <stop offset="1" stop-color="#00B3A6"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <span class="logo-text">INFO.DeV</span>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="PAGPRI.html"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="Materiais.html"><i class="fas fa-book"></i> Materiais</a></li>
+                    <li><a href="PagFAQ.html"><i class="fas fa-question-circle"></i> FAQ</a></li>
+                    <li><a href="quiz/quiz.html"><i class="fas fa-question"></i> QUIZ</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <header class="page-header">
+            <h1><i class="fas fa-business-time"></i> E-Business</h1>
+            <p>Tecnologias e estratégias para transformação digital dos negócios</p>
+        </header>
+
+        <main>
+            <div class="content-container">
+                <button id="whatIsBtn" class="what-is-button">
+                    <i class="fas fa-question-circle"></i>
+                    O que é E-Business?
+                </button>
+                
+                <div id="whatIsContent" class="what-is-content hidden">
+                    <p>E-Business (Electronic Business) é o uso de tecnologias digitais — especialmente a internet — para gerenciar, automatizar ou transformar processos empresariais. Representa a integração completa das tecnologias da informação em todas as áreas de uma organização.</p>
+                    <p>Diferente do E-commerce que se concentra apenas nas transações comerciais online, o E-Business engloba todo o ecossistema digital de uma empresa, incluindo:</p>
+                    <ul>
+                        <li>Gestão de relacionamento com clientes (CRM)</li>
+                        <li>Cadeia de suprimentos digital (SCM)</li>
+                        <li>Planejamento de recursos empresariais (ERP)</li>
+                        <li>Colaboração entre empresas (B2B)</li>
+                    </ul>
+                </div>
+                
+                <div class="topics-menu">
+                    <h2>Tópicos sobre E-Business</h2>
+                    <ul class="topics-list">
+                        <li><a href="EB_BENEFICIOS.html"><i class="fas fa-layer-group"></i> Benefícios do E-Business</a></li>
+                        <li><a href="EB_EMOUTRASPALA.html"><i class="fas fa-desktop"></i> Em outras palavras...</a></li>
+                        <li><a href="EB_EXEMPLOSAPL.html"><i class="fas fa-book-open"></i> Exemplos de Aplicação</a></li>
+                        <li><a href="EB_TECNOLOGIAS.html"><i class="fas fa-microchip"></i> Tecnologias Chave</a></li>
+                        <li><a href="EB_TENDENCIAS.html"><i class="fas fa-chart-line"></i> Tendências Atuais</a></li>
+                        <li><a href="EB_DESAFIOS.html"><i class="fas fa-exclamation-triangle"></i> Desafios e Soluções</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Seção de Referências -->
+            <div class="references">
+                <h2><i class="fas fa-link"></i> Recursos Adicionais sobre E-Business</h2>
+                <div class="reference-grid">
+                    <div class="reference-card">
+                        <h3><i class="fas fa-graduation-cap"></i> Aprendizado</h3>
+                        <ul>
+                            <li><a href="https://www.coursera.org/learn/e-business" target="_blank">Curso: E-Business Essentials (Coursera)</a></li>
+                            <li><a href="https://www.edx.org/course/e-business" target="_blank">Fundamentos de E-Business (edX)</a></li>
+                            <li><a href="https://www.youtube.com/watch?v=GPeDZ6BQRGE" target="_blank">TED: O Futuro dos Negócios Digitais</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="reference-card">
+                        <h3><i class="fas fa-book"></i> Artigos e Guias</h3>
+                        <ul>
+                            <li><a href="https://www.ibm.com/topics/e-business" target="_blank">IBM - O que é E-Business?</a></li>
+                            <li><a href="https://www.forbes.com/sites/forbestechcouncil/2021/03/05/the-future-of-e-business-trends-to-watch-in-2021/" target="_blank">Forbes: Tendências de E-Business</a></li>
+                            <li><a href="https://hbr.org/topic/e-business" target="_blank">Harvard Business Review - E-Business</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="reference-card">
+                        <h3><i class="fas fa-tools"></i> Ferramentas</h3>
+                        <ul>
+                            <li><a href="https://www.salesforce.com/products/what-is-crm/" target="_blank">CRM - Salesforce</a></li>
+                            <li><a href="https://www.sap.com/products/erp/what-is-erp.html" target="_blank">ERP - SAP</a></li>
+                            <li><a href="https://www.oracle.com/scm/" target="_blank">SCM - Oracle</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="reference-card">
+                        <h3><i class="fas fa-globe"></i> Casos de Estudo</h3>
+                        <ul>
+                            <li><a href="https://www.mckinsey.com/business-functions/mckinsey-digital/our-insights/how-companies-are-using-digital-to-improve-their-businesses" target="_blank">McKinsey - Transformação Digital</a></li>
+                            <li><a href="https://www2.deloitte.com/global/en/pages/technology-media-and-telecommunications/topics/digital-transformation.html" target="_blank">Deloitte - Transformação Digital</a></li>
+                            <li><a href="https://www.gartner.com/en/digital-business" target="_blank">Gartner - Digital Business</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <div class="footer-content">
+                <p>© 2025 INFO.DeV | Todos os direitos reservados.</p>
+                <div class="footer-bottom">
+                    <p>Desenvolvido com <i class="fas fa-heart" style="color: #e74c3c;"></i> pela equipe INFO.DeV</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        document.getElementById('whatIsBtn').addEventListener('click', function () {
+            const content = document.getElementById('whatIsContent');
+            content.classList.toggle('hidden');
+
+            if (!content.classList.contains('hidden')) {
+                content.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        });
+
+        // Efeito suave de rolagem para os links internos
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

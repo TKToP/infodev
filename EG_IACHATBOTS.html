@@ -1,0 +1,851 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inteligência Artificial e Chatbots no Atendimento Público - INFO.DeV</title>
+    
+    <!-- Fontes modernas -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Lora:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Ícones Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #3b82f6;
+            --secondary-color: #2563eb;
+            --accent-color: #60a5fa;
+            --text-color: #e5e7eb;
+            --light-text: #9ca3af;
+            --bg-color: #111827;
+            --card-bg: #1f2937;
+            --footer-bg: #030712;
+            --government-color: #6366f1; /* Índigo para governo */
+            --ai-color: #10b981; /* Verde para IA */
+            --section-border: #374151;
+            --owasp-red: #d73a49; /* Cor OWASP para alertas */
+            --security-green: #28a745; /* Cor para boas práticas */
+            --code-bg: #1e1e1e; /* Fundo para blocos de código */
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: var(--card-bg);
+            padding: 15px 0;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo-text {
+            font-family: 'Lora', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--primary-color), var(--government-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .nav-links a, .nav-links button {
+            font-size: 0.95rem;
+            padding: 8px 16px;
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+            color: var(--primary-color);
+            transition: all 0.3s;
+            border-radius: 6px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .nav-links button:hover, .nav-links a:hover {
+            background-color: rgba(59, 130, 246, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Header */
+        .page-header {
+            text-align: center;
+            margin: 40px 0;
+            padding: 30px 0;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(99, 102, 241, 0.1));
+            border-radius: 12px;
+            border: 1px solid var(--section-border);
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            color: var(--ai-color);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            color: var(--light-text);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Content */
+        .content-container {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+            border: 1px solid var(--section-border);
+        }
+
+        /* Seções Temáticas */
+        .content-section {
+            margin-bottom: 30px;
+            padding: 25px;
+            background-color: rgba(31, 41, 55, 0.7);
+            border-radius: 8px;
+            border-left: 4px solid var(--ai-color);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .content-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .content-section:hover {
+            transform: translateY(-5px);
+            background-color: rgba(31, 41, 55, 0.9);
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.1);
+        }
+
+        .content-section h2 {
+            color: var(--ai-color);
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--section-border);
+        }
+
+        .content-section h2 i {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+
+        .content-section:hover h2 i {
+            transform: scale(1.2);
+        }
+
+        .content-section p {
+            margin-bottom: 10px;
+            color: var(--light-text);
+        }
+
+        /* Enhanced Content */
+        .enhanced-content {
+            border-left: 3px solid var(--ai-color);
+            padding: 15px;
+            margin: 20px 0;
+            background: rgba(16, 185, 129, 0.05);
+            border-radius: 5px;
+        }
+
+        .enhanced-content h3 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--ai-color);
+            margin-bottom: 10px;
+        }
+
+        /* Listas */
+        .feature-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .feature-list li {
+            margin-bottom: 12px;
+            padding-left: 30px;
+            position: relative;
+            line-height: 1.6;
+        }
+
+        .feature-list li::before {
+            content: "→";
+            color: var(--ai-color);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        /* Government Cards */
+        .gov-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .gov-card {
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+            border: 1px solid var(--section-border);
+            transition: all 0.3s;
+        }
+
+        .gov-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(16, 185, 129, 0.2);
+        }
+
+        .gov-card h4 {
+            color: var(--ai-color);
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Stats */
+        .stat-badge {
+            display: inline-block;
+            background-color: rgba(16, 185, 129, 0.2);
+            color: var(--ai-color);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin: 5px 0;
+            font-weight: 600;
+        }
+
+        /* Alert Boxes */
+        .alert-box {
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 6px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .alert-box i {
+            font-size: 1.2rem;
+            margin-top: 2px;
+        }
+
+        .gov-alert {
+            background-color: rgba(99, 102, 241, 0.1);
+            border-left: 4px solid var(--government-color);
+        }
+
+        .ai-alert {
+            background-color: rgba(16, 185, 129, 0.1);
+            border-left: 4px solid var(--ai-color);
+        }
+
+        .owasp-alert {
+            background-color: rgba(215, 58, 73, 0.1);
+            border-left: 4px solid var(--owasp-red);
+        }
+
+        .security-alert {
+            background-color: rgba(40, 167, 69, 0.1);
+            border-left: 4px solid var(--security-green);
+        }
+
+        /* Tabelas Comparativas */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .comparison-table th, .comparison-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--section-border);
+        }
+
+        .comparison-table th {
+            background-color: rgba(16, 185, 129, 0.2);
+            color: var(--ai-color);
+            font-weight: 600;
+        }
+
+        .comparison-table tr:hover {
+            background-color: rgba(16, 185, 129, 0.05);
+        }
+
+        /* Blocos de Código */
+        .code-block {
+            background-color: var(--code-bg);
+            border-radius: 6px;
+            padding: 15px;
+            margin: 15px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9rem;
+            border-left: 4px solid var(--ai-color);
+        }
+
+        .code-block pre {
+            margin: 0;
+        }
+
+        .code-block .comment {
+            color: #6A9955;
+        }
+
+        .code-block .keyword {
+            color: #569CD6;
+        }
+
+        .code-block .string {
+            color: #CE9178;
+        }
+
+        .code-block .function {
+            color: #DCDCAA;
+        }
+
+        /* Tooltips */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            border-bottom: 1px dotted var(--light-text);
+            cursor: help;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            text-align: center;
+            border-radius: 6px;
+            padding: 10px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -100px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            border: 1px solid var(--section-border);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--footer-bg);
+            color: #d1d5db;
+            padding: 30px 0;
+            margin-top: 60px;
+            border-top: 1px solid var(--section-border);
+        }
+
+        .footer-content {
+            text-align: center;
+        }
+
+        .footer-bottom {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--section-border);
+            font-size: 0.9rem;
+            color: var(--light-text);
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .navbar .container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .content-section h2 {
+                font-size: 1.3rem;
+            }
+            
+            .gov-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .comparison-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar">
+            <div class="container">
+               <a href="PAGPRI.html" class="logo">
+                    <!-- Logo SVG inline para INFO.DeV -->
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="40" height="40" rx="8" fill="url(#paint0_linear)"/>
+                        <path d="M12 12H16V28H12V12Z" fill="white"/>
+                        <path d="M18 12H22V28H18V12Z" fill="white"/>
+                        <path d="M24 12H28V28H24V12Z" fill="white"/>
+                        <path d="M12 12H28V16H12V12Z" fill="white"/>
+                        <path d="M12 24H28V28H12V24Z" fill="white"/>
+                        <defs>
+                            <linearGradient id="paint0_linear" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#2563EB"/>
+                                <stop offset="1" stop-color="#00B3A6"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <span class="logo-text">INFO.DeV</span>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="PAGPRI.html"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="Materiais.html"><i class="fas fa-book"></i> Materiais</a></li>
+                    <li><a href="PagFAQ.html"><i class="fas fa-question-circle"></i> FAQ</a></li>
+                    <li><a href="quiz/quiz.html"><i class="fas fa-question"></i> QUIZ</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <header class="page-header">
+            <h1><i class="fas fa-robot"></i> Inteligência Artificial e Chatbots no Atendimento Público</h1>
+            <p>Tecnologias que transformam o atendimento e aprimoram a gestão pública com eficiência e inovação.</p>
+        </header>
+
+        <main>
+            <div class="content-container">
+                <!-- Seção 1 - Chatbots -->
+                <div class="content-section">
+                    <h2><i class="fas fa-comments"></i> Chatbots para atendimento</h2>
+                    
+                    <p>Chatbots ajudam a tirar dúvidas e a acessar serviços de forma rápida e eficiente, como o assistente virtual da Receita Federal.</p>
+                    
+                    <div class="gov-cards">
+                        <div class="gov-card">
+                            <h4><i class="fas fa-chart-line"></i> Benefícios</h4>
+                            <ul class="feature-list">
+                                <li><span class="stat-badge">+80%</span> disponibilidade</li>
+                                <li><span class="stat-badge">-60%</span> custos com atendimento</li>
+                                <li>Respostas instantâneas 24/7</li>
+                                <li>Redução de filas e espera</li>
+                            </ul>
+                        </div>
+                        <div class="gov-card">
+                            <h4><i class="fas fa-cogs"></i> Plataformas</h4>
+                            <ul class="feature-list">
+                                <li>IBM Watson Assistant</li>
+                                <li>Google Dialogflow</li>
+                                <li>Microsoft Bot Framework</li>
+                                <li>Rasa Open Source</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="alert-box ai-alert">
+                        <i class="fas fa-lightbulb"></i>
+                        <div>
+                            <strong>Exemplo:</strong> O chatbot da Receita Federal respondeu mais de 5 milhões de perguntas em 2023, com taxa de acerto de 92%.
+                        </div>
+                    </div>
+
+                    <!-- Novo conteúdo técnico -->
+                    <div class="enhanced-content">
+                        <h3><i class="fas fa-code"></i> Implementação de Chatbot</h3>
+                        <p>Exemplo básico de um chatbot usando Dialogflow:</p>
+                        
+                        <div class="code-block">
+                            <pre><span class="comment">// Configuração básica de intenção no Dialogflow</span>
+{
+  <span class="string">"intent"</span>: <span class="string">"consulta.cpf"</span>,
+  <span class="string">"trainingPhrases"</span>: [
+    <span class="string">"Como consultar meu CPF?"</span>,
+    <span class="string">"Quero ver minha situação no CPF"</span>,
+    <span class="string">"Consulta de CPF"</span>
+  ],
+  <span class="string">"responses"</span>: [
+    {
+      <span class="string">"text"</span>: {
+        <span class="string">"text"</span>: [
+          <span class="string">"Você pode consultar seu CPF no site da Receita Federal ou pelo aplicativo Meu Imposto de Renda. Posso te enviar o link?"</span>
+        ]
+      },
+      <span class="string">"platform"</span>: <span class="string">"TELEGRAM"</span>
+    }
+  ]
+}
+
+<span class="comment">// Webhook para integração com sistemas governamentais</span>
+<span class="keyword">app</span>.<span class="function">post</span>(<span class="string">'/webhook'</span>, (req, res) => {
+  <span class="keyword">const</span> intent = req.body.queryResult.intent.displayName;
+  
+  <span class="keyword">if</span> (intent === <span class="string">'consulta.cpf'</span>) {
+    <span class="keyword">const</span> cpf = req.body.queryResult.parameters.cpf;
+    <span class="comment">// Validação do CPF</span>
+    <span class="keyword">if</span> (!<span class="function">validarCPF</span>(cpf)) {
+      <span class="keyword">return</span> res.json({
+        fulfillmentText: <span class="string">'CPF inválido. Por favor, digite novamente.'</span>
+      });
+    }
+    
+    <span class="comment">// Consulta na API da Receita Federal</span>
+    <span class="function">consultarCPF</span>(cpf)
+      .then(resultado => {
+        res.json({
+          fulfillmentText: <span class="string">`Situação do CPF: </span>${resultado.situacao}<span class="string">`</span>
+        });
+      });
+  }
+});</pre>
+                        </div>
+
+                        <div class="alert-box security-alert">
+                            <i class="fas fa-shield-alt"></i>
+                            <div>
+                                <strong>Segurança:</strong> Ao implementar chatbots que lidam com dados pessoais, certifique-se de cumprir a LGPD e utilizar técnicas de <span class="tooltip">tokenização<span class="tooltiptext">Substituição de dados sensíveis por tokens não sensíveis equivalentes</span></span> para proteger informações dos cidadãos.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seção 2 - IA em Dados -->
+                <div class="content-section">
+                    <h2><i class="fas fa-chart-line"></i> IA na análise de dados</h2>
+                    
+                    <p>A inteligência artificial é aplicada na análise de grandes volumes de dados para melhorar políticas públicas e tomar decisões mais precisas.</p>
+                    
+                    <div class="enhanced-content">
+                        <h3><i class="fas fa-brain"></i> Aplicações Práticas</h3>
+                        <ul class="feature-list">
+                            <li>Predição de demandas por serviços públicos</li>
+                            <li>Otimização de rotas e logística</li>
+                            <li>Detecção de fraudes em benefícios sociais</li>
+                            <li>Análise de sentimentos em feedbacks</li>
+                        </ul>
+                    </div>
+
+                    <div class="gov-cards">
+                        <div class="gov-card">
+                            <h4><i class="fas fa-project-diagram"></i> Tecnologias</h4>
+                            <ul class="feature-list">
+                                <li>Machine Learning</li>
+                                <li>Processamento de Linguagem Natural</li>
+                                <li>Visão Computacional</li>
+                                <li>Redes Neurais</li>
+                            </ul>
+                        </div>
+                        <div class="gov-card">
+                            <h4><i class="fas fa-database"></i> Casos de Uso</h4>
+                            <ul class="feature-list">
+                                <li>IBGE - Análise de dados censitários</li>
+                                <li>Ministério da Saúde - Previsão de epidemias</li>
+                                <li>INSS - Detecção de benefícios irregulares</li>
+                                <li>DNIT - Otimização de tráfego</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Nova tabela comparativa -->
+                    <h3 style="margin-top: 25px;"><i class="fas fa-table"></i> Frameworks de IA mais utilizados no setor público</h3>
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Framework</th>
+                                <th>Linguagem</th>
+                                <th>Aplicação</th>
+                                <th>Exemplo de Uso</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>TensorFlow</td>
+                                <td>Python</td>
+                                <td>Modelos complexos</td>
+                                <td>Previsão de demanda</td>
+                            </tr>
+                            <tr>
+                                <td>Scikit-learn</td>
+                                <td>Python</td>
+                                <td>Análise tradicional</td>
+                                <td>Classificação de documentos</td>
+                            </tr>
+                            <tr>
+                                <td>PyTorch</td>
+                                <td>Python</td>
+                                <td>Pesquisa e prototipagem</td>
+                                <td>Processamento de linguagem</td>
+                            </tr>
+                            <tr>
+                                <td>OpenCV</td>
+                                <td>C++/Python</td>
+                                <td>Visão computacional</td>
+                                <td>Reconhecimento facial</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="alert-box owasp-alert">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <div>
+                            <strong>Ética em IA:</strong> Ao implementar soluções de IA no setor público, considere os princípios de <span class="tooltip">IA responsável<span class="tooltiptext">IA desenvolvida com transparência, justiça, privacidade e responsabilidade</span></span> para evitar vieses e garantir equidade nos serviços.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seção 3 - Automação -->
+                <div class="content-section">
+                    <h2><i class="fas fa-cogs"></i> Automatização de atendimentos</h2>
+                    
+                    <p>Sistemas automatizados realizam atendimentos e triagens iniciais, otimizando o tempo dos servidores e agilizando o serviço ao cidadão.</p>
+                    
+                    <div class="gov-cards">
+                        <div class="gov-card">
+                            <h4><i class="fas fa-robot"></i> Benefícios</h4>
+                            <ul class="feature-list">
+                                <li><span class="stat-badge">+50%</span> produtividade</li>
+                                <li>Redução de erros humanos</li>
+                                <li>Atendimento padronizado</li>
+                                <li>Escalabilidade ilimitada</li>
+                            </ul>
+                        </div>
+                        <div class="gov-card">
+                            <h4><i class="fas fa-tools"></i> Ferramentas</h4>
+                            <ul class="feature-list">
+                                <li>RPA (UiPath, Automation Anywhere)</li>
+                                <li>Workflow Engines (Camunda, Flowable)</li>
+                                <li>Process Mining (Celonis)</li>
+                                <li>Low-code (OutSystems, Mendix)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="alert-box ai-alert">
+                        <i class="fas fa-chart-pie"></i>
+                        <div>
+                            <strong>Impacto:</strong> A automação no INSS reduziu o tempo médio de análise de benefícios de 30 para 5 dias úteis em 2023.
+                        </div>
+                    </div>
+
+                    <!-- Novo conteúdo técnico -->
+                    <div class="enhanced-content">
+                        <h3><i class="fas fa-code"></i> Exemplo de Automação com RPA</h3>
+                        <p>Script básico de automação para consulta de processos:</p>
+                        
+                        <div class="code-block">
+                            <pre><span class="comment"># Exemplo de automação com Python e Selenium</span>
+<span class="keyword">from</span> selenium <span class="keyword">import</span> webdriver
+<span class="keyword">from</span> selenium.webdriver.common.by <span class="keyword">import</span> By
+<span class="keyword">from</span> selenium.webdriver.support.ui <span class="keyword">import</span> WebDriverWait
+<span class="keyword">from</span> selenium.webdriver.support <span class="keyword">import</span> expected_conditions <span class="keyword">as</span> EC
+
+<span class="keyword">def</span> <span class="function">consultar_processo</span>(numero_processo):
+    <span class="comment"># Configura o driver do navegador</span>
+    driver = webdriver.Chrome()
+    driver.get(<span class="string">"https://pje.tjsp.jus.br"</span>)
+    
+    <span class="keyword">try</span>:
+        <span class="comment"># Preenche o número do processo</span>
+        input_processo = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, <span class="string">"numeroProcesso"</span>))
+        )
+        input_processo.send_keys(numero_processo)
+        
+        <span class="comment"># Clica no botão de consulta</span>
+        btn_consultar = driver.find_element(By.ID, <span class="string">"btnConsultar"</span>)
+        btn_consultar.click()
+        
+        <span class="comment"># Aguarda e captura o resultado</span>
+        resultado = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.CLASS_NAME, <span class="string">"resultado-consulta"</span>))
+        <span class="keyword">return</span> resultado.text
+        
+    <span class="keyword">finally</span>:
+        driver.quit()
+
+<span class="comment"># Validação do número do processo antes da consulta</span>
+<span class="keyword">def</span> <span class="function">validar_processo</span>(numero):
+    <span class="keyword">return</span> len(numero) == 20 <span class="keyword">and</span> numero.isdigit()</pre>
+                        </div>
+
+                        <div class="alert-box security-alert">
+                            <i class="fas fa-user-shield"></i>
+                            <div>
+                                <strong>Privacidade:</strong> Ao automatizar processos que lidam com dados pessoais, implemente <span class="tooltip">mascaramento de dados<span class="tooltiptext">Técnica que oculta dados sensíveis durante o processamento</span></span> e garanta o cumprimento da LGPD em todos os fluxos.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seção 4 - Futuro -->
+                <div class="content-section">
+                    <h2><i class="fas fa-microchip"></i> O Futuro da IA no Setor Público</h2>
+                    
+                    <p>Tendências e inovações que moldarão os serviços públicos na próxima década.</p>
+                    
+                    <div class="enhanced-content">
+                        <h3><i class="fas fa-lightbulb"></i> Tendências Emergentes</h3>
+                        <ul class="feature-list">
+                            <li>Assistentes virtuais com reconhecimento de voz</li>
+                            <li>Análise preditiva para políticas públicas</li>
+                            <li>Processamento de linguagem natural avançado</li>
+                            <li>Chatbots com multimodalidade (texto, voz, imagem)</li>
+                            <li>Blockchain para registros governamentais</li>
+                        </ul>
+                    </div>
+
+                    <div class="gov-cards">
+                        <div class="gov-card">
+                            <h4><i class="fas fa-chart-line"></i> Impacto Esperado</h4>
+                            <ul class="feature-list">
+                                <li><span class="stat-badge">+90%</span> eficiência</li>
+                                <li>Redução de custos operacionais</li>
+                                <li>Serviços personalizados</li>
+                                <li>Transparência aumentada</li>
+                            </ul>
+                        </div>
+                        <div class="gov-card">
+                            <h4><i class="fas fa-exclamation-triangle"></i> Desafios</h4>
+                            <ul class="feature-list">
+                                <li>Privacidade de dados</li>
+                                <li>Vieses algorítmicos</li>
+                                <li>Capacitação de servidores</li>
+                                <li>Integração com sistemas legados</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="alert-box owasp-alert">
+                        <i class="fas fa-shield-alt"></i>
+                        <div>
+                            <strong>Segurança:</strong> A adoção de IA no governo requer frameworks de segurança robustos como o <span class="tooltip">OWASP ML Top 10<span class="tooltiptext">Lista dos 10 maiores riscos de segurança em Machine Learning</span></span> para proteger sistemas contra ataques adversariais e vazamentos de dados.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <div class="footer-content">
+                <p>© 2025 INFO.DeV | Todos os direitos reservados.</p>
+                <div class="footer-bottom">
+                    <p>Desenvolvido com <i class="fas fa-heart" style="color: #ef4444;"></i> pela equipe INFO.DeV</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Efeito suave de rolagem para os links internos
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Animação de aparecimento das seções
+        const contentSections = document.querySelectorAll('.content-section');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        contentSections.forEach(section => observer.observe(section));
+    </script>
+</body>
+</html>

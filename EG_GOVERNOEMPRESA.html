@@ -1,0 +1,596 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>G2B – Governo para Empresas - INFO.DeV</title>
+    
+    <!-- Fontes modernas -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Lora:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Ícones Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #3b82f6;
+            --secondary-color: #2563eb;
+            --accent-color: #60a5fa;
+            --text-color: #e5e7eb;
+            --light-text: #9ca3af;
+            --bg-color: #111827;
+            --card-bg: #1f2937;
+            --footer-bg: #030712;
+            --government-color: #6366f1; /* Índigo para governo */
+            --section-border: #374151;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: var(--card-bg);
+            padding: 15px 0;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo-text {
+            font-family: 'Lora', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--primary-color), var(--government-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .nav-links a, .nav-links button {
+            font-size: 0.95rem;
+            padding: 8px 16px;
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+            color: var(--primary-color);
+            transition: all 0.3s;
+            border-radius: 6px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .nav-links button:hover, .nav-links a:hover {
+            background-color: rgba(59, 130, 246, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Header */
+        .page-header {
+            text-align: center;
+            margin: 40px 0;
+            padding: 30px 0;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(99, 102, 241, 0.1));
+            border-radius: 12px;
+            border: 1px solid var(--section-border);
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            color: var(--government-color);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            color: var(--light-text);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Content */
+        .content-container {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+            border: 1px solid var(--section-border);
+        }
+
+        /* Seções Temáticas */
+        .content-section {
+            margin-bottom: 30px;
+            padding: 25px;
+            background-color: rgba(31, 41, 55, 0.7);
+            border-radius: 8px;
+            border-left: 4px solid var(--government-color);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .content-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .content-section:hover {
+            transform: translateY(-5px);
+            background-color: rgba(31, 41, 55, 0.9);
+            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.1);
+        }
+
+        .content-section h2 {
+            color: var(--government-color);
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--section-border);
+        }
+
+        .content-section h2 i {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+
+        .content-section:hover h2 i {
+            transform: scale(1.2);
+        }
+
+        .content-section p {
+            margin-bottom: 10px;
+            color: var(--light-text);
+        }
+
+        /* Enhanced Content */
+        .enhanced-content {
+            border-left: 3px solid var(--government-color);
+            padding: 15px;
+            margin: 20px 0;
+            background: rgba(99, 102, 241, 0.05);
+            border-radius: 5px;
+        }
+
+        .enhanced-content h3 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--government-color);
+            margin-bottom: 10px;
+        }
+
+        /* Listas */
+        .feature-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .feature-list li {
+            margin-bottom: 12px;
+            padding-left: 30px;
+            position: relative;
+            line-height: 1.6;
+        }
+
+        .feature-list li::before {
+            content: "→";
+            color: var(--government-color);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        /* Government Cards */
+        .gov-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .gov-card {
+            background: rgba(99, 102, 241, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+            border: 1px solid var(--section-border);
+            transition: all 0.3s;
+        }
+
+        .gov-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(99, 102, 241, 0.2);
+        }
+
+        .gov-card h4 {
+            color: var(--government-color);
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Stats */
+        .stat-badge {
+            display: inline-block;
+            background-color: rgba(99, 102, 241, 0.2);
+            color: var(--government-color);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin: 5px 0;
+            font-weight: 600;
+        }
+
+        /* Alert Boxes */
+        .alert-box {
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 6px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .alert-box i {
+            font-size: 1.2rem;
+            margin-top: 2px;
+        }
+
+        .gov-alert {
+            background-color: rgba(99, 102, 241, 0.1);
+            border-left: 4px solid var(--government-color);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--footer-bg);
+            color: #d1d5db;
+            padding: 30px 0;
+            margin-top: 60px;
+            border-top: 1px solid var(--section-border);
+        }
+
+        .footer-content {
+            text-align: center;
+        }
+
+        .footer-bottom {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--section-border);
+            font-size: 0.9rem;
+            color: var(--light-text);
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .navbar .container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .content-section h2 {
+                font-size: 1.3rem;
+            }
+            
+            .gov-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar">
+            <div class="container">
+                <a href="PAGPRI.html" class="logo">
+                    <!-- Logo SVG inline para INFO.DeV -->
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="40" height="40" rx="8" fill="url(#paint0_linear)"/>
+                        <path d="M12 12H16V28H12V12Z" fill="white"/>
+                        <path d="M18 12H22V28H18V12Z" fill="white"/>
+                        <path d="M24 12H28V28H24V12Z" fill="white"/>
+                        <path d="M12 12H28V16H12V12Z" fill="white"/>
+                        <path d="M12 24H28V28H12V24Z" fill="white"/>
+                        <defs>
+                            <linearGradient id="paint0_linear" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#2563EB"/>
+                                <stop offset="1" stop-color="#00B3A6"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <span class="logo-text">INFO.DeV</span>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="PAGPRI.html"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="Materiais.html"><i class="fas fa-book"></i> Materiais</a></li>
+                    <li><a href="PagFAQ.html"><i class="fas fa-question-circle"></i> FAQ</a></li>
+                    <li><a href="quiz/quiz.html"><i class="fas fa-question"></i> QUIZ</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <header class="page-header">
+            <h1><i class="fas fa-landmark"></i> G2B – Governo para Empresas</h1>
+            <p>Conheça os serviços digitais que facilitam o relacionamento entre empresas e governo, reduzindo burocracia e aumentando eficiência.</p>
+        </header>
+
+        <main>
+            <div class="content-container">
+                <!-- Seção 1 - Nota Fiscal -->
+                <div class="content-section">
+                    <h2><i class="fas fa-file-invoice-dollar"></i> Nota Fiscal Eletrônica</h2>
+                    
+                    <p>Sistema que permite a emissão, transmissão e armazenamento de documentos fiscais de forma digital, com validade jurídica.</p>
+                    
+                    <div class="gov-cards">
+                        <div class="gov-card">
+                            <h4><i class="fas fa-chart-line"></i> Benefícios</h4>
+                            <ul class="feature-list">
+                                <li><span class="stat-badge">-80%</span> custos com papel</li>
+                                <li><span class="stat-badge">+90%</span> agilidade nos processos</li>
+                                <li>Redução de erros manuais</li>
+                                <li>Integração com sistemas contábeis</li>
+                            </ul>
+                        </div>
+                        <div class="gov-card">
+                            <h4><i class="fas fa-laptop-code"></i> Como Implementar</h4>
+                            <ul class="feature-list">
+                                <li>Credenciamento na SEFAZ</li>
+                                <li>Software certificado</li>
+                                <li>Certificado digital</li>
+                                <li>Integração com ERP</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="alert-box gov-alert">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <div>
+                            <strong>Obrigatoriedade:</strong> Desde 2020, todas as empresas brasileiras devem emitir NF-e, exceto MEIs com faturamento abaixo de R$81 mil/ano.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seção 2 - Simples Nacional -->
+                <div class="content-section">
+                    <h2><i class="fas fa-calculator"></i> Simples Nacional e eSocial</h2>
+                    
+                    <p>Sistemas unificados que simplificam o cumprimento de obrigações fiscais, tributárias e trabalhistas.</p>
+                    
+                    <div class="enhanced-content">
+                        <h3><i class="fas fa-lightbulb"></i> Vantagens</h3>
+                        <ul class="feature-list">
+                            <li>Unificação de impostos em uma única guia</li>
+                            <li>Redução da carga tributária para pequenos negócios</li>
+                            <li>Envio centralizado de informações trabalhistas</li>
+                            <li>Processo 100% digital</li>
+                        </ul>
+                    </div>
+
+                    <div class="gov-cards">
+                        <div class="gov-card">
+                            <h4><i class="fas fa-user-tie"></i> Requisitos</h4>
+                            <ul class="feature-list">
+                                <li>Faturamento ≤ R$4.8 milhões/ano</li>
+                                <li>Sem débitos com a Receita</li>
+                                <li>Atividade permitida no Anexo</li>
+                                <li>Sócio sem restrições</li>
+                            </ul>
+                        </div>
+                        <div class="gov-card">
+                            <h4><i class="fas fa-calendar-alt"></i> Prazos</h4>
+                            <ul class="feature-list">
+                                <li>DAS: até dia 20 do mês seguinte</li>
+                                <li>eSocial: eventos conforme tabela</li>
+                                <li>Declaração Anual: até abril</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seção 3 - Receita Digital -->
+                <div class="content-section">
+                    <h2><i class="fas fa-laptop-code"></i> Receita Federal Digital</h2>
+                    
+                    <p>Portal que permite a realização de diversos serviços fiscais de forma totalmente online, sem necessidade de deslocamento.</p>
+                    
+                    <div class="gov-cards">
+                        <div class="gov-card">
+                            <h4><i class="fas fa-tasks"></i> Serviços Disponíveis</h4>
+                            <ul class="feature-list">
+                                <li>Declaração de Imposto de Renda</li>
+                                <li>Consulta a débitos e parcelamentos</li>
+                                <li>Emissão de certidões negativas</li>
+                                <li>Regularização de CNPJ</li>
+                                <li>Pedido de restituição</li>
+                            </ul>
+                        </div>
+                        <div class="gov-card">
+                            <h4><i class="fas fa-lock"></i> Acesso</h4>
+                            <ul class="feature-list">
+                                <li>Certificado digital (e-CNPJ)</li>
+                                <li>Código de acesso (gerado na RFB)</li>
+                                <li>Gov.br (nível prata ou ouro)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="alert-box gov-alert">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <strong>Novidade 2024:</strong> A Receita está migrando todos os serviços para o portal gov.br, com autenticação unificada e processos simplificados.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seção 4 - Licitações -->
+                <div class="content-section">
+                    <h2><i class="fas fa-gavel"></i> Licitações Eletrônicas</h2>
+                    
+                    <p>Sistema que permite a participação em processos licitatórios de forma totalmente digital, com mais transparência e agilidade.</p>
+                    
+                    <div class="enhanced-content">
+                        <h3><i class="fas fa-search-dollar"></i> Plataformas Principais</h3>
+                        <ul class="feature-list">
+                            <li><strong>Compras.gov.br:</strong> Portal nacional de licitações</li>
+                            <li><strong>Pregão Eletrônico:</strong> Para compras diretas</li>
+                            <li><strong>Sistema de Registro de Preços:</strong> Para compras programadas</li>
+                            <li><strong>Portais estaduais/municipais:</strong> Cada ente tem seu sistema</li>
+                        </ul>
+                    </div>
+
+                    <div class="gov-cards">
+                        <div class="gov-card">
+                            <h4><i class="fas fa-chart-pie"></i> Vantagens</h4>
+                            <ul class="feature-list">
+                                <li><span class="stat-badge">-70%</span> custos com deslocamento</li>
+                                <li>Equalização de oportunidades</li>
+                                <li>Transparência em tempo real</li>
+                                <li>Redução de prazos</li>
+                            </ul>
+                        </div>
+                        <div class="gov-card">
+                            <h4><i class="fas fa-file-signature"></i> Requisitos</h4>
+                            <ul class="feature-list">
+                                <li>Cadastro no SICAF</li>
+                                <li>Certificado digital</li>
+                                <li>Habilitação jurídica</li>
+                                <li>Proposta técnica e econômica</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seção 5 - Impactos -->
+                <div class="content-section">
+                    <h2><i class="fas fa-chart-line"></i> Impactos no Ambiente de Negócios</h2>
+                    
+                    <p>A digitalização dos serviços G2B tem transformado radicalmente a relação entre empresas e governo no Brasil.</p>
+                    
+                    <div class="enhanced-content">
+                        <h3><i class="fas fa-award"></i> Benefícios para Empresas</h3>
+                        <ul class="feature-list">
+                            <li><span class="stat-badge">-40%</span> tempo em burocracia</li>
+                            <li><span class="stat-badge">+30%</span> eficiência operacional</li>
+                            <li>Redução de custos com compliance</li>
+                            <li>Melhor planejamento tributário</li>
+                            <li>Acesso a mercados públicos</li>
+                        </ul>
+                    </div>
+
+                    <div class="alert-box gov-alert">
+                        <i class="fas fa-globe-americas"></i>
+                        <div>
+                            <strong>Ranking Doing Business:</strong> O Brasil subiu 15 posições no ranking de facilidade de fazer negócios graças às iniciativas de governo digital.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <div class="footer-content">
+                <p>© 2025 INFO.DeV | Todos os direitos reservados.</p>
+                <div class="footer-bottom">
+                    <p>Desenvolvido com <i class="fas fa-heart" style="color: #ef4444;"></i> pela equipe INFO.DeV</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Efeito suave de rolagem para os links internos
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Animação de aparecimento das seções
+        const contentSections = document.querySelectorAll('.content-section');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        contentSections.forEach(section => observer.observe(section));
+    </script>
+</body>
+</html>

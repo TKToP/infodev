@@ -1,0 +1,593 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experiência do Usuário (UX) - INFO.DeV</title>
+    
+    <!-- Fontes modernas -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Lora:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Ícones Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #3b82f6;
+            --secondary-color: #2563eb;
+            --accent-color: #60a5fa;
+            --text-color: #e5e7eb;
+            --light-text: #9ca3af;
+            --bg-color: #111827;
+            --card-bg: #1f2937;
+            --footer-bg: #030712;
+            --ux-color: #8b5cf6; /* Roxo para UX */
+            --section-border: #374151;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: var(--card-bg);
+            padding: 15px 0;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo-text {
+            font-family: 'Lora', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--primary-color), var(--ux-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .nav-links a, .nav-links button {
+            font-size: 0.95rem;
+            padding: 8px 16px;
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+            color: var(--primary-color);
+            transition: all 0.3s;
+            border-radius: 6px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .nav-links button:hover, .nav-links a:hover {
+            background-color: rgba(59, 130, 246, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Header */
+        .page-header {
+            text-align: center;
+            margin: 40px 0;
+            padding: 30px 0;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
+            border-radius: 12px;
+            border: 1px solid var(--section-border);
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            color: var(--ux-color);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            color: var(--light-text);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Content */
+        .content-container {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+            border: 1px solid var(--section-border);
+        }
+
+        /* Seções Temáticas */
+        .content-section {
+            margin-bottom: 30px;
+            padding: 25px;
+            background-color: rgba(31, 41, 55, 0.7);
+            border-radius: 8px;
+            border-left: 4px solid var(--ux-color);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .content-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .content-section:hover {
+            transform: translateY(-5px);
+            background-color: rgba(31, 41, 55, 0.9);
+            box-shadow: 0 8px 20px rgba(139, 92, 246, 0.1);
+        }
+
+        .content-section h2 {
+            color: var(--ux-color);
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--section-border);
+        }
+
+        .content-section h2 i {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+
+        .content-section:hover h2 i {
+            transform: scale(1.2);
+        }
+
+        .content-section p {
+            margin-bottom: 10px;
+            color: var(--light-text);
+        }
+
+        /* Enhanced Content */
+        .enhanced-content {
+            border-left: 3px solid var(--ux-color);
+            padding: 15px;
+            margin: 20px 0;
+            background: rgba(139, 92, 246, 0.05);
+            border-radius: 5px;
+        }
+
+        .enhanced-content h3 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--ux-color);
+            margin-bottom: 10px;
+        }
+
+        /* Listas */
+        .feature-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .feature-list li {
+            margin-bottom: 12px;
+            padding-left: 30px;
+            position: relative;
+            line-height: 1.6;
+        }
+
+        .feature-list li::before {
+            content: "▹";
+            color: var(--ux-color);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        /* UX Cards */
+        .ux-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .ux-card {
+            background: rgba(139, 92, 246, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+            border: 1px solid var(--section-border);
+            transition: all 0.3s;
+        }
+
+        .ux-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(139, 92, 246, 0.2);
+        }
+
+        .ux-card h4 {
+            color: var(--ux-color);
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Stats */
+        .stat-badge {
+            display: inline-block;
+            background-color: rgba(139, 92, 246, 0.2);
+            color: var(--ux-color);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin: 5px 0;
+            font-weight: 600;
+        }
+
+        /* Alert Boxes */
+        .alert-box {
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 6px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .alert-box i {
+            font-size: 1.2rem;
+            margin-top: 2px;
+        }
+
+        .ux-alert {
+            background-color: rgba(139, 92, 246, 0.1);
+            border-left: 4px solid var(--ux-color);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--footer-bg);
+            color: #d1d5db;
+            padding: 30px 0;
+            margin-top: 60px;
+            border-top: 1px solid var(--section-border);
+        }
+
+        .footer-content {
+            text-align: center;
+        }
+
+        .footer-bottom {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--section-border);
+            font-size: 0.9rem;
+            color: var(--light-text);
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .navbar .container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .content-section h2 {
+                font-size: 1.3rem;
+            }
+            
+            .ux-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar">
+            <div class="container">
+                <a href="PAGPRI.html" class="logo">
+                    <!-- Logo SVG inline para INFO.DeV -->
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="40" height="40" rx="8" fill="url(#paint0_linear)"/>
+                        <path d="M12 12H16V28H12V12Z" fill="white"/>
+                        <path d="M18 12H22V28H18V12Z" fill="white"/>
+                        <path d="M24 12H28V28H24V12Z" fill="white"/>
+                        <path d="M12 12H28V16H12V12Z" fill="white"/>
+                        <path d="M12 24H28V28H12V24Z" fill="white"/>
+                        <defs>
+                            <linearGradient id="paint0_linear" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#2563EB"/>
+                                <stop offset="1" stop-color="#00B3A6"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <span class="logo-text">INFO.DeV</span>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="PAGPRI.html"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="Materiais.html"><i class="fas fa-book"></i> Materiais</a></li>
+                    <li><a href="PagFAQ.html"><i class="fas fa-question-circle"></i> FAQ</a></li>
+                    <li><a href="quiz/quiz.html"><i class="fas fa-question"></i> QUIZ</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <header class="page-header">
+            <h1><i class="fas fa-user-circle"></i> Experiência do Usuário (UX)</h1>
+            <p>Melhore a jornada do cliente no seu e-commerce com as melhores práticas de UX para aumentar conversões e fidelização em 2024.</p>
+        </header>
+
+        <main>
+            <div class="content-container">
+                <!-- Seção 1 - Design Responsivo -->
+                <div class="content-section">
+                    <h2><i class="fas fa-mobile-alt"></i> Design Responsivo</h2>
+                    
+                    <p>Garantir que seu e-commerce funcione perfeitamente em qualquer dispositivo é essencial, já que mais de 60% das compras são feitas por mobile.</p>
+                    
+                    <div class="ux-cards">
+                        <div class="ux-card">
+                            <h4><i class="fas fa-chart-line"></i> Estatísticas</h4>
+                            <ul class="feature-list">
+                                <li><span class="stat-badge">73%</span> dos usuários abandonam sites não responsivos</li>
+                                <li><span class="stat-badge">2x</span> mais conversões em sites mobile-friendly</li>
+                                <li>Google prioriza sites responsivos no ranking</li>
+                            </ul>
+                        </div>
+                        <div class="ux-card">
+                            <h4><i class="fas fa-check-circle"></i> Boas Práticas</h4>
+                            <ul class="feature-list">
+                                <li>Teste em múltiplos dispositivos</li>
+                                <li>Botões grandes para touch (mínimo 48x48px)</li>
+                                <li>Carregamento rápido (under 3s)</li>
+                                <li>Design mobile-first</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="alert-box ux-alert">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <div>
+                            <strong>Google Core Web Vitals:</strong> Seu site deve ter bons scores em LCP (maior conteúdo visível), FID (interatividade) e CLS (estabilidade visual) para melhor ranqueamento.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seção 2 - Navegação -->
+                <div class="content-section">
+                    <h2><i class="fas fa-search"></i> Navegação Intuitiva</h2>
+                    
+                    <p>Uma navegação clara e filtros eficientes podem reduzir a taxa de abandono e aumentar significativamente as conversões.</p>
+                    
+                    <div class="enhanced-content">
+                        <h3><i class="fas fa-filter"></i> Filtros Eficientes</h3>
+                        <ul class="feature-list">
+                            <li>Hierarquia clara de categorias (máximo 3 níveis)</li>
+                            <li>Filtros por preço, avaliação, características</li>
+                            <li>Busca com autocompletar e correção</li>
+                            <li>Histórico de buscas recentes</li>
+                        </ul>
+                    </div>
+
+                    <div class="ux-cards">
+                        <div class="ux-card">
+                            <h4><i class="fas fa-sitemap"></i> Arquitetura da Informação</h4>
+                            <ul class="feature-list">
+                                <li>Máximo de 3 cliques para qualquer produto</li>
+                                <li>Breadcrumbs para orientação</li>
+                                <li>Menu consistente em todas as páginas</li>
+                                <li>Links relevantes no footer</li>
+                            </ul>
+                        </div>
+                        <div class="ux-card">
+                            <h4><i class="fas fa-tachometer-alt"></i> Métricas</h4>
+                            <ul class="feature-list">
+                                <li><span class="stat-badge">-35%</span> taxa de abandono com navegação otimizada</li>
+                                <li><span class="stat-badge">+40%</span> tempo no site com busca eficiente</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seção 3 - Avaliações -->
+                <div class="content-section">
+                    <h2><i class="fas fa-star"></i> Avaliações e Comentários</h2>
+                    
+                    <p>Social proof é um dos fatores mais influentes na decisão de compra, podendo aumentar as conversões em até 120%.</p>
+                    
+                    <div class="ux-cards">
+                        <div class="ux-card">
+                            <h4><i class="fas fa-chart-pie"></i> Impacto</h4>
+                            <ul class="feature-list">
+                                <li><span class="stat-badge">92%</span> dos consumidores leem avaliações</li>
+                                <li>Produtos com avaliações vendem <span class="stat-badge">3.5x</span> mais</li>
+                                <li>Média ideal: 4.2-4.8 estrelas</li>
+                            </ul>
+                        </div>
+                        <div class="ux-card">
+                            <h4><i class="fas fa-lightbulb"></i> Implementação</h4>
+                            <ul class="feature-list">
+                                <li>Incentive avaliações com recompensas</li>
+                                <li>Responda a comentários (positivos e negativos)</li>
+                                <li>Destaque avaliações verificadas</li>
+                                <li>Permita fotos/vídeos de clientes</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="alert-box ux-alert">
+                        <i class="fas fa-medal"></i>
+                        <div>
+                            <strong>Dica:</strong> Exibir snippets de avaliações nos cards de produto pode aumentar o CTR em até 30%.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seção 4 - Atendimento -->
+                <div class="content-section">
+                    <h2><i class="fas fa-comments"></i> Atendimento ao Cliente</h2>
+                    
+                    <p>Suporte rápido e eficiente pode ser a diferença entre uma venda perdida e um cliente fidelizado.</p>
+                    
+                    <div class="ux-cards">
+                        <div class="ux-card">
+                            <h4><i class="fas fa-robot"></i> Chatbots Inteligentes</h4>
+                            <ul class="feature-list">
+                                <li>Resposta em menos de 2 minutos</li>
+                                <li>Encaminhamento para humano quando necessário</li>
+                                <li>Integração com FAQ e base de conhecimento</li>
+                                <li>Disponível 24/7</li>
+                            </ul>
+                        </div>
+                        <div class="ux-card">
+                            <h4><i class="fas fa-headset"></i> Canais de Atendimento</h4>
+                            <ul class="feature-list">
+                                <li>Chat online (preferência de 65% dos usuários)</li>
+                                <li>WhatsApp Business</li>
+                                <li>E-mail com resposta em até 6h</li>
+                                <li>Telefone para casos complexos</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="enhanced-content">
+                        <h3><i class="fas fa-clock"></i> Métricas de Suporte</h3>
+                        <ul class="feature-list">
+                            <li>Tempo médio de resposta < 5min</li>
+                            <li>Resolução na primeira interação > 85%</li>
+                            <li>Satisfação do cliente (CSAT) > 90%</li>
+                            <li>Taxa de retenção pós-contato > 70%</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Seção 5 - Checkout -->
+                <div class="content-section">
+                    <h2><i class="fas fa-cash-register"></i> Experiência de Checkout</h2>
+                    
+                    <p>O processo de finalização de compra é onde a maioria dos carrinhos são abandonados - otimizá-lo pode aumentar suas conversões em até 35%.</p>
+                    
+                    <div class="enhanced-content">
+                        <h3><i class="fas fa-bolt"></i> Otimizações de Checkout</h3>
+                        <ul class="feature-list">
+                            <li>Progresso claro (passo a passo visível)</li>
+                            <li>Múltiplas opções de pagamento</li>
+                            <li>Cadastro opcional (permita checkout como visitante)</li>
+                            <li>Detalhes do pedido sempre visíveis</li>
+                            <li>Autopreenchimento de dados</li>
+                        </ul>
+                    </div>
+
+                    <div class="alert-box ux-alert">
+                        <i class="fas fa-wallet"></i>
+                        <div>
+                            <strong>Dado crucial:</strong> 28% dos usuários abandonam carrinhos por processos de checkout muito longos. Mantenha-o em no máximo 3 etapas.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <div class="footer-content">
+                <p>© 2025 INFO.DeV | Todos os direitos reservados.</p>
+                <div class="footer-bottom">
+                    <p>Desenvolvido com <i class="fas fa-heart" style="color: #ef4444;"></i> pela equipe INFO.DeV</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Efeito suave de rolagem para os links internos
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Animação de aparecimento das seções
+        const contentSections = document.querySelectorAll('.content-section');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        contentSections.forEach(section => observer.observe(section));
+    </script>
+</body>
+</html>

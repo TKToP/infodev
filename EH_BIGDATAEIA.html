@@ -1,0 +1,761 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Aplicações de Big Data e Inteligência Artificial no setor de saúde, incluindo diagnóstico, prevenção de epidemias e medicina personalizada.">
+    <meta name="keywords" content="Big Data, Inteligência Artificial, Saúde, Diagnóstico, Epidemias, Medicina Personalizada">
+    <title>Big Data e IA na Saúde - INFO.DeV</title>
+    
+    <!-- Fontes modernas -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Lora:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Ícones Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Highlight.js para syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #3b82f6;
+            --secondary-color: #2563eb;
+            --accent-color: #60a5fa;
+            --text-color: #e5e7eb;
+            --light-text: #9ca3af;
+            --bg-color: #111827;
+            --card-bg: #1f2937;
+            --footer-bg: #030712;
+            --health-color: #10b981; /* Verde para saúde */
+            --section-border: #374151;
+            --ai-color: #8b5cf6; /* Roxo para IA */
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: var(--card-bg);
+            padding: 15px 0;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo-text {
+            font-family: 'Lora', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--primary-color), var(--ai-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .nav-links a, .nav-links button {
+            font-size: 0.95rem;
+            padding: 8px 16px;
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+            color: var(--primary-color);
+            transition: all 0.3s;
+            border-radius: 6px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .nav-links button:hover, .nav-links a:hover {
+            background-color: rgba(59, 130, 246, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Header */
+        .page-header {
+            text-align: center;
+            margin: 40px 0;
+            padding: 30px 0;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(139, 92, 246, 0.1));
+            border-radius: 12px;
+            border: 1px solid var(--section-border);
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            color: var(--health-color);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            color: var(--light-text);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Content */
+        .content-container {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+            border: 1px solid var(--section-border);
+        }
+
+        /* Seções Temáticas */
+        .content-section {
+            margin-bottom: 30px;
+            padding: 25px;
+            background-color: rgba(31, 41, 55, 0.7);
+            border-radius: 8px;
+            border-left: 4px solid var(--health-color);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .content-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .content-section:hover {
+            transform: translateY(-5px);
+            background-color: rgba(31, 41, 55, 0.9);
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.1);
+        }
+
+        .content-section h2 {
+            color: var(--health-color);
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--section-border);
+        }
+
+        .content-section h2 i {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+
+        .content-section:hover h2 i {
+            transform: scale(1.2);
+        }
+
+        .content-section p {
+            margin-bottom: 10px;
+            color: var(--light-text);
+        }
+
+        /* Enhanced Content */
+        .enhanced-content {
+            border-left: 3px solid var(--health-color);
+            padding: 15px;
+            margin: 20px 0;
+            background: rgba(16, 185, 129, 0.05);
+            border-radius: 5px;
+        }
+
+        .enhanced-content h3 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--health-color);
+            margin-bottom: 10px;
+        }
+
+        /* Listas */
+        .feature-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .feature-list li {
+            margin-bottom: 12px;
+            padding-left: 30px;
+            position: relative;
+            line-height: 1.6;
+        }
+
+        .feature-list li::before {
+            content: "→";
+            color: var(--health-color);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        /* Benefit Cards */
+        .benefit-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .benefit-card {
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+            border: 1px solid var(--section-border);
+            transition: all 0.3s;
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(16, 185, 129, 0.2);
+        }
+
+        .benefit-card h4 {
+            color: var(--health-color);
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Stats */
+        .stat-badge {
+            display: inline-block;
+            background-color: rgba(16, 185, 129, 0.2);
+            color: var(--health-color);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin: 5px 0;
+            font-weight: 600;
+        }
+
+        /* Alert Boxes */
+        .alert-box {
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 6px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .alert-box i {
+            font-size: 1.2rem;
+            margin-top: 2px;
+        }
+
+        .health-alert {
+            background-color: rgba(16, 185, 129, 0.1);
+            border-left: 4px solid var(--health-color);
+        }
+
+        .ai-alert {
+            background-color: rgba(139, 92, 246, 0.1);
+            border-left: 4px solid var(--ai-color);
+        }
+
+        /* Platform Showcase */
+        .platform-showcase {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .platform-item {
+            flex: 1;
+            min-width: 200px;
+            background: rgba(16, 185, 129, 0.05);
+            border: 1px solid var(--section-border);
+            border-radius: 8px;
+            padding: 15px;
+            transition: all 0.3s;
+        }
+
+        .platform-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(16, 185, 129, 0.1);
+        }
+
+        .platform-item h5 {
+            color: var(--health-color);
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Code Blocks */
+        .code-container {
+            position: relative;
+            margin: 20px 0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .code-header {
+            background-color: #1e1e1e;
+            padding: 8px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+
+        .code-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            color: #d4d4d4;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .code-copy {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #d4d4d4;
+            padding: 4px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s;
+        }
+
+        .code-copy:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Comparison Tables */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .comparison-table th, .comparison-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--section-border);
+        }
+
+        .comparison-table th {
+            background-color: rgba(16, 185, 129, 0.1);
+            color: var(--health-color);
+            font-weight: 600;
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comparison-table tr:hover {
+            background-color: rgba(16, 185, 129, 0.05);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--footer-bg);
+            color: #d1d5db;
+            padding: 30px 0;
+            margin-top: 60px;
+            border-top: 1px solid var(--section-border);
+        }
+
+        .footer-content {
+            text-align: center;
+        }
+
+        .footer-bottom {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--section-border);
+            font-size: 0.9rem;
+            color: var(--light-text);
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .navbar .container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .content-section h2 {
+                font-size: 1.3rem;
+            }
+            
+            .benefit-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .platform-showcase {
+                flex-direction: column;
+            }
+            
+            .comparison-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar">
+            <div class="container">
+                <a href="PAGPRI.html" class="logo">
+                    <!-- Logo SVG inline para INFO.DeV -->
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="40" height="40" rx="8" fill="url(#paint0_linear)"/>
+                        <path d="M12 12H16V28H12V12Z" fill="white"/>
+                        <path d="M18 12H22V28H18V12Z" fill="white"/>
+                        <path d="M24 12H28V28H24V12Z" fill="white"/>
+                        <path d="M12 12H28V16H12V12Z" fill="white"/>
+                        <path d="M12 24H28V28H12V24Z" fill="white"/>
+                        <defs>
+                            <linearGradient id="paint0_linear" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#2563EB"/>
+                                <stop offset="1" stop-color="#00B3A6"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <span class="logo-text">INFO.DeV</span>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="PAGPRI.html"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="Materiais.html"><i class="fas fa-book"></i> Materiais</a></li>
+                    <li><a href="PagFAQ.html"><i class="fas fa-question-circle"></i> FAQ</a></li>
+                    <li><a href="quiz/quiz.html"><i class="fas fa-question"></i> QUIZ</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <header class="page-header">
+            <h1><i class="fas fa-brain"></i> Big Data e IA na Saúde</h1>
+            <p>O uso de tecnologias avançadas está revolucionando o diagnóstico, prevenção e tratamento de doenças.</p>
+        </header>
+
+        <main>
+            <div class="content-container">
+                <!-- Seção 1 - IA para Diagnóstico -->
+                <div class="content-section">
+                    <h2><i class="fas fa-stethoscope"></i> IA para Diagnóstico</h2>
+                    
+                    <p>Algoritmos de Inteligência Artificial são utilizados para analisar exames e sugerir diagnósticos precisos com base em grandes volumes de dados clínicos e imagens médicas.</p>
+                    
+                    <div class="benefit-cards">
+                        <div class="benefit-card">
+                            <h4><i class="fas fa-chart-line"></i> Estatísticas</h4>
+                            <ul class="feature-list">
+                                <li><span class="stat-badge">+95%</span> precisão em diagnósticos de câncer de mama</li>
+                                <li><span class="stat-badge">-30%</span> tempo de análise de exames</li>
+                                <li><span class="stat-badge">+40%</span> detecção precoce de doenças</li>
+                            </ul>
+                        </div>
+                        <div class="benefit-card">
+                            <h4><i class="fas fa-laptop-medical"></i> Plataformas</h4>
+                            <ul class="feature-list">
+                                <li>IBM Watson Health</li>
+                                <li>Google DeepMind Health</li>
+                                <li>Zebra Medical Vision</li>
+                                <li>Butterfly Network</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="code-container">
+                        <div class="code-header">
+                            <div class="code-title">
+                                <i class="fas fa-code"></i> Exemplo de Classificação de Imagens (Python)
+                            </div>
+                            <button class="code-copy" onclick="copyCode(this)">Copiar</button>
+                        </div>
+                        <pre><code class="language-python">import tensorflow as tf
+from tensorflow.keras.applications import DenseNet121
+from tensorflow.keras.layers import Dense, GlobalAveragePooling2D
+from tensorflow.keras.models import Model
+
+# Carregar modelo pré-treinado
+base_model = DenseNet121(weights='imagenet', include_top=False)
+
+# Adicionar camadas personalizadas para diagnóstico médico
+x = base_model.output
+x = GlobalAveragePooling2D()(x)
+x = Dense(1024, activation='relu')(x)
+predictions = Dense(2, activation='softmax')(x)  # 2 classes: normal/anormal
+
+# Modelo final
+model = Model(inputs=base_model.input, outputs=predictions)
+
+# Congelar camadas convolucionais
+for layer in base_model.layers:
+    layer.trainable = False
+
+# Compilar o modelo
+model.compile(optimizer='adam', 
+              loss='categorical_crossentropy',
+              metrics=['accuracy'])
+
+# Treinar com imagens médicas
+# model.fit(train_images, train_labels, epochs=10, validation_data=(val_images, val_labels))</code></pre>
+                    </div>
+
+                    <div class="alert-box health-alert">
+                        <i class="fas fa-heartbeat"></i>
+                        <div>
+                            <strong>Impacto:</strong> Sistemas de IA auxiliam radiologistas, aumentando a precisão diagnóstica em até 30% segundo estudos recentes.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seção 2 - Prevenção de Epidemias -->
+                <div class="content-section">
+                    <h2><i class="fas fa-virus"></i> Prevenção e Previsão de Epidemias</h2>
+                    
+                    <p>A análise de grandes volumes de dados de saúde, juntamente com comportamentos e dados populacionais, pode prever surtos e epidemias, permitindo que os sistemas de saúde se preparem de forma proativa.</p>
+                    
+                    <div class="enhanced-content">
+                        <h3><i class="fas fa-database"></i> Fontes de Dados</h3>
+                        <ul class="feature-list">
+                            <li>Registros eletrônicos de saúde</li>
+                            <li>Dados de redes sociais e buscas online</li>
+                            <li>Informações climáticas e ambientais</li>
+                            <li>Dados de mobilidade populacional</li>
+                        </ul>
+                    </div>
+
+                    <div class="comparison-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Tecnologia</th>
+                                    <th>Aplicação</th>
+                                    <th>Resultados</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Machine Learning</td>
+                                    <td>Previsão de surtos de gripe</td>
+                                    <td>Até 2 semanas de antecedência</td>
+                                </tr>
+                                <tr>
+                                    <td>Análise de Sentimento</td>
+                                    <td>Detecção precoce de sintomas</td>
+                                    <td>Identificação de áreas de risco</td>
+                                </tr>
+                                <tr>
+                                    <td>Simulações Epidemiológicas</td>
+                                    <td>Projeção de disseminação</td>
+                                    <td>Planejamento de recursos</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="alert-box ai-alert">
+                        <i class="fas fa-robot"></i>
+                        <div>
+                            <strong>Casos Reais:</strong> Durante a COVID-19, modelos de IA previram com precisão as curvas de infecção em diversas regiões, auxiliando na alocação de recursos.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seção 3 - Medicina Personalizada -->
+                <div class="content-section">
+                    <h2><i class="fas fa-flask"></i> Pesquisas Clínicas e Medicina Personalizada</h2>
+                    
+                    <p>Big Data permite a análise de grandes volumes de dados de pacientes, incluindo históricos médicos e genéticos, para ajudar em pesquisas clínicas e tratamentos personalizados.</p>
+                    
+                    <div class="platform-showcase">
+                        <div class="platform-item">
+                            <h5><i class="fas fa-dna"></i> Projeto Genoma Humano</h5>
+                            <p>Análise de variações genéticas para tratamentos personalizados contra o câncer.</p>
+                        </div>
+                        <div class="platform-item">
+                            <h5><i class="fas fa-pills"></i> Atomwise</h5>
+                            <p>Uso de IA para descoberta acelerada de novos medicamentos.</p>
+                        </div>
+                        <div class="platform-item">
+                            <h5><i class="fas fa-microscope"></i> Deep Genomics</h5>
+                            <p>Previsão de como mutações genéticas afetam a saúde.</p>
+                        </div>
+                    </div>
+
+                    <div class="code-container">
+                        <div class="code-header">
+                            <div class="code-title">
+                                <i class="fas fa-dna"></i> Análise Genômica (Python)
+                            </div>
+                            <button class="code-copy" onclick="copyCode(this)">Copiar</button>
+                        </div>
+                        <pre><code class="language-python">import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+
+# Carregar dados genômicos e clínicos
+genomic_data = pd.read_csv('pacientes_genomicos.csv')
+clinical_data = pd.read_csv('dados_clinicos.csv')
+
+# Combinar datasets
+data = pd.merge(genomic_data, clinical_data, on='patient_id')
+
+# Pré-processamento
+X = data.drop(['patient_id', 'treatment_response'], axis=1)
+y = data['treatment_response']
+
+# Dividir em treino e teste
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+
+# Modelo de predição de resposta a tratamento
+model = RandomForestClassifier(n_estimators=100)
+model.fit(X_train, y_train)
+
+# Avaliar desempenho
+accuracy = model.score(X_test, y_test)
+print(f"Acurácia na previsão de resposta ao tratamento: {accuracy:.2%}")
+
+# Salvar modelo para uso clínico
+# import joblib
+# joblib.dump(model, 'modelo_resposta_tratamento.pkl')</code></pre>
+                    </div>
+
+                    <div class="alert-box health-alert">
+                        <i class="fas fa-clipboard-check"></i>
+                        <div>
+                            <strong>Futuro:</strong> Até 2027, estima-se que 50% dos tratamentos contra o câncer serão personalizados com base em análise genômica e IA.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <div class="footer-content">
+                <p>© 2025 INFO.DeV | Todos os direitos reservados.</p>
+                <div class="footer-bottom">
+                    <p>Desenvolvido com <i class="fas fa-heart" style="color: #ef4444;"></i> pela equipe INFO.DeV</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>
+        // Efeito suave de rolagem para os links internos
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Animação de aparecimento das seções
+        const contentSections = document.querySelectorAll('.content-section');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        contentSections.forEach(section => observer.observe(section));
+
+        // Ativar highlight.js para syntax highlighting
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.querySelectorAll('pre code').forEach((block) => {
+                hljs.highlightElement(block);
+            });
+        });
+
+        // Função para copiar código
+        function copyCode(button) {
+            const codeBlock = button.parentElement.nextElementSibling;
+            const code = codeBlock.textContent;
+
+            navigator.clipboard.writeText(code).then(() => {
+                button.textContent = 'Copiado!';
+                setTimeout(() => {
+                    button.textContent = 'Copiar';
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>

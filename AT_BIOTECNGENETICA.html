@@ -1,0 +1,824 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biotecnologia e Genética no Agronegócio - INFO.DeV</title>
+    
+    <!-- Fontes modernas -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Lora:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Ícones Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #3b82f6;
+            --secondary-color: #2563eb;
+            --accent-color: #60a5fa;
+            --text-color: #e5e7eb;
+            --light-text: #9ca3af;
+            --bg-color: #111827;
+            --card-bg: #1f2937;
+            --footer-bg: #030712;
+            --bio-color: #10b981; /* Verde para biotecnologia */
+            --genetic-color: #3b82f6; /* Azul para genética */
+            --section-border: #374151;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: var(--card-bg);
+            padding: 15px 0;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo-text {
+            font-family: 'Lora', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--primary-color), var(--bio-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .nav-links a, .nav-links button {
+            font-size: 0.95rem;
+            padding: 8px 16px;
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+            color: var(--primary-color);
+            transition: all 0.3s;
+            border-radius: 6px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .nav-links button:hover, .nav-links a:hover {
+            background-color: rgba(59, 130, 246, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Header */
+        .page-header {
+            text-align: center;
+            margin: 40px 0;
+            padding: 30px 0;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(16, 185, 129, 0.1));
+            border-radius: 12px;
+            border: 1px solid var(--section-border);
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            color: var(--bio-color);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            color: var(--light-text);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Content */
+        .content-container {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+            border: 1px solid var(--section-border);
+        }
+
+        /* Seções Temáticas */
+        .content-section {
+            margin-bottom: 30px;
+            padding: 25px;
+            background-color: rgba(31, 41, 55, 0.7);
+            border-radius: 8px;
+            border-left: 4px solid var(--bio-color);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .genetic-section {
+            border-left: 4px solid var(--genetic-color);
+        }
+
+        .content-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .content-section:hover {
+            transform: translateY(-5px);
+            background-color: rgba(31, 41, 55, 0.9);
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.1);
+        }
+
+        .genetic-section:hover {
+            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.1);
+        }
+
+        .content-section h2 {
+            color: var(--bio-color);
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--section-border);
+        }
+
+        .genetic-section h2 {
+            color: var(--genetic-color);
+        }
+
+        .content-section h2 i {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+
+        .genetic-section h2 i {
+            animation: pulse-genetic 2s infinite;
+        }
+
+        .content-section:hover h2 i {
+            transform: scale(1.2);
+        }
+
+        .content-section p {
+            margin-bottom: 10px;
+            color: var(--light-text);
+        }
+
+        /* Enhanced Content */
+        .enhanced-content {
+            border-left: 3px solid var(--bio-color);
+            padding: 15px;
+            margin: 20px 0;
+            background: rgba(16, 185, 129, 0.05);
+            border-radius: 5px;
+        }
+
+        .genetic-enhanced {
+            border-left: 3px solid var(--genetic-color);
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        .enhanced-content h3 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--bio-color);
+            margin-bottom: 10px;
+        }
+
+        .genetic-enhanced h3 {
+            color: var(--genetic-color);
+        }
+
+        /* Listas */
+        .feature-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .feature-list li {
+            margin-bottom: 12px;
+            padding-left: 30px;
+            position: relative;
+            line-height: 1.6;
+        }
+
+        .feature-list li::before {
+            content: "→";
+            color: var(--bio-color);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        .genetic-list li::before {
+            color: var(--genetic-color);
+        }
+
+        /* Benefit Cards */
+        .benefit-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .benefit-card {
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+            border: 1px solid var(--section-border);
+            transition: all 0.3s;
+        }
+
+        .genetic-card {
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(16, 185, 129, 0.2);
+        }
+
+        .genetic-card:hover {
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.2);
+        }
+
+        .benefit-card h4 {
+            color: var(--bio-color);
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .genetic-card h4 {
+            color: var(--genetic-color);
+        }
+
+        /* Stats */
+        .stat-badge {
+            display: inline-block;
+            background-color: rgba(16, 185, 129, 0.2);
+            color: var(--bio-color);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin: 5px 0;
+            font-weight: 600;
+        }
+
+        .genetic-badge {
+            background-color: rgba(59, 130, 246, 0.2);
+            color: var(--genetic-color);
+        }
+
+        .warning-badge {
+            background-color: rgba(245, 158, 11, 0.2);
+            color: var(--warning-color);
+        }
+
+        /* Alert Boxes */
+        .alert-box {
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 6px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .alert-box i {
+            font-size: 1.2rem;
+            margin-top: 2px;
+        }
+
+        .bio-alert {
+            background-color: rgba(16, 185, 129, 0.1);
+            border-left: 4px solid var(--bio-color);
+        }
+
+        .genetic-alert {
+            background-color: rgba(59, 130, 246, 0.1);
+            border-left: 4px solid var(--genetic-color);
+        }
+
+        .warning-alert {
+            background-color: rgba(245, 158, 11, 0.1);
+            border-left: 4px solid var(--warning-color);
+        }
+
+        /* Platform Showcase */
+        .platform-showcase {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .platform-item {
+            flex: 1;
+            min-width: 200px;
+            background: rgba(16, 185, 129, 0.05);
+            border: 1px solid var(--section-border);
+            border-radius: 8px;
+            padding: 15px;
+            transition: all 0.3s;
+        }
+
+        .genetic-item {
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        .platform-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(16, 185, 129, 0.1);
+        }
+
+        .genetic-item:hover {
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.1);
+        }
+
+        .platform-item h5 {
+            color: var(--bio-color);
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .genetic-item h5 {
+            color: var(--genetic-color);
+        }
+
+        /* Comparison Tables */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .comparison-table th, .comparison-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--section-border);
+        }
+
+        .comparison-table th {
+            background-color: rgba(16, 185, 129, 0.1);
+            color: var(--bio-color);
+            font-weight: 600;
+        }
+
+        .genetic-table th {
+            background-color: rgba(59, 130, 246, 0.1);
+            color: var(--genetic-color);
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comparison-table tr:hover {
+            background-color: rgba(16, 185, 129, 0.05);
+        }
+
+        .genetic-table tr:hover {
+            background-color: rgba(59, 130, 246, 0.05);
+        }
+
+        /* Tech Stack */
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .tech-item {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid var(--section-border);
+            border-radius: 20px;
+            padding: 8px 15px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .genetic-tech {
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--footer-bg);
+            color: #d1d5db;
+            padding: 30px 0;
+            margin-top: 60px;
+            border-top: 1px solid var(--section-border);
+        }
+
+        .footer-content {
+            text-align: center;
+        }
+
+        .footer-bottom {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--section-border);
+            font-size: 0.9rem;
+            color: var(--light-text);
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
+        }
+
+        @keyframes pulse-genetic {
+            0%, 100% { transform: scale(1); opacity: 1; color: var(--genetic-color); }
+            50% { transform: scale(1.2); opacity: 0.7; color: #93c5fd; }
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .navbar .container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .content-section h2 {
+                font-size: 1.3rem;
+            }
+            
+            .benefit-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .platform-showcase {
+                flex-direction: column;
+            }
+
+            .comparison-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .content-container {
+                padding: 15px;
+            }
+            
+            .content-section {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar">
+            <div class="container">
+                <a href="PAGPRI.html" class="logo">
+                    <!-- Logo SVG inline para INFO.DeV -->
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="40" height="40" rx="8" fill="url(#paint0_linear)"/>
+                        <path d="M12 12H16V28H12V12Z" fill="white"/>
+                        <path d="M18 12H22V28H18V12Z" fill="white"/>
+                        <path d="M24 12H28V28H24V12Z" fill="white"/>
+                        <path d="M12 12H28V16H12V12Z" fill="white"/>
+                        <path d="M12 24H28V28H12V24Z" fill="white"/>
+                        <defs>
+                            <linearGradient id="paint0_linear" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#2563EB"/>
+                                <stop offset="1" stop-color="#00B3A6"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <span class="logo-text">INFO.DeV</span>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="PAGPRI.html"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="Materiais.html"><i class="fas fa-book"></i> Materiais</a></li>
+                    <li><a href="PagFAQ.html"><i class="fas fa-question-circle"></i> FAQ</a></li>
+                    <li><a href="quiz/quiz.html"><i class="fas fa-question"></i> QUIZ</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <header class="page-header">
+            <h1><i class="fas fa-dna"></i> Biotecnologia e Genética no Agronegócio</h1>
+            <p>A inovação genética está revolucionando o campo, promovendo cultivos mais resistentes e eficientes, além de animais mais produtivos e adaptados.</p>
+        </header>
+
+        <main>
+            <div class="content-container">
+                <!-- Seção 1 - Sementes Geneticamente Melhoradas -->
+                <div class="content-section genetic-section">
+                    <h2><i class="fas fa-seedling"></i> Sementes Geneticamente Melhoradas</h2>
+                    
+                    <p>Desenvolvimento de <strong>sementes transgênicas</strong> mais resistentes a pragas, doenças e variações climáticas.</p>
+                    
+                    <div class="benefit-cards">
+                        <div class="benefit-card genetic-card">
+                            <h4><i class="fas fa-dna"></i> Tecnologias Utilizadas</h4>
+                            <ul class="feature-list genetic-list">
+                                <li>CRISPR-Cas9 para edição genética</li>
+                                <li>Transgenia para inserção de genes</li>
+                                <li>Seleção assistida por marcadores</li>
+                                <li>Genômica computacional</li>
+                            </ul>
+                        </div>
+                        <div class="benefit-card genetic-card">
+                            <h4><i class="fas fa-chart-line"></i> Benefícios</h4>
+                            <ul class="feature-list genetic-list">
+                                <li><span class="stat-badge genetic-badge">+30%</span> produtividade</li>
+                                <li><span class="stat-badge genetic-badge">-50%</span> uso de pesticidas</li>
+                                <li>Resistência a condições extremas</li>
+                                <li>Melhor valor nutricional</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="alert-box genetic-alert">
+                        <i class="fas fa-lightbulb"></i>
+                        <div>
+                            <strong>Exemplo:</strong> Soja Intacta RR2 PRO® reduz em 70% as perdas por lagartas e diminui aplicações de inseticidas.
+                        </div>
+                    </div>
+
+                    <div class="tech-stack">
+                        <div class="tech-item genetic-tech">
+                            <i class="fas fa-dna"></i> CRISPR
+                        </div>
+                        <div class="tech-item genetic-tech">
+                            <i class="fas fa-microscope"></i> PCR
+                        </div>
+                        <div class="tech-item genetic-tech">
+                            <i class="fas fa-laptop-code"></i> Bioinformática
+                        </div>
+                        <div class="tech-item genetic-tech">
+                            <i class="fas fa-vial"></i> Sequenciamento NGS
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seção 2 - Fertilizantes Biológicos e OGMs -->
+                <div class="content-section">
+                    <h2><i class="fas fa-vial"></i> Fertilizantes Biológicos e OGMs</h2>
+                    
+                    <p>Uso de microrganismos benéficos para aumentar a fertilidade do solo e produtividade das plantas.</p>
+                    
+                    <div class="enhanced-content">
+                        <h3><i class="fas fa-bacteria"></i> Microrganismos Utilizados</h3>
+                        <ul class="feature-list">
+                            <li><strong>Rhizobium:</strong> Fixação biológica de nitrogênio</li>
+                            <li><strong>Azospirillum:</strong> Promoção de crescimento</li>
+                            <li><strong>Bacillus:</strong> Controle biológico de patógenos</li>
+                            <li><strong>Micorrizas:</strong> Aumento da absorção de nutrientes</li>
+                        </ul>
+                    </div>
+
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Tecnologia</th>
+                                <th>Redução de Fertilizantes</th>
+                                <th>Aumento de Produtividade</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Inoculantes de Nitrogênio</td>
+                                <td><span class="stat-badge">-40%</span> N químico</td>
+                                <td><span class="stat-badge">+15%</span> rendimento</td>
+                            </tr>
+                            <tr>
+                                <td>Biofertilizantes Fosfatados</td>
+                                <td><span class="stat-badge">-30%</span> P₂O₅</td>
+                                <td><span class="stat-badge">+12%</span> rendimento</td>
+                            </tr>
+                            <tr>
+                                <td>Consórcios Microbianos</td>
+                                <td><span class="stat-badge">-50%</span> NPK</td>
+                                <td><span class="stat-badge">+20%</span> rendimento</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="platform-showcase">
+                        <div class="platform-item">
+                            <h5><i class="fas fa-leaf"></i> Azotic Technologies</h5>
+                            <p>Fixadores de nitrogênio para diversas culturas</p>
+                        </div>
+                        <div class="platform-item">
+                            <h5><i class="fas fa-seedling"></i> Bioma</h5>
+                            <p>Consórcios microbianos para agricultura</p>
+                        </div>
+                        <div class="platform-item">
+                            <h5><i class="fas fa-tree"></i> Novozymes</h5>
+                            <p>Soluções biológicas para proteção de cultivos</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seção 3 - Melhoramento Genético Animal -->
+                <div class="content-section genetic-section">
+                    <h2><i class="fas fa-cow"></i> Melhoramento Genético Animal</h2>
+                    
+                    <p>Criação de raças com <strong>melhor desempenho produtivo</strong> e maior resistência a doenças.</p>
+                    
+                    <div class="benefit-cards">
+                        <div class="benefit-card genetic-card">
+                            <h4><i class="fas fa-dna"></i> Técnicas Avançadas</h4>
+                            <ul class="feature-list genetic-list">
+                                <li>Seleção genômica</li>
+                                <li>Fertilização in vitro</li>
+                                <li>Transferência de embriões</li>
+                                <li>Edição genética CRISPR</li>
+                            </ul>
+                        </div>
+                        <div class="benefit-card genetic-card">
+                            <h4><i class="fas fa-chart-pie"></i> Resultados</h4>
+                            <ul class="feature-list genetic-list">
+                                <li><span class="stat-badge genetic-badge">+40%</span> produção leiteira</li>
+                                <li><span class="stat-badge genetic-badge">+25%</span> ganho de peso</li>
+                                <li>Resistência a doenças</li>
+                                <li>Melhor conversão alimentar</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="alert-box warning-alert">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <div>
+                            <strong>Desafio:</strong> Regulamentação e aceitação do mercado ainda são barreiras para tecnologias como edição genética.
+                        </div>
+                    </div>
+
+                    <div class="enhanced-content genetic-enhanced">
+                        <h3><i class="fas fa-project-diagram"></i> Exemplos de Aplicação</h3>
+                        <ul class="feature-list genetic-list">
+                            <li><strong>Gado Leiteiro:</strong> Genes de caseína para melhor qualidade do leite</li>
+                            <li><strong>Suínos:</strong> Resistência à PRRS (Síndrome Reprodutiva e Respiratória)</li>
+                            <li><strong>Aves:</strong> Resistência à gripe aviária</li>
+                            <li><strong>Peixes:</strong> Crescimento acelerado em piscicultura</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Seção 4 - Futuro da Biotecnologia -->
+                <div class="content-section">
+                    <h2><i class="fas fa-microscope"></i> O Futuro da Biotecnologia no Agro</h2>
+                    
+                    <p>Novas fronteiras da ciência prometem revolucionar ainda mais a produção agrícola e pecuária.</p>
+                    
+                    <div class="benefit-cards">
+                        <div class="benefit-card">
+                            <h4><i class="fas fa-dna"></i> Inovações Emergentes</h4>
+                            <ul class="feature-list">
+                                <li>Agricultura celular e carne cultivada</li>
+                                <li>Plantas que produzem vacinas</li>
+                                <li>Microbioma personalizado para solos</li>
+                                <li>Biofábricas de moléculas complexas</li>
+                            </ul>
+                        </div>
+                        <div class="benefit-card">
+                            <h4><i class="fas fa-globe-americas"></i> Impacto Global</h4>
+                            <ul class="feature-list">
+                                <li>Segurança alimentar</li>
+                                <li>Sustentabilidade ambiental</li>
+                                <li>Redução do uso de agroquímicos</li>
+                                <li>Adaptação às mudanças climáticas</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="alert-box bio-alert">
+                        <i class="fas fa-chart-line"></i>
+                        <div>
+                            <strong>Perspectivas:</strong> O mercado global de biotecnologia agrícola deve alcançar US$ 85 bilhões até 2028.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <div class="footer-content">
+                <p>© 2025 INFO.DeV | Todos os direitos reservados.</p>
+                <div class="footer-bottom">
+                    <p>Desenvolvido com <i class="fas fa-heart" style="color: #ef4444;"></i> pela equipe INFO.DeV</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Efeito suave de rolagem para os links internos
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Animação de aparecimento das seções
+        const contentSections = document.querySelectorAll('.content-section');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        contentSections.forEach(section => observer.observe(section));
+
+        // Destaque para termos técnicos
+        document.addEventListener('DOMContentLoaded', () => {
+            const techTerms = ['CRISPR', 'transgênicos', 'OGM', 'genoma', 'edição genética', 'genômica', 'biologia molecular'];
+
+            document.querySelectorAll('.content-section p, .content-section li').forEach(element => {
+                const text = element.textContent.toLowerCase();
+                if (techTerms.some(term => text.includes(term.toLowerCase()))) {
+                    element.classList.add('tech-term');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

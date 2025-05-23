@@ -1,0 +1,531 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce - INFO.DeV</title>
+    
+    <!-- Fontes modernas -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Lora:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Ícones Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+     <style>
+        /* Mantendo as variáveis do tema escuro */
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #14b8a6;
+            --accent-color: #22d3ee;
+            --text-color: #e0e7ff;
+            --light-text: #94a3b8;
+            --bg-color: #121827;
+            --card-bg: #1e293b;
+            --footer-bg: #0f172a;
+            --border-color: #334155;
+            --hover-bg: #2563eb;
+            --hover-text: #fff;
+            --shadow-color: rgba(0, 0, 0, 0.7);
+            --commerce-color: #8b5cf6; /* Mantido para ênfase específica */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--primary-color);
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: var(--hover-bg);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navbar - Padronizada */
+        .navbar {
+            background-color: var(--card-bg);
+            padding: 15px 0;
+            box-shadow: 0 2px 15px var(--shadow-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
+        }
+
+        .logo-text {
+            font-family: 'Lora', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .nav-links a, .nav-links button {
+            font-size: 0.95rem;
+            padding: 8px 16px;
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+            color: var(--primary-color);
+            transition: all 0.3s ease;
+            border-radius: 6px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .nav-links a:hover, .nav-links button:hover {
+            background-color: var(--primary-color);
+            color: var(--hover-text);
+            transform: translateY(-2px);
+        }
+
+        /* Header - Ajustado para o tema */
+        .page-header {
+            text-align: center;
+            margin: 40px 0;
+            padding: 30px 0;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(37, 99, 235, 0.15));
+            border-radius: 12px;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            color: var(--commerce-color);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            color: var(--light-text);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Content Container - Padronizado */
+        .content-container {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 5px 15px var(--shadow-color);
+            margin-bottom: 40px;
+        }
+
+        /* Botão - Integrado ao tema */
+        .what-is-button {
+            background-color: var(--commerce-color);
+            color: var(--hover-text);
+            border: none;
+            padding: 15px 25px;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(139, 92, 246, 0.5);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 0 auto 30px;
+            font-weight: 600;
+            width: 100%;
+            max-width: 400px;
+            justify-content: center;
+        }
+
+        .what-is-button:hover {
+            background-color: #7c3aed;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(123, 58, 237, 0.6);
+        }
+
+        .what-is-button:active {
+            transform: translateY(1px);
+        }
+
+        /* Conteúdo Explicativo - Tema Escuro */
+        .what-is-content {
+            background-color: var(--bg-color);
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border-left: 4px solid var(--commerce-color);
+            transition: all 0.5s ease;
+            color: var(--text-color);
+        }
+
+        .what-is-content p {
+            margin-bottom: 15px;
+            line-height: 1.7;
+        }
+
+        .what-is-content.hidden {
+            display: none;
+        }
+
+        /* Lista de Tópicos - Adaptada */
+        .topics-menu {
+            margin-top: 40px;
+        }
+
+        .topics-menu h2 {
+            text-align: center;
+            color: var(--commerce-color);
+            margin-bottom: 30px;
+            font-size: 1.8rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .topics-menu h2::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(to right, var(--commerce-color), var(--primary-color));
+            border-radius: 3px;
+        }
+
+        .topics-list {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .topics-list li a {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 20px;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 4px 8px var(--shadow-color);
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        .topics-list li a:hover {
+            background-color: var(--commerce-color);
+            color: var(--hover-text);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(139, 92, 246, 0.4);
+            border-color: var(--commerce-color);
+        }
+
+        .topics-list li a i {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .topics-list li a:hover i {
+            transform: scale(1.2);
+        }
+
+        /* Referências - Ajustada para tema escuro */
+        .references {
+            margin-top: 50px;
+            padding: 30px;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 5px 15px var(--shadow-color);
+        }
+
+        .references h2 {
+            color: var(--commerce-color);
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.8rem;
+        }
+
+        .reference-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .reference-card {
+            padding: 20px;
+            background-color: var(--bg-color);
+            border-radius: 8px;
+            border-left: 4px solid var(--commerce-color);
+        }
+
+        .reference-card h3 {
+            color: var(--commerce-color);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .reference-card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .reference-card li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+            color: var(--text-color);
+        }
+
+        .reference-card li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--commerce-color);
+        }
+
+        .reference-card a {
+            color: var(--accent-color);
+            text-decoration: underline;
+            transition: color 0.3s;
+        }
+
+        .reference-card a:hover {
+            color: var(--secondary-color);
+        }
+
+        /* Footer - Padronizado */
+        footer {
+            background-color: var(--footer-bg);
+            color: var(--light-text);
+            padding: 30px 0;
+            margin-top: 60px;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-bottom {
+            margin-top: 20px;
+            padding-top: 20px;
+            font-size: 0.9rem;
+            color: var(--light-text);
+        }
+
+        /* Responsividade - Ajustes de tema */
+        @media (max-width: 768px) {
+            .topics-list {
+                grid-template-columns: 1fr;
+            }
+            
+            .navbar .container {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar">
+            <div class="container">
+                <a href="PAGPRI.html" class="logo">
+                    <!-- Logo SVG inline para INFO.DeV -->
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="40" height="40" rx="8" fill="url(#paint0_linear)"/>
+                        <path d="M12 12H16V28H12V12Z" fill="white"/>
+                        <path d="M18 12H22V28H18V12Z" fill="white"/>
+                        <path d="M24 12H28V28H24V12Z" fill="white"/>
+                        <path d="M12 12H28V16H12V12Z" fill="white"/>
+                        <path d="M12 24H28V28H12V24Z" fill="white"/>
+                        <defs>
+                            <linearGradient id="paint0_linear" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#2563EB"/>
+                                <stop offset="1" stop-color="#00B3A6"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <span class="logo-text">INFO.DeV</span>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="PAGPRI.html"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="Materiais.html"><i class="fas fa-book"></i> Materiais</a></li>
+                    <li><a href="PagFAQ.html"><i class="fas fa-question-circle"></i> FAQ</a></li>
+                    <li><a href="quiz/quiz.html"><i class="fas fa-question"></i> QUIZ</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <header class="page-header">
+            <h1><i class="fas fa-shopping-cart"></i> E-Commerce</h1>
+            <p>Transformando a experiência de compra e venda no ambiente digital</p>
+        </header>
+
+        <main>
+            <div class="content-container">
+                <button id="whatIsBtn" class="what-is-button">
+                    <i class="fas fa-question-circle"></i>
+                    O que é E-Commerce?
+                </button>
+                
+                <div id="whatIsContent" class="what-is-content hidden">
+                    <p>E-Commerce é a prática de comprar e vender produtos ou serviços pela internet. Ele representa um dos pilares do E-Business e tem crescido exponencialmente com a digitalização do consumo.</p>
+                    
+                    <h3>Principais características do E-Commerce:</h3>
+                    <ul>
+                        <li><strong>Loja virtual 24/7:</strong> Disponível para compras a qualquer momento</li>
+                        <li><strong>Alcance global:</strong> Possibilidade de vender para qualquer lugar do mundo</li>
+                        <li><strong>Redução de custos:</strong> Menos despesas com estrutura física</li>
+                        <li><strong>Personalização:</strong> Experiências de compra customizadas</li>
+                        <li><strong>Dados analíticos:</strong> Insights sobre comportamento do consumidor</li>
+                    </ul>
+                </div>
+                
+                <div class="topics-menu">
+                    <h2>Tópicos sobre E-Commerce</h2>
+                    <ul class="topics-list">
+                        <li><a href="EC_TIPOS.html"><i class="fas fa-store"></i> Tipos de E-Commerce</a></li>
+                        <li><a href="EC_PLATAFORMAS.html"><i class="fas fa-shopping-bag"></i> Plataformas</a></li>
+                        <li><a href="EC_MEIOSPAGA.html"><i class="fas fa-credit-card"></i> Meios de Pagamento</a></li>
+                        <li><a href="EC_LOGISTICA.html"><i class="fas fa-truck"></i> Logística e Entrega</a></li>
+                        <li><a href="EC_MARKETING.html"><i class="fas fa-bullhorn"></i> Marketing Digital</a></li>
+                        <li><a href="EC_SEGURANCA.html"><i class="fas fa-lock"></i> Segurança</a></li>
+                        <li><a href="EC_UX.html"><i class="fas fa-user-check"></i> Experiência do Usuário</a></li>
+                        <li><a href="EC_TENDENCIAS.html"><i class="fas fa-chart-line"></i> Tendências</a></li>
+                        <li><a href="EC_MOBILE.html"><i class="fas fa-mobile-alt"></i> Mobile Commerce</a></li>
+                        <li><a href="EC_ANALYTICS.html"><i class="fas fa-chart-pie"></i> Analytics</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Seção de Referências -->
+            <div class="references">
+                <h2><i class="fas fa-link"></i> Recursos Adicionais sobre E-Commerce</h2>
+                <div class="reference-grid">
+                    <div class="reference-card">
+                        <h3><i class="fas fa-shopping-basket"></i> Plataformas Populares</h3>
+                        <ul>
+                            <li><a href="https://www.shopify.com/" target="_blank">Shopify</a></li>
+                            <li><a href="https://woocommerce.com/" target="_blank">WooCommerce</a></li>
+                            <li><a href="https://www.magento.com/" target="_blank">Magento</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="reference-card">
+                        <h3><i class="fas fa-book"></i> Artigos e Estatísticas</h3>
+                        <ul>
+                            <li><a href="https://www.statista.com/topics/871/online-shopping/" target="_blank">Estatísticas de E-Commerce</a></li>
+                            <li><a href="https://www.shopify.com/blog" target="_blank">Blog da Shopify</a></li>
+                            <li><a href="https://www.bigcommerce.com/blog/" target="_blank">Blog da BigCommerce</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="reference-card">
+                        <h3><i class="fas fa-tools"></i> Ferramentas Úteis</h3>
+                        <ul>
+                            <li><a href="https://www.hotjar.com/" target="_blank">Hotjar - Análise de UX</a></li>
+                            <li><a href="https://mailchimp.com/" target="_blank">Mailchimp - E-mail Marketing</a></li>
+                            <li><a href="https://www.google.com/analytics/" target="_blank">Google Analytics</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="reference-card">
+                        <h3><i class="fas fa-video"></i> Vídeos Educativos</h3>
+                        <ul>
+                            <li><a href="https://www.youtube.com/watch?v=GPeDZ6BQRGE" target="_blank">O Futuro do E-Commerce</a></li>
+                            <li><a href="https://www.youtube.com/watch?v=1Yk0Gj3z0z0" target="_blank">Como Criar uma Loja Virtual</a></li>
+                            <li><a href="https://www.youtube.com/watch?v=3YFb1Zq3w4s" target="_blank">Tendências de E-Commerce</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <div class="footer-content">
+                <p>© 2025 INFO.DeV | Todos os direitos reservados.</p>
+                <div class="footer-bottom">
+                    <p>Desenvolvido com <i class="fas fa-heart" style="color: #e74c3c;"></i> pela equipe INFO.DeV</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        document.getElementById('whatIsBtn').addEventListener('click', function () {
+            const content = document.getElementById('whatIsContent');
+            content.classList.toggle('hidden');
+
+            if (!content.classList.contains('hidden')) {
+                content.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        });
+
+        // Efeito suave de rolagem para os links internos
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

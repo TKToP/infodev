@@ -1,0 +1,771 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Internet das Coisas (IoT) - INFO.DeV</title>
+    
+    <!-- Fontes modernas -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Lora:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Ícones Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Highlight.js para syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #3b82f6;
+            --secondary-color: #2563eb;
+            --accent-color: #60a5fa;
+            --text-color: #e5e7eb;
+            --light-text: #9ca3af;
+            --bg-color: #111827;
+            --card-bg: #1f2937;
+            --footer-bg: #030712;
+            --iot-color: #10b981; /* Verde para IoT */
+            --section-border: #374151;
+            --danger-color: #ef4444;
+            --warning-color: #f59e0b;
+            --success-color: #10b981;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: var(--card-bg);
+            padding: 15px 0;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo-text {
+            font-family: 'Lora', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--primary-color), var(--iot-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .nav-links a, .nav-links button {
+            font-size: 0.95rem;
+            padding: 8px 16px;
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+            color: var(--primary-color);
+            transition: all 0.3s;
+            border-radius: 6px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .nav-links button:hover, .nav-links a:hover {
+            background-color: rgba(59, 130, 246, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Header */
+        .page-header {
+            text-align: center;
+            margin: 40px 0;
+            padding: 30px 0;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(16, 185, 129, 0.1));
+            border-radius: 12px;
+            border: 1px solid var(--section-border);
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            color: var(--iot-color);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            color: var(--light-text);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Content */
+        .content-container {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+            border: 1px solid var(--section-border);
+        }
+
+        /* Seções Temáticas */
+        .content-section {
+            margin-bottom: 30px;
+            padding: 25px;
+            background-color: rgba(31, 41, 55, 0.7);
+            border-radius: 8px;
+            border-left: 4px solid var(--iot-color);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .content-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .content-section:hover {
+            transform: translateY(-5px);
+            background-color: rgba(31, 41, 55, 0.9);
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.1);
+        }
+
+        .content-section h2 {
+            color: var(--iot-color);
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--section-border);
+        }
+
+        .content-section h2 i {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+
+        .content-section:hover h2 i {
+            transform: scale(1.2);
+        }
+
+        .content-section p {
+            margin-bottom: 10px;
+            color: var(--light-text);
+        }
+
+        /* Enhanced Content */
+        .enhanced-content {
+            border-left: 3px solid var(--iot-color);
+            padding: 15px;
+            margin: 20px 0;
+            background: rgba(16, 185, 129, 0.05);
+            border-radius: 5px;
+        }
+
+        .enhanced-content h3 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--iot-color);
+            margin-bottom: 10px;
+        }
+
+        /* Listas */
+        .feature-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .feature-list li {
+            margin-bottom: 12px;
+            padding-left: 30px;
+            position: relative;
+            line-height: 1.6;
+        }
+
+        .feature-list li::before {
+            content: "→";
+            color: var(--iot-color);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        /* Benefit Cards */
+        .benefit-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .benefit-card {
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+            border: 1px solid var(--section-border);
+            transition: all 0.3s;
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(16, 185, 129, 0.2);
+        }
+
+        .benefit-card h4 {
+            color: var(--iot-color);
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Stats */
+        .stat-badge {
+            display: inline-block;
+            background-color: rgba(16, 185, 129, 0.2);
+            color: var(--iot-color);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin: 5px 0;
+            font-weight: 600;
+        }
+
+        /* Alert Boxes */
+        .alert-box {
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 6px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .alert-box i {
+            font-size: 1.2rem;
+            margin-top: 2px;
+        }
+
+        .iot-alert {
+            background-color: rgba(16, 185, 129, 0.1);
+            border-left: 4px solid var(--iot-color);
+        }
+
+        .danger-alert {
+            background-color: rgba(239, 68, 68, 0.1);
+            border-left: 4px solid var(--danger-color);
+        }
+
+        .warning-alert {
+            background-color: rgba(245, 158, 11, 0.1);
+            border-left: 4px solid var(--warning-color);
+        }
+
+        .success-alert {
+            background-color: rgba(16, 185, 129, 0.1);
+            border-left: 4px solid var(--success-color);
+        }
+
+        /* Example Box */
+        .example-box {
+            background: rgba(16, 185, 129, 0.1);
+            border-left: 4px solid var(--iot-color);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 6px;
+            font-style: italic;
+            color: var(--light-text);
+        }
+
+        /* Platform Showcase */
+        .platform-showcase {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .platform-item {
+            flex: 1;
+            min-width: 200px;
+            background: rgba(16, 185, 129, 0.05);
+            border: 1px solid var(--section-border);
+            border-radius: 8px;
+            padding: 15px;
+            transition: all 0.3s;
+        }
+
+        .platform-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(16, 185, 129, 0.1);
+        }
+
+        .platform-item h5 {
+            color: var(--iot-color);
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Code Blocks */
+        .code-container {
+            position: relative;
+            margin: 20px 0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 8px 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: var(--light-text);
+        }
+
+        .code-copy-btn {
+            background: none;
+            border: none;
+            color: var(--light-text);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .code-copy-btn:hover {
+            color: var(--iot-color);
+        }
+
+        pre {
+            margin: 0;
+            padding: 0;
+        }
+
+        code {
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .hljs {
+            background: rgba(0, 0, 0, 0.2) !important;
+            padding: 15px !important;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--footer-bg);
+            color: #d1d5db;
+            padding: 30px 0;
+            margin-top: 60px;
+            border-top: 1px solid var(--section-border);
+        }
+
+        .footer-content {
+            text-align: center;
+        }
+
+        .footer-bottom {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--section-border);
+            font-size: 0.9rem;
+            color: var(--light-text);
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .navbar .container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .content-section h2 {
+                font-size: 1.3rem;
+            }
+            
+            .benefit-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .platform-showcase {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar">
+            <div class="container">
+                <a href="PAGPRI.html" class="logo">
+                    <!-- Logo SVG inline para INFO.DeV -->
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="40" height="40" rx="8" fill="url(#paint0_linear)"/>
+                        <path d="M12 12H16V28H12V12Z" fill="white"/>
+                        <path d="M18 12H22V28H18V12Z" fill="white"/>
+                        <path d="M24 12H28V28H24V12Z" fill="white"/>
+                        <path d="M12 12H28V16H12V12Z" fill="white"/>
+                        <path d="M12 24H28V28H12V24Z" fill="white"/>
+                        <defs>
+                            <linearGradient id="paint0_linear" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#2563EB"/>
+                                <stop offset="1" stop-color="#00B3A6"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <span class="logo-text">INFO.DeV</span>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="PAGPRI.html"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="Materiais.html"><i class="fas fa-book"></i> Materiais</a></li>
+                    <li><a href="PagFAQ.html"><i class="fas fa-question-circle"></i> FAQ</a></li>
+                    <li><a href="quiz/quiz.html"><i class="fas fa-question"></i> QUIZ</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <header class="page-header">
+            <h1><i class="fas fa-network-wired"></i> Internet das Coisas (IoT)</h1>
+            <p>Conexão de dispositivos e equipamentos à internet para troca contínua de dados em tempo real, permitindo automação e maior eficiência.</p>
+        </header>
+
+        <main>
+            <div class="content-container">
+                <!-- Seção 1 - Visão Geral -->
+                <div class="content-section">
+                    <h2><i class="fas fa-globe"></i> Visão Geral</h2>
+                    
+                    <p>A Internet das Coisas (IoT) representa a próxima fase da revolução digital, conectando objetos físicos à internet e permitindo que coletem e compartilhem dados sem intervenção humana.</p>
+                    
+                    <div class="benefit-cards">
+                        <div class="benefit-card">
+                            <h4><i class="fas fa-project-diagram"></i> Componentes Básicos</h4>
+                            <ul class="feature-list">
+                                <li>Dispositivos/sensores inteligentes</li>
+                                <li>Conectividade (Wi-Fi, Bluetooth, 5G, LoRaWAN)</li>
+                                <li>Plataformas de processamento de dados</li>
+                                <li>Aplicações e interfaces de usuário</li>
+                            </ul>
+                        </div>
+                        <div class="benefit-card">
+                            <h4><i class="fas fa-chart-pie"></i> Mercado Global</h4>
+                            <ul class="feature-list">
+                                <li><span class="stat-badge">$1.1 trilhão</span> até 2027</li>
+                                <li><span class="stat-badge">29 bilhões</span> de dispositivos até 2030</li>
+                                <li>Crescimento anual de <span class="stat-badge">12.5%</span></li>
+                                <li>Indústria e cidades inteligentes lideram adoção</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="alert-box iot-alert">
+                        <i class="fas fa-lightbulb"></i>
+                        <div>
+                            <strong>Dados 2024:</strong> Empresas que adotam IoT reduzem custos operacionais em <span class="stat-badge">30%</span> e aumentam eficiência em <span class="stat-badge">25%</span> em média.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seção 2 - Aplicações Principais -->
+                <div class="content-section">
+                    <h2><i class="fas fa-robot"></i> Aplicações Principais</h2>
+                    
+                    <p>A IoT está transformando diversos setores com soluções inovadoras e eficientes.</p>
+                    
+                    <div class="platform-showcase">
+                        <div class="platform-item">
+                            <h5><i class="fas fa-industry"></i> Indústria 4.0</h5>
+                            <ul class="feature-list">
+                                <li>Monitoramento de máquinas</li>
+                                <li>Manutenção preditiva</li>
+                                <li>Gestão de ativos</li>
+                                <li>Otimização de processos</li>
+                            </ul>
+                        </div>
+                        <div class="platform-item">
+                            <h5><i class="fas fa-home"></i> Smart Home</h5>
+                            <ul class="feature-list">
+                                <li>Automação residencial</li>
+                                <li>Segurança inteligente</li>
+                                <li>Eficiência energética</li>
+                                <li>Eletrodomésticos conectados</li>
+                            </ul>
+                        </div>
+                        <div class="platform-item">
+                            <h5><i class="fas fa-city"></i> Cidades Inteligentes</h5>
+                            <ul class="feature-list">
+                                <li>Iluminação pública adaptativa</li>
+                                <li>Gestão de tráfego</li>
+                                <li>Monitoramento ambiental</li>
+                                <li>Coleta de lixo inteligente</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="example-box">
+                        <p><strong>Exemplo Industrial:</strong> Sensores em máquinas detectam vibração ou temperatura anormal e acionam alertas para manutenção preventiva, evitando paradas não planejadas que custam em média <span class="stat-badge">$260.000/hora</span> na indústria automotiva.</p>
+                    </div>
+                </div>
+
+                <!-- Seção 3 - Benefícios -->
+                <div class="content-section">
+                    <h2><i class="fas fa-check-circle"></i> Benefícios Estratégicos</h2>
+                    
+                    <p>A IoT oferece vantagens competitivas significativas para organizações de todos os portes.</p>
+                    
+                    <div class="enhanced-content">
+                        <h3><i class="fas fa-tachometer-alt"></i> Eficiência Operacional</h3>
+                        <ul class="feature-list">
+                            <li>Redução de custos com manutenção</li>
+                            <li>Otimização do uso de recursos</li>
+                            <li>Automatização de processos repetitivos</li>
+                            <li>Melhor aproveitamento da capacidade produtiva</li>
+                        </ul>
+                    </div>
+
+                    <div class="benefit-cards">
+                        <div class="benefit-card">
+                            <h4><i class="fas fa-exclamation-triangle"></i> Detecção Antecipada</h4>
+                            <ul class="feature-list">
+                                <li>Monitoramento contínuo de equipamentos</li>
+                                <li>Alertas sobre possíveis falhas</li>
+                                <li>Análise de padrões para prever problemas</li>
+                                <li>Redução de paradas não planejadas</li>
+                            </ul>
+                        </div>
+                        <div class="benefit-card">
+                            <h4><i class="fas fa-mobile-alt"></i> Monitoramento Remoto</h4>
+                            <ul class="feature-list">
+                                <li>Acesso em tempo real aos dados</li>
+                                <li>Controle de operações à distância</li>
+                                <li>Alertas personalizáveis</li>
+                                <li>Integração com sistemas móveis</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="alert-box success-alert">
+                        <i class="fas fa-chart-line"></i>
+                        <div>
+                            <strong>Case de Sucesso:</strong> A John Deere reduziu em <span class="stat-badge">40%</span> o tempo de inatividade de seus equipamentos agrícolas com IoT, aumentando a produtividade em <span class="stat-badge">15%</span>.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seção 4 - Tecnologias e Implementação -->
+                <div class="content-section">
+                    <h2><i class="fas fa-microchip"></i> Tecnologias e Implementação</h2>
+                    
+                    <p>Conheça os principais protocolos e considerações para implementar soluções IoT.</p>
+                    
+                    <div class="benefit-cards">
+                        <div class="benefit-card">
+                            <h4><i class="fas fa-wifi"></i> Protocolos de Comunicação</h4>
+                            <ul class="feature-list">
+                                <li><strong>Wi-Fi:</strong> Alta taxa de dados, curto alcance</li>
+                                <li><strong>Bluetooth Low Energy:</strong> Baixo consumo</li>
+                                <li><strong>LoRaWAN:</strong> Longo alcance, baixa energia</li>
+                                <li><strong>5G:</strong> Ultrabaixa latência</li>
+                                <li><strong>Zigbee:</strong> Redes mesh</li>
+                            </ul>
+                        </div>
+                        <div class="benefit-card">
+                            <h4><i class="fas fa-shield-alt"></i> Considerações de Segurança</h4>
+                            <ul class="feature-list">
+                                <li>Criptografia de ponta a ponta</li>
+                                <li>Autenticação robusta</li>
+                                <li>Atualizações de firmware seguras</li>
+                                <li>Proteção contra ataques DDoS</li>
+                                <li>Segregação de redes</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="code-container">
+                        <div class="code-header">
+                            <span>Exemplo de Código para Sensor IoT (Python)</span>
+                            <button class="code-copy-btn" onclick="copyCode(this)"><i class="far fa-copy"></i> Copiar</button>
+                        </div>
+                        <pre><code class="language-python"># Simulador de sensor IoT simples
+import random
+import time
+from datetime import datetime
+import paho.mqtt.client as mqtt
+
+# Configurações do broker MQTT
+broker = "iot.example.com"
+port = 1883
+topic = "factory/sensors/vibration"
+
+def on_connect(client, userdata, flags, rc):
+    print(f"Conectado ao broker com código {rc}")
+
+def simulate_sensor():
+    client = mqtt.Client("sensor_simulator")
+    client.on_connect = on_connect
+    client.connect(broker, port)
+    
+    while True:
+        # Simular leitura do sensor
+        vibration = random.uniform(0.1, 10.0)
+        temp = random.uniform(20.0, 45.0)
+        timestamp = datetime.now().isoformat()
+        
+        # Criar payload JSON
+        payload = {
+            "sensor_id": "vib_001",
+            "timestamp": timestamp,
+            "vibration": round(vibration, 2),
+            "temperature": round(temp, 1),
+            "unit": "mm/s"
+        }
+        
+        # Publicar dados
+        client.publish(topic, str(payload))
+        print(f"Dados publicados: {payload}")
+        time.sleep(5)
+
+if __name__ == "__main__":
+    simulate_sensor()</code></pre>
+                    </div>
+
+                    <div class="alert-box warning-alert">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <div>
+                            <strong>Desafios Comuns:</strong> 60% dos projetos IoT enfrentam problemas com interoperabilidade, segurança de dados e integração com sistemas legados. Planejamento cuidadoso é essencial.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <div class="footer-content">
+                <p>© 2025 INFO.DeV | Todos os direitos reservados.</p>
+                <div class="footer-bottom">
+                    <p>Desenvolvido com <i class="fas fa-heart" style="color: #ef4444;"></i> pela equipe INFO.DeV</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>
+        // Efeito suave de rolagem para os links internos
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Animação de aparecimento das seções
+        const contentSections = document.querySelectorAll('.content-section');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        contentSections.forEach(section => observer.observe(section));
+
+        // Copy code functionality
+        function copyCode(button) {
+            const codeBlock = button.closest('.code-container').querySelector('code');
+            const range = document.createRange();
+            range.selectNode(codeBlock);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+            document.execCommand('copy');
+            window.getSelection().removeAllRanges();
+            
+            // Feedback visual
+            const originalIcon = button.innerHTML;
+            button.innerHTML = '<i class="fas fa-check"></i> Copiado!';
+            setTimeout(() => {
+                button.innerHTML = originalIcon;
+            }, 2000);
+        }
+
+        // Initialize syntax highlighting
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.querySelectorAll('pre code').forEach((block) => {
+                hljs.highlightElement(block);
+            });
+        });
+    </script>
+</body>
+</html>

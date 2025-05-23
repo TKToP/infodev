@@ -1,0 +1,367 @@
+﻿
+<!-- CÓDIGO ATUALIZADO COM TEMA ESCURO -->
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Materiais - INFO.DeV</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Lora:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <style>
+    :root {
+      --primary-color: #2563eb;
+      --secondary-color: #1e40af;
+      --accent-color: #00b3a6;
+      --bg-color: #0f172a;
+      --card-bg: #1e293b;
+      --text-color: #f9fafb;
+      --light-text: #94a3b8;
+      --footer-bg: #0f172a;
+      --border-color: #334155;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.6;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.3s ease;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .navbar {
+      background-color: var(--card-bg);
+      padding: 15px 0;
+      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .navbar .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: transform 0.3s ease;
+    }
+
+    .logo:hover {
+      transform: scale(1.05);
+    }
+
+    .logo img {
+      height: 40px;
+    }
+
+    .logo-text {
+      font-family: 'Lora', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+
+    .nav-links a, .nav-links button {
+      font-size: 0.95rem;
+      padding: 8px 16px;
+      border: none;
+      background-color: transparent;
+      cursor: pointer;
+      color: var(--text-color);
+      transition: all 0.3s;
+      border-radius: 6px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .nav-links a:hover, .nav-links button:hover {
+      background-color: var(--primary-color);
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    .page-header {
+      text-align: center;
+      margin: 40px 0;
+      padding: 20px 0;
+    }
+
+    .page-header h1 {
+      font-size: 2.5rem;
+      color: var(--primary-color);
+      margin-bottom: 15px;
+      font-weight: 700;
+    }
+
+    .page-header p {
+      font-size: 1.1rem;
+      color: var(--light-text);
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .main-button-container {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 40px;
+    }
+
+    .main-button {
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 18px 36px;
+      font-size: 1.3rem;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      font-weight: 600;
+    }
+
+    .main-button:hover {
+      background-color: var(--secondary-color);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .main-button:active {
+      transform: translateY(1px);
+    }
+
+    .subtopics-container {
+      background-color: var(--card-bg);
+      border-radius: 12px;
+      padding: 40px;
+      box-shadow: 0 5px 25px rgba(0, 0, 0, 0.25);
+      margin-bottom: 60px;
+    }
+
+    .subtopics-container h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: var(--primary-color);
+      font-size: 1.8rem;
+      position: relative;
+      padding-bottom: 10px;
+    }
+
+    .subtopics-container h2::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+      border-radius: 3px;
+    }
+
+    .subtopics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 25px;
+    }
+
+    .subtopic {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 30px 20px;
+      background-color: var(--bg-color);
+      border-radius: 10px;
+      text-decoration: none;
+      color: var(--text-color);
+      font-weight: 600;
+      font-size: 1.1rem;
+      border: 2px solid var(--border-color);
+      transition: all 0.3s ease;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    .subtopic:hover {
+      background-color: var(--primary-color);
+      color: white;
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+      border-color: var(--primary-color);
+    }
+
+    .subtopic i {
+      font-size: 2.2rem;
+      margin-bottom: 15px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    footer {
+      background-color: var(--footer-bg);
+      color: #9ca3af;
+      padding: 30px 0;
+      margin-top: 60px;
+    }
+
+    .footer-content {
+      text-align: center;
+    }
+
+    .footer-bottom {
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid #334155;
+      font-size: 0.9rem;
+      color: #64748b;
+    }
+
+    @media (max-width: 768px) {
+      .subtopics-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      }
+      .page-header h1 {
+        font-size: 2rem;
+      }
+      .main-button {
+        font-size: 1.1rem;
+        padding: 15px 30px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .subtopics-grid {
+        grid-template-columns: 1fr;
+      }
+      .navbar .container {
+        flex-direction: column;
+        gap: 15px;
+      }
+      .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <nav class="navbar">
+      <div class="container">
+        <a href="PAGPRI.html" class="logo">
+          <!-- Logo SVG -->
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="40" height="40" rx="8" fill="url(#paint0_linear)"/>
+            <path d="M12 12H16V28H12V12Z" fill="white"/>
+            <path d="M18 12H22V28H18V12Z" fill="white"/>
+            <path d="M24 12H28V28H24V12Z" fill="white"/>
+            <path d="M12 12H28V16H12V12Z" fill="white"/>
+            <path d="M12 24H28V28H12V24Z" fill="white"/>
+            <defs>
+              <linearGradient id="paint0_linear" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#2563EB"/>
+                <stop offset="1" stop-color="#00B3A6"/>
+              </linearGradient>
+            </defs>
+          </svg>
+          <span class="logo-text">INFO.DeV</span>
+        </a>
+        <ul class="nav-links">
+          <li><a href="PAGPRI.html"><i class="fas fa-home"></i> Home</a></li>
+          <li><a href="#"><i class="fas fa-book"></i> Materiais</a></li>
+          <li><a href="PagFAQ.html"><i class="fas fa-question-circle"></i> FAQ</a></li>
+          <li><a href="quiz/quiz.html"><i class="fas fa-question"></i> QUIZ</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <header class="page-header">
+      <h1>Biblioteca Digital</h1>
+      <p>Explore nossos materiais sobre E-Business e tecnologias digitais</p>
+    </header>
+
+    <main>
+      <div class="main-button-container">
+        <button id="ebusinessBtn" class="main-button">
+          <i class="fas fa-business-time"></i>
+          Explorar Categorias
+        </button>
+      </div>
+
+      <div id="subtopicsContainer" class="subtopics-container hidden">
+        <h2>Todos os Materiais Disponíveis</h2>
+        <div class="subtopics-grid">
+          <a href="E-Business.html" class="subtopic"><i class="fas fa-globe"></i>E-Business</a>
+          <a href="E-Learning.html" class="subtopic"><i class="fas fa-graduation-cap"></i>E-Learning</a>
+          <a href="E-Security.html" class="subtopic"><i class="fas fa-shield-alt"></i>E-Security</a>
+          <a href="E-Commerce.html" class="subtopic"><i class="fas fa-shopping-cart"></i>E-Commerce</a>
+          <a href="E-Health.html" class="subtopic"><i class="fas fa-heartbeat"></i>E-Health</a>
+          <a href="E-Government.html" class="subtopic"><i class="fas fa-landmark"></i>E-Government</a>
+          <a href="AgroTech.html" class="subtopic"><i class="fas fa-tractor"></i>AgroTech</a>
+          <a href="Industria4.html" class="subtopic"><i class="fas fa-industry"></i>Indústria 4.0</a>
+          <a href="FinTech.html" class="subtopic"><i class="fas fa-coins"></i>FinTech</a>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <div class="footer-content">
+        <p>© 2025 INFO.DeV | Todos os direitos reservados.</p>
+        <div class="footer-bottom">
+          <p>Desenvolvido com <i class="fas fa-heart" style="color: #e74c3c;"></i> pela equipe INFO.DeV</p>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+      document.getElementById('ebusinessBtn').addEventListener('click', function () {
+          const container = document.getElementById('subtopicsContainer');
+          container.classList.toggle('hidden');
+          if (!container.classList.contains('hidden')) {
+              container.scrollIntoView({ behavior: 'smooth' });
+          }
+      });
+  </script>
+</body>
+</html>
+
+

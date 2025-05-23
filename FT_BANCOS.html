@@ -1,0 +1,752 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bancos Digitais - INFO.DeV</title>
+    
+    <!-- Fontes modernas -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Lora:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Ícones Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #3b82f6;
+            --secondary-color: #2563eb;
+            --accent-color: #60a5fa;
+            --text-color: #e5e7eb;
+            --light-text: #9ca3af;
+            --bg-color: #111827;
+            --card-bg: #1f2937;
+            --footer-bg: #030712;
+            --egov-color: #8b5cf6;
+            --bank-color: #3b82f6; /* Azul para bancos */
+            --fintech-color: #8b5cf6; /* Roxo para fintechs */
+            --section-border: #374151;
+            --danger-color: #ef4444;
+            --success-color: #10b981;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: var(--card-bg);
+            padding: 15px 0;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo-text {
+            font-family: 'Lora', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--primary-color), var(--egov-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .nav-links a, .nav-links button {
+            font-size: 0.95rem;
+            padding: 8px 16px;
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+            color: var(--primary-color);
+            transition: all 0.3s;
+            border-radius: 6px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .nav-links button:hover, .nav-links a:hover {
+            background-color: rgba(59, 130, 246, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Header */
+        .page-header {
+            text-align: center;
+            margin: 40px 0;
+            padding: 30px 0;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
+            border-radius: 12px;
+            border: 1px solid var(--section-border);
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            color: var(--bank-color);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            color: var(--light-text);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Content */
+        .content-container {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+            border: 1px solid var(--section-border);
+        }
+
+        /* Seções Temáticas */
+        .content-section {
+            margin-bottom: 30px;
+            padding: 25px;
+            background-color: rgba(31, 41, 55, 0.7);
+            border-radius: 8px;
+            border-left: 4px solid var(--bank-color);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .fintech-section {
+            border-left-color: var(--fintech-color);
+        }
+
+        .fintech-section h2 {
+            color: var(--fintech-color) !important;
+        }
+
+        .content-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .content-section:hover {
+            transform: translateY(-5px);
+            background-color: rgba(31, 41, 55, 0.9);
+            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.1);
+        }
+
+        .fintech-section:hover {
+            box-shadow: 0 8px 20px rgba(139, 92, 246, 0.1);
+        }
+
+        .content-section h2 {
+            color: var(--bank-color);
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--section-border);
+        }
+
+        .content-section h2 i {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+
+        .content-section:hover h2 i {
+            transform: scale(1.2);
+        }
+
+        .content-section p {
+            margin-bottom: 10px;
+            color: var(--light-text);
+        }
+
+        /* Enhanced Content */
+        .enhanced-content {
+            border-left: 3px solid var(--bank-color);
+            padding: 15px;
+            margin: 20px 0;
+            background: rgba(59, 130, 246, 0.05);
+            border-radius: 5px;
+        }
+
+        .fintech-enhanced {
+            border-left-color: var(--fintech-color);
+            background: rgba(139, 92, 246, 0.05);
+        }
+
+        .enhanced-content h3 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--bank-color);
+            margin-bottom: 10px;
+        }
+
+        .fintech-enhanced h3 {
+            color: var(--fintech-color) !important;
+        }
+
+        /* Listas */
+        .feature-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .feature-list li {
+            margin-bottom: 12px;
+            padding-left: 30px;
+            position: relative;
+            line-height: 1.6;
+        }
+
+        .feature-list li::before {
+            content: "→";
+            color: var(--bank-color);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        .fintech-list li::before {
+            color: var(--fintech-color);
+        }
+
+        /* Benefit Cards */
+        .benefit-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .benefit-card {
+            background: rgba(59, 130, 246, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+            border: 1px solid var(--section-border);
+            transition: all 0.3s;
+        }
+
+        .fintech-card {
+            background: rgba(139, 92, 246, 0.1);
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.2);
+        }
+
+        .fintech-card:hover {
+            box-shadow: 0 5px 15px rgba(139, 92, 246, 0.2);
+        }
+
+        .benefit-card h4 {
+            color: var(--bank-color);
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .fintech-card h4 {
+            color: var(--fintech-color);
+        }
+
+        /* Stats */
+        .stat-badge {
+            display: inline-block;
+            background-color: rgba(59, 130, 246, 0.2);
+            color: var(--bank-color);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin: 5px 0;
+            font-weight: 600;
+        }
+
+        .fintech-badge {
+            background-color: rgba(139, 92, 246, 0.2);
+            color: var(--fintech-color);
+        }
+
+        .danger-badge {
+            background-color: rgba(239, 68, 68, 0.2);
+            color: var(--danger-color);
+        }
+
+        .success-badge {
+            background-color: rgba(16, 185, 129, 0.2);
+            color: var(--success-color);
+        }
+
+        /* Alert Boxes */
+        .alert-box {
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 6px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .alert-box i {
+            font-size: 1.2rem;
+            margin-top: 2px;
+        }
+
+        .bank-alert {
+            background-color: rgba(59, 130, 246, 0.1);
+            border-left: 4px solid var(--bank-color);
+        }
+
+        .fintech-alert {
+            background-color: rgba(139, 92, 246, 0.1);
+            border-left: 4px solid var(--fintech-color);
+        }
+
+        .danger-alert {
+            background-color: rgba(239, 68, 68, 0.1);
+            border-left: 4px solid var(--danger-color);
+        }
+
+        .success-alert {
+            background-color: rgba(16, 185, 129, 0.1);
+            border-left: 4px solid var(--success-color);
+        }
+
+        /* Platform Showcase */
+        .platform-showcase {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .platform-item {
+            flex: 1;
+            min-width: 200px;
+            background: rgba(59, 130, 246, 0.05);
+            border: 1px solid var(--section-border);
+            border-radius: 8px;
+            padding: 15px;
+            transition: all 0.3s;
+        }
+
+        .fintech-item {
+            background: rgba(139, 92, 246, 0.05);
+        }
+
+        .platform-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.1);
+        }
+
+        .fintech-item:hover {
+            box-shadow: 0 5px 15px rgba(139, 92, 246, 0.1);
+        }
+
+        .platform-item h5 {
+            color: var(--bank-color);
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .fintech-item h5 {
+            color: var(--fintech-color);
+        }
+
+        /* Comparison Tables */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .comparison-table th, .comparison-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border: 1px solid var(--section-border);
+        }
+
+        .comparison-table th {
+            background-color: rgba(59, 130, 246, 0.1);
+            color: var(--bank-color);
+            font-weight: 600;
+        }
+
+        .fintech-table th {
+            background-color: rgba(139, 92, 246, 0.1);
+            color: var(--fintech-color);
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background-color: rgba(31, 41, 55, 0.5);
+        }
+
+        .comparison-table tr:hover {
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--footer-bg);
+            color: #d1d5db;
+            padding: 30px 0;
+            margin-top: 60px;
+            border-top: 1px solid var(--section-border);
+        }
+
+        .footer-content {
+            text-align: center;
+        }
+
+        .footer-bottom {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--section-border);
+            font-size: 0.9rem;
+            color: var(--light-text);
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+
+        .shake {
+            animation: shake 0.5s;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .navbar .container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .content-section h2 {
+                font-size: 1.3rem;
+            }
+            
+            .benefit-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .platform-showcase {
+                flex-direction: column;
+            }
+            
+            .comparison-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar">
+            <div class="container">
+                <a href="PAGPRI.html" class="logo">
+                    <!-- Logo SVG inline para INFO.DeV -->
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="40" height="40" rx="8" fill="url(#paint0_linear)"/>
+                        <path d="M12 12H16V28H12V12Z" fill="white"/>
+                        <path d="M18 12H22V28H18V12Z" fill="white"/>
+                        <path d="M24 12H28V28H24V12Z" fill="white"/>
+                        <path d="M12 12H28V16H12V12Z" fill="white"/>
+                        <path d="M12 24H28V28H12V24Z" fill="white"/>
+                        <defs>
+                            <linearGradient id="paint0_linear" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#2563EB"/>
+                                <stop offset="1" stop-color="#00B3A6"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <span class="logo-text">INFO.DeV</span>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="PAGPRI.html"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="Materiais.html"><i class="fas fa-book"></i> Materiais</a></li>
+                    <li><a href="PagFAQ.html"><i class="fas fa-question-circle"></i> FAQ</a></li>
+                    <li><a href="quiz/quiz.html"><i class="fas fa-question"></i> QUIZ</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <header class="page-header">
+            <h1><i class="fas fa-mobile-alt"></i> Bancos Digitais</h1>
+            <p>Os bancos digitais vêm ganhando popularidade graças à sua praticidade, facilidade de acesso e tarifas reduzidas, oferecendo serviços financeiros completos 100% online.</p>
+        </header>
+
+        <main>
+            <div class="content-container">
+                <!-- Seção 1 - Instituições Digitais -->
+                <div class="content-section">
+                    <h2><i class="fas fa-building"></i> Instituições 100% Online</h2>
+                    
+                    <p>Sem agências físicas, os bancos digitais oferecem todos os serviços financeiros através de aplicativos e plataformas web, com operações mais ágeis e menos burocráticas.</p>
+                    
+                    <div class="benefit-cards">
+                        <div class="benefit-card">
+                            <h4><i class="fas fa-star"></i> Principais Bancos</h4>
+                            <ul class="feature-list">
+                                <li>Nubank - Cartão roxinho e conta digital</li>
+                                <li>Inter - Banco completo com investimentos</li>
+                                <li>C6 Bank - Conta global e tag de pedágio</li>
+                                <li>Banco Original - Focado em PJ e agronegócio</li>
+                            </ul>
+                        </div>
+                        <div class="benefit-card">
+                            <h4><i class="fas fa-chart-line"></i> Vantagens</h4>
+                            <ul class="feature-list">
+                                <li><span class="stat-badge">-90%</span> taxas bancárias</li>
+                                <li>Abertura de conta em minutos</li>
+                                <li>Sem anuidade de cartão</li>
+                                <li>TEDs e DOC sem custo</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="alert-box bank-alert">
+                        <i class="fas fa-lightbulb"></i>
+                        <div>
+                            <strong>Exemplo:</strong> Você pode abrir uma conta no Nubank em poucos minutos pelo celular, receber um cartão de crédito sem anuidade em casa e começar a usar todos os serviços bancários sem precisar visitar uma agência.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seção 2 - Serviços Completos -->
+                <div class="content-section fintech-section">
+                    <h2><i class="fas fa-concierge-bell"></i> Serviços Financeiros Completos</h2>
+                    
+                    <p>Os bancos digitais oferecem toda a gama de serviços financeiros tradicionalmente disponíveis nos bancos convencionais, mas com mais facilidade e menos custos.</p>
+                    
+                    <div class="comparison-table fintech-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Serviço</th>
+                                    <th>Bancos Tradicionais</th>
+                                    <th>Bancos Digitais</th>
+                                    <th>Vantagem</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Conta Corrente</td>
+                                    <td>Taxa de manutenção</td>
+                                    <td>Sem taxa</td>
+                                    <td><span class="stat-badge success-badge">100%</span> economia</td>
+                                </tr>
+                                <tr>
+                                    <td>Cartão de Crédito</td>
+                                    <td>Anuidade alta</td>
+                                    <td>Sem anuidade</td>
+                                    <td><span class="stat-badge success-badge">R$300+/ano</span> economia</td>
+                                </tr>
+                                <tr>
+                                    <td>Transferências</td>
+                                    <td>Tarifas por TED/DOC</td>
+                                    <td>Ilimitadas e gratuitas</td>
+                                    <td><span class="stat-badge success-badge">-100%</span> custos</td>
+                                </tr>
+                                <tr>
+                                    <td>Investimentos</td>
+                                    <td>Taxas de corretagem</td>
+                                    <td>Zero taxa para ETFs e fundos</td>
+                                    <td><span class="stat-badge success-badge">Melhor ROI</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="enhanced-content fintech-enhanced">
+                        <h3><i class="fas fa-cogs"></i> Serviços Oferecidos</h3>
+                        <ul class="feature-list fintech-list">
+                            <li>Conta corrente e poupança digital</li>
+                            <li>Cartões de crédito e débito virtuais e físicos</li>
+                            <li>Empréstimos e financiamentos com taxas competitivas</li>
+                            <li>Investimentos em renda fixa e variável</li>
+                            <li>Seguros e produtos de previdência</li>
+                            <li>Pagamento de contas e boletos</li>
+                            <li>Programas de cashback e benefícios</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Seção 3 - Atendimento Digital -->
+                <div class="content-section">
+                    <h2><i class="fas fa-headset"></i> Atendimento Digital 24/7</h2>
+                    
+                    <p>Com suporte totalmente digital, os bancos virtuais oferecem atendimento humano e automatizado a qualquer hora, com respostas rápidas e eficientes.</p>
+                    
+                    <div class="platform-showcase">
+                        <div class="platform-item">
+                            <h5><i class="fas fa-robot"></i> Chatbots Inteligentes</h5>
+                            <p>Resolução instantânea de 80% das dúvidas com IA</p>
+                        </div>
+                        <div class="platform-item">
+                            <h5><i class="fas fa-comments"></i> Atendimento Humano</h5>
+                            <p>Suporte especializado via chat, email e telefone</p>
+                        </div>
+                        <div class="platform-item">
+                            <h5><i class="fas fa-video"></i> Videochamadas</h5>
+                            <p>Atendimento personalizado com especialistas</p>
+                        </div>
+                    </div>
+
+                    <div class="alert-box bank-alert">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <strong>Estatística:</strong> 92% dos problemas são resolvidos em menos de 1 hora nos bancos digitais, contra 48 horas nos bancos tradicionais.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seção 4 - Economia e Benefícios -->
+                <div class="content-section fintech-section">
+                    <h2><i class="fas fa-piggy-bank"></i> Economia e Benefícios</h2>
+                    
+                    <p>Por não manterem estrutura física, os bancos digitais repassam a economia em custos operacionais para os clientes, oferecendo tarifas reduzidas e benefícios exclusivos.</p>
+                    
+                    <div class="benefit-cards">
+                        <div class="benefit-card fintech-card">
+                            <h4><i class="fas fa-money-bill-wave"></i> Economia Anual</h4>
+                            <ul class="feature-list fintech-list">
+                                <li><span class="stat-badge fintech-badge">R$ 500+</span> em taxas bancárias</li>
+                                <li><span class="stat-badge fintech-badge">R$ 300</span> anuidade de cartão</li>
+                                <li><span class="stat-badge fintech-badge">R$ 200</span> transferências</li>
+                                <li><span class="stat-badge fintech-badge">R$ 1000+</span> total por ano</li>
+                            </ul>
+                        </div>
+                        <div class="benefit-card fintech-card">
+                            <h4><i class="fas fa-gift"></i> Benefícios Exclusivos</h4>
+                            <ul class="feature-list fintech-list">
+                                <li>Cashback em compras</li>
+                                <li>Programas de pontos</li>
+                                <li>Descontos em parceiros</li>
+                                <li>Seguros gratuitos</li>
+                                <li>Tag de pedágio grátis</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="alert-box fintech-alert">
+                        <i class="fas fa-chart-pie"></i>
+                        <div>
+                            <strong>Dados 2024:</strong> Usuários de bancos digitais economizam em média R$1.200 por ano em comparação com bancos tradicionais.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <div class="footer-content">
+                <p>© 2025 INFO.DeV | Todos os direitos reservados.</p>
+                <div class="footer-bottom">
+                    <p>Desenvolvido com <i class="fas fa-heart" style="color: #ef4444;"></i> pela equipe INFO.DeV</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Efeito suave de rolagem para os links internos
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Animação de aparecimento das seções
+        const contentSections = document.querySelectorAll('.content-section');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        contentSections.forEach(section => observer.observe(section));
+    </script>
+</body>
+</html>

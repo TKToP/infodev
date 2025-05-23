@@ -1,0 +1,565 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketing Digital para E-Commerce - INFO.DeV</title>
+    
+    <!-- Fontes modernas -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Lora:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Ícones Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #3b82f6;
+            --secondary-color: #2563eb;
+            --accent-color: #60a5fa;
+            --text-color: #e5e7eb;
+            --light-text: #9ca3af;
+            --bg-color: #111827;
+            --card-bg: #1f2937;
+            --footer-bg: #030712;
+            --marketing-color: #ec4899; /* Rosa para marketing */
+            --section-border: #374151;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: var(--card-bg);
+            padding: 15px 0;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
+        }
+
+        .logo-text {
+            font-family: 'Lora', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--primary-color), var(--marketing-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .nav-links a, .nav-links button {
+            font-size: 0.95rem;
+            padding: 8px 16px;
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+            color: var(--primary-color);
+            transition: all 0.3s;
+            border-radius: 6px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .nav-links button:hover, .nav-links a:hover {
+            background-color: rgba(59, 130, 246, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Header */
+        .page-header {
+            text-align: center;
+            margin: 40px 0;
+            padding: 30px 0;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(236, 72, 153, 0.1));
+            border-radius: 12px;
+            border: 1px solid var(--section-border);
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            color: var(--marketing-color);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            color: var(--light-text);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Content */
+        .content-container {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+            border: 1px solid var(--section-border);
+        }
+
+        /* Marketing Sections */
+        .marketing-section {
+            margin-bottom: 30px;
+            padding: 25px;
+            background-color: rgba(31, 41, 55, 0.7);
+            border-radius: 8px;
+            border-left: 4px solid var(--marketing-color);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .marketing-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .marketing-section:hover {
+            transform: translateY(-5px);
+            background-color: rgba(31, 41, 55, 0.9);
+            box-shadow: 0 8px 20px rgba(236, 72, 153, 0.1);
+        }
+
+        .marketing-section h2 {
+            color: var(--marketing-color);
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--section-border);
+        }
+
+        .marketing-section h2 i {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+
+        .marketing-section:hover h2 i {
+            transform: scale(1.2);
+        }
+
+        .marketing-section p {
+            margin-bottom: 10px;
+            color: var(--light-text);
+        }
+
+        /* Enhanced Content */
+        .enhanced-content {
+            border-left: 3px solid var(--marketing-color);
+            padding: 15px;
+            margin: 20px 0;
+            background: rgba(236, 72, 153, 0.05);
+            border-radius: 5px;
+        }
+
+        .enhanced-content h3 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--marketing-color);
+            margin-bottom: 10px;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        .comparison-table th, .comparison-table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid var(--section-border);
+        }
+
+        .comparison-table th {
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+
+        /* Alert Boxes */
+        .alert-box {
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 6px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .alert-box i {
+            font-size: 1.2rem;
+            margin-top: 2px;
+        }
+
+        .technical-alert {
+            background-color: rgba(59, 130, 246, 0.1);
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .performance-alert {
+            background-color: rgba(22, 163, 74, 0.1);
+            border-left: 4px solid #16a34a;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--footer-bg);
+            color: #d1d5db;
+            padding: 30px 0;
+            margin-top: 60px;
+            border-top: 1px solid var(--section-border);
+        }
+
+        .footer-content {
+            text-align: center;
+        }
+
+        .footer-bottom {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--section-border);
+            font-size: 0.9rem;
+            color: var(--light-text);
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .navbar .container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .marketing-section h2 {
+                font-size: 1.3rem;
+            }
+            
+            .comparison-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar">
+            <div class="container">
+               <a href="PAGPRI.html" class="logo">
+                    <!-- Logo SVG inline para INFO.DeV -->
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="40" height="40" rx="8" fill="url(#paint0_linear)"/>
+                        <path d="M12 12H16V28H12V12Z" fill="white"/>
+                        <path d="M18 12H22V28H18V12Z" fill="white"/>
+                        <path d="M24 12H28V28H24V12Z" fill="white"/>
+                        <path d="M12 12H28V16H12V12Z" fill="white"/>
+                        <path d="M12 24H28V28H12V24Z" fill="white"/>
+                        <defs>
+                            <linearGradient id="paint0_linear" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#2563EB"/>
+                                <stop offset="1" stop-color="#00B3A6"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <span class="logo-text">INFO.DeV</span>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="PAGPRI.html"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="Materiais.html"><i class="fas fa-book"></i> Materiais</a></li>
+                    <li><a href="PagFAQ.html"><i class="fas fa-question-circle"></i> FAQ</a></li>
+                    <li><a href="quiz/quiz.html"><i class="fas fa-question"></i> QUIZ</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <header class="page-header">
+            <h1><i class="fas fa-bullhorn"></i> Marketing Digital para E-Commerce</h1>
+            <p>O marketing digital é essencial para aumentar a visibilidade e as vendas de um e-commerce. Veja como ele pode ser aplicado na prática:</p>
+        </header>
+
+        <main>
+            <div class="content-container">
+                <!-- Seção 1 - SEO -->
+                <div class="marketing-section">
+                    <h2><i class="fas fa-search"></i> SEO (Otimização para Mecanismos de Busca)</h2>
+                    <p>O SEO envolve otimizar o site e o conteúdo para que ele apareça nas primeiras posições nos resultados de busca do Google.</p>
+                    
+                    <div class="enhanced-content">
+                        <h3><i class="fas fa-key"></i> Fatores de Rankeamento (2024)</h3>
+                        <table class="comparison-table">
+                            <tr>
+                                <th>Fator</th>
+                                <th>Importância</th>
+                                <th>Ferramentas</th>
+                            </tr>
+                            <tr>
+                                <td>Core Web Vitals</td>
+                                <td>Alta</td>
+                                <td>PageSpeed Insights</td>
+                            </tr>
+                            <tr>
+                                <td>Conteúdo E-A-T</td>
+                                <td>Crítica</td>
+                                <td>SurferSEO</td>
+                            </tr>
+                            <tr>
+                                <td>Backlinks</td>
+                                <td>Alta</td>
+                                <td>Ahrefs, SEMrush</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="alert-box technical-alert">
+                        <i class="fas fa-code"></i>
+                        <div>
+                            <strong>Exemplo de Schema Markup para E-commerce:</strong>
+                            <pre style="margin-top: 8px;">
+&lt;script type="application/ld+json"&gt;
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "Smartphone XYZ",
+  "image": "https://exemplo.com/image.jpg",
+  "description": "Descrição do produto...",
+  "brand": { "@type": "Brand", "name": "Marca" },
+  "offers": {
+    "@type": "Offer",
+    "price": "1999.99",
+    "priceCurrency": "BRL"
+  }
+}
+&lt;/script&gt;</pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seção 2 - Tráfego Pago -->
+                <div class="marketing-section">
+                    <h2><i class="fas fa-ad"></i> Tráfego Pago (Google Ads, Meta Ads)</h2>
+                    <p>Campanhas pagas são usadas para gerar tráfego imediato para o e-commerce por meio de anúncios em plataformas digitais.</p>
+                    
+                    <div class="enhanced-content">
+                        <h3><i class="fas fa-chart-line"></i> Métricas de Performance</h3>
+                        <table class="comparison-table">
+                            <tr>
+                                <th>Métrica</th>
+                                <th>Bom</th>
+                                <th>Ótimo</th>
+                            </tr>
+                            <tr>
+                                <td>CTR (Taxa de Clique)</td>
+                                <td>2-3%</td>
+                                <td>5%+</td>
+                            </tr>
+                            <tr>
+                                <td>CAC (Custo por Aquisição)</td>
+                                <td>30% LTV</td>
+                                <td>20% LTV</td>
+                            </tr>
+                            <tr>
+                                <td>ROAS (Retorno em Anúncio)</td>
+                                <td>3:1</td>
+                                <td>5:1+</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="alert-box performance-alert">
+                        <i class="fas fa-lightbulb"></i>
+                        <div>
+                            <strong>Dica:</strong> Use campanhas PMax com feed otimizado para aumentar conversões em 30-50%
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seção 3 - Email Marketing -->
+                <div class="marketing-section">
+                    <h2><i class="fas fa-envelope"></i> Email Marketing e Automação</h2>
+                    <p>O envio de e-mails personalizados para engajar os clientes e automatizar processos como recuperação de carrinhos abandonados.</p>
+                    
+                    <div class="enhanced-content">
+                        <h3><i class="fas fa-robot"></i> Fluxos de Automação</h3>
+                        <ol style="margin-left: 20px;">
+                            <li><strong>Boas-vindas:</strong> Série de 3 e-mails em 7 dias</li>
+                            <li><strong>Carrinho Abandonado:</strong> 3 e-mails em 72h</li>
+                            <li><strong>Pós-compra:</strong> NPS + upsell</li>
+                        </ol>
+                        
+                        <h3 style="margin-top:15px;"><i class="fas fa-percentage"></i> Taxas de Conversão</h3>
+                        <div class="alert-box technical-alert">
+                            <i class="fas fa-chart-pie"></i>
+                            <div>
+                                <strong>Dados 2024:</strong> E-mails de carrinho abandonado convertem 20-30% dos clientes
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seção 4 - Influenciadores -->
+                <div class="marketing-section">
+                    <h2><i class="fas fa-users"></i> Influenciadores e Marketing de Afiliados</h2>
+                    <p>O uso de influenciadores e afiliados para promover produtos nas redes sociais e gerar vendas.</p>
+                    
+                    <div class="enhanced-content">
+                        <h3><i class="fas fa-handshake"></i> Modelos de Parceria</h3>
+                        <table class="comparison-table">
+                            <tr>
+                                <th>Tipo</th>
+                                <th>Custo</th>
+                                <th>ROI Médio</th>
+                            </tr>
+                            <tr>
+                                <td>Postagem Paga</td>
+                                <td>R$ 1.000-10.000</td>
+                                <td>2-4x</td>
+                            </tr>
+                            <tr>
+                                <td>Comissão por Venda</td>
+                                <td>10-30%</td>
+                                <td>5-10x</td>
+                            </tr>
+                            <tr>
+                                <td>Produto Gratuito</td>
+                                <td>Sem custo</td>
+                                <td>Variável</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Seção 5 - Remarketing -->
+                <div class="marketing-section">
+                    <h2><i class="fas fa-redo-alt"></i> Remarketing e Retargeting</h2>
+                    <p>Estratégias para recuperar vendas perdidas, como exibir anúncios para consumidores que abandonaram o carrinho.</p>
+                    
+                    <div class="enhanced-content">
+                        <h3><i class="fas fa-bullseye"></i> Estratégias Eficazes</h3>
+                        <ul style="margin-left: 20px;">
+                            <li><strong>Dynamic Ads:</strong> Mostrar produtos visualizados</li>
+                            <li><strong>Oferta Especial:</strong> Desconto após 24h</li>
+                            <li><strong>Cross-device:</strong> Continuar jornada em outros dispositivos</li>
+                        </ul>
+                        
+                        <h3 style="margin-top:15px;"><i class="fas fa-code"></i> Configuração do Pixel</h3>
+                        <pre>
+// Evento de Carrinho Abandonado no Meta Pixel
+fbq('track', 'AddToCart', {
+  content_ids: ['ABC123'],
+  content_type: 'product',
+  value: 199.99,
+  currency: 'BRL'
+});</pre>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <div class="footer-content">
+                <p>© 2025 INFO.DeV | Todos os direitos reservados.</p>
+                <div class="footer-bottom">
+                    <p>Desenvolvido com <i class="fas fa-heart" style="color: #ef4444;"></i> pela equipe INFO.DeV</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Efeito suave de rolagem para os links internos
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Animação de aparecimento das seções
+        const marketingSections = document.querySelectorAll('.marketing-section');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        marketingSections.forEach(section => observer.observe(section));
+    </script>
+</body>
+</html>
